@@ -1,0 +1,27 @@
+{
+  "name": "uf-browser",
+  "version": "1.0.0",
+  "description": "Universal Framework variant for Browser/Electron versions.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "uf-browser"
+  },
+  "keywords": [
+    "UF",
+    "Universal",
+    "Framework",
+    "Browser",
+    "Electron",
+    "Hanseceltica"
+  ],
+  "author": "Vis/Australis",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^29.0.1"
+  }
+}
