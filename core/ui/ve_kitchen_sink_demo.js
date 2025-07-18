@@ -113,8 +113,66 @@
 						y: 5,
 						
 						attributes: {
+							size: 20, //[WIP] - Doesn't work because this is strongly set to 30 by default
 							value: "johndoe@gmail.com"
 						}
+					},
+					file: {
+						name: "Classic File Input",
+						type: "file",
+						x: 0,
+						y: 6
+					},
+					number: {
+						name: "Number (0-100):",
+						type: "number",
+						x: 0,
+						y: 7,
+						
+						attributes: {
+							min: 0,
+							max: 100,
+							step: 10
+						}
+					},
+					password: {
+						name: "Give me your password:",
+						type: "password",
+						x: 0,
+						y: 8,
+						
+						attributes: {
+							size: 12,
+							value: "password"
+						}
+					},
+					radio_list: {
+						name: "Radio List:", //[WIP] - Not consistently implemented
+						type: "radio",
+						x: 0,
+						y: 9,
+						
+						options: {
+							"the": "The",
+							"illusion": "Illusion of",
+							"choice": "Choice"
+						}
+					},
+					range: {
+						name: "Range (Log):",
+						type: "range",
+						x: 0,
+						y: 10,
+						
+						attributes: {
+							min: 0,
+							max: 100,
+							step: 0.001, //This controls the resolution of control
+						},
+						placeholder: {
+							VALUE: "VALUE*Math.pow(10, 3)"
+						},
+						value_equation: `VALUE/Math.pow(10, 3)`, //1 represents 0,001; 100 represents 0,1
 					}
 				},
 				custom_html: {
@@ -129,6 +187,30 @@
 				default_fallback: {
 					name: "Default Fallback:",
 					type: Infinity
+				},
+				more_inputs: {
+					name: "More Inputs:",
+					type: "interface",
+					
+					select_input: {
+						name: "Select Input:",
+						type: "select",
+						
+						options: {
+							"winter": "Winter",
+							"spring": "Spring",
+							"summer": "Summer",
+							"autumn": "Autumn"
+						}
+					},
+					time_input: {
+						name: "Time Input",
+						type: "time"
+					},
+					url: {
+						name: "URL",
+						type: "url"
+					}
 				}
 			}
 		});
