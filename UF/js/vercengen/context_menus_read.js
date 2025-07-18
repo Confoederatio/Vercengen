@@ -149,7 +149,7 @@
     } else if (["color", "colour"].includes(type)) {
       output = getColourFromFields(input_el);
     } else if (type == "datalist") {
-      output = input_el.querySelector("datalist").value;
+      output = input_el.querySelector("input[list]").value;
     } else if (type == "date") {
       output = getDateFromFields(input_el);
     } else if (type == "date_length") {

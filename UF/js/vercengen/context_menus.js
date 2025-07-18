@@ -1220,13 +1220,13 @@
       html_string.push(`</span>`);
     } else if (options.type == "checkbox") {
       delete options.options.VALUE;
+      
+      if (options.name)
+        html_string.push(`<span>${options.name}</span><br>`);
       if (!options.options) {
         if (options.icon)
           html_string.push(`<img src = "${options.icon}">`);
         html_string.push(`<input type = "checkbox" ${objectToAttributes(options.attributes)}>`);
-
-        if (options.name)
-          html_string.push(`<span>${options.name}</span>`);
       } else {
         //Iterate over all options.options
         var all_suboptions = Object.keys(options.options);
@@ -1279,7 +1279,8 @@
       delete options.options.VALUE;
       if (options.name)
         html_string.push(`<div class = "header">${options.name}</div>`);
-      html_string.push(`<datalist class = "datalist">`);
+      html_string.push(`<input list = "${options.id}-datalist">`)
+      html_string.push(`<datalist id = "${options.id}-datalist" class = "datalist">`);
         //Add .options to datalist
         var all_options = Object.keys(options.options);
 
@@ -1288,7 +1289,7 @@
           var local_value = options.options[all_options[i]];
 
           //Push option to html_string
-          html_string.push(`<option id = "${all_options[i]}" value = "${local_value}">`);
+          html_string.push(`<option id = "${all_options[i]}" value = "${local_value}"></option>`);
         }
       html_string.push(`</datalist>`);
     } else if (options.type == "date") {

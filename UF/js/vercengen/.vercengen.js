@@ -549,7 +549,9 @@ global.ve = {
 					var local_x = (local_option.x != undefined) ?
 						local_option.x : local_row.length;
 
-					if (!local_option.id) local_option.id = all_options[i];
+					//.id is not settable since it is essentially boilerplate given that .id is contained in the key anyway
+					local_option.id = all_options[i];
+					if (!local_option.type) local_option.type = "text";
 						local_option.x = local_x;
 					var local_component = new ve.Component(this, local_option);
 						this.components[(local_option.id) ? local_option.id : all_options[i]] = local_component;

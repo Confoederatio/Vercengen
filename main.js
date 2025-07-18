@@ -21,7 +21,7 @@ var win;
         webSecurity: false
       },
 
-      icon: path.join(__dirname, `public/favicon.png`)
+      icon: path.join(__dirname, `gfx/logo.png`)
     });
 
     //Load file; open Inspect Element

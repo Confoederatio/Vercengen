@@ -1,5 +1,6 @@
 /* -- Font imports -- */
 @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jersey+10&family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+.display-none { display: none; }
 
 /* -- File Explorer code -- */
 /* -- Entity/Group styling -- */
@@ -132,7 +133,7 @@
 
   height: 100%;
 }
-.context-menu td:has(div span.button) {
+.context-menu td:has(> div > span.button) {
   transition: all 0.5s;
 
   .context-menu-cell {
@@ -142,7 +143,7 @@
     padding: 0rem;
   }
 }
-.context-menu td:has(div span.button):hover {
+.context-menu td:has(> div > span.button):hover {
   background-color: var(--primary-hover-colour);
   cursor: pointer;
 }
@@ -366,7 +367,6 @@ input[type="color"]::-webkit-color-swatch {
 /* -- Colour picker -- */
 .context-menu-cell[type="colour"] {
   .header {
-    position: absolute;
   }
 }
 .colour-picker-brightness {
@@ -418,7 +418,7 @@ input[type="color"]::-webkit-color-swatch {
   border: 1px solid black;
   box-shadow: 0px 0px 1px 1px white;
   left: calc((8.25rem/2) - 6px);
-  top: calc((8.25rem/2) - 6px - 1.15rem);
+  top: calc((8.25rem/2) - 6px);
 
   transition: left 0.25s ease, top 0.25s ease, background 0.25s ease;
 }
@@ -463,6 +463,15 @@ input[type="color"]::-webkit-color-swatch {
 
   .small-header {
     margin-left: 0.5rem;
+  }
+}
+
+/* -- Interface -- */
+.context-menu-cell[type="interface"] {
+  padding: 0.5rem;
+
+  > details > summary {
+    cursor: pointer;
   }
 }
 

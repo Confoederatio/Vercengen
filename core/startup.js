@@ -61,6 +61,8 @@ global.path = require("path");
     try {
       ve.initialise();
       clearInterval(initialise_ve_loop);
+
+      initialiseVercengenWindowsDemo();
     } catch (e) {}
   }, 100);
 }

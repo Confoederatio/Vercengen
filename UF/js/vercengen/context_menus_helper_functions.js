@@ -340,14 +340,15 @@
       var bounding_rect = e.target.getBoundingClientRect();
       var coord_x = e.clientX - bounding_rect.left;
       var coord_y = e.clientY - bounding_rect.top;
-      console.log(e);
+      var name_label_el = parent_el.querySelector(`#name-label`);
 
       colour_cursor_el.style.left = `calc(${coord_x}px - 6px)`;
       colour_cursor_el.style.top = `calc(${coord_y}px - 6px)`;
 
       //Apply post-rem offset
-      coord_y += rem_px*1;
-      coord_x += rem_px*1;
+      coord_x += rem_px;
+      coord_y += rem_px;
+      if (name_label_el) coord_y += name_label_el.offsetHeight;
 
       //Get r,g,b value of pixel
       removeErrorHandlers(); //Remove error handlers; restore later
@@ -370,8 +371,9 @@
         restoreErrorHandlers();
 
         //'onchange' handler
-        (typeof parent_el.onchange == "string") ? 
-          eval(parent_el.onchange) : parent_el.onchange([pixel[0], pixel[1], pixel[2]]);
+        if (parent_el.onchange)
+          (typeof parent_el.onchange == "string") ?
+            eval(parent_el.onchange) : parent_el.onchange([pixel[0], pixel[1], pixel[2]]);
       });
       temp_parent_el.remove();
     };
