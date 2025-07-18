@@ -543,7 +543,7 @@ global.ve = {
 			for (var i = 0; i < all_options.length; i++) {
 				var local_option = options[all_options[i]];
 
-				if (typeof local_option == "object" && local_option.type) {
+				if (typeof local_option == "object" && local_option.type != undefined) {
 					var local_el_html = [];
 					var local_row = this.table_rows[local_option.y];
 					var local_x = (local_option.x != undefined) ?
@@ -551,7 +551,7 @@ global.ve = {
 
 					//.id is not settable since it is essentially boilerplate given that .id is contained in the key anyway
 					local_option.id = all_options[i];
-					if (!local_option.type) local_option.type = "text";
+					if (typeof local_option.type != "string") local_option.type = "text";
 						local_option.x = local_x;
 					var local_component = new ve.Component(this, local_option);
 						this.components[(local_option.id) ? local_option.id : all_options[i]] = local_component;

@@ -130,7 +130,7 @@
         b_el.value = options.placeholder[2];
         setColourWheelCursor(options.element, options.placeholder);
       } else if (options.type == "datalist") {
-        options.element.querySelector("datalist").value = options.placeholder;
+        options.element.querySelector("input[list*='datalist']").value = options.placeholder;
       } else if (options.type == "date") {
         var day_el = options.element.querySelector(`#day-input`);
         var hour_el = options.element.querySelector(`#hour-input`);

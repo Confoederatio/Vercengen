@@ -103,8 +103,50 @@
 							"help": "Help",
 							"info": "Info",
 							"test": "Test"
+						},
+						placeholder: "Help"
+					},
+					email: {
+						name: "Email",
+						type: "email",
+						x: 0,
+						y: 5,
+						
+						attributes: {
+							value: "johndoe@gmail.com"
 						}
 					}
+				},
+				custom_html: {
+					name: "Custom HTML:",
+					type: "interface",
+					
+					custom_html: {
+						name: "<b>This</b> is <u>custom HTML!</u>",
+						type: "html"
+					}
+				},
+				default_fallback: {
+					name: "Default Fallback:",
+					type: Infinity
+				}
+			}
+		});
+		
+		window.form_inputs = new ve.Window({
+			can_rename: false,
+			name: "Date",
+			x: window.form_inputs.x + window.form_inputs.element.offsetWidth*1.5 + margin_px,
+			y: 100,
+			interface: {
+				regular_date: {
+					name: "Date Picker",
+					type: "date",
+					multiple_rows: true
+				},
+				date_length_picker: {
+					name: "Date Length Picker",
+					type: "date_length"
 				}
 			}
 		});

@@ -1279,7 +1279,7 @@
       delete options.options.VALUE;
       if (options.name)
         html_string.push(`<div class = "header">${options.name}</div>`);
-      html_string.push(`<input list = "${options.id}-datalist">`)
+      html_string.push(`<input list = "${options.id}-datalist" value = "${(options.placeholder) ? options.placeholder : ""}">`)
       html_string.push(`<datalist id = "${options.id}-datalist" class = "datalist">`);
         //Add .options to datalist
         var all_options = Object.keys(options.options);
