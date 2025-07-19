@@ -1073,22 +1073,7 @@
 
     //Input type handling
     if (options.type == "biuf") {
-      if (options.name)
-        html_string.push(`<div class = "header">${options.name}</div>`);
-
-      //Create a contenteditable div with onchange handlers to strip formatting
-      html_string.push(`<div id = "biuf-toolbar" class = "biuf-toolbar">`);
-        //Onload handler
-        html_string.push(`<img src = "" onerror = "initBIUFToolbar('${options.id}');">`);
-        html_string.push(`<button id = "bold-button" class = "bold-icon">B</button>`);
-        html_string.push(`<button id = "italic-button" class = "italic-icon">I</button>`);
-        html_string.push(`<button id = "underline-button" class = "underline-icon">U</button>`);
-        html_string.push(`<button id = "clear-button" class = "clear-icon">T</button>`);
-      html_string.push(`</div>`);
-
-      html_string.push(`<div id = "biuf-input" class = "biuf-input" contenteditable = "true" oninput = "handleBIUF(this);" ${objectToAttributes(options.options)}>`);
-        html_string.push((options.default) ? options.default : "Name");
-      html_string.push(`</div>`);
+      html_string.push(new ve.ComponentBIUF(undefined, options).element.innerHTML);
     } else if (["rich_text", "wysiwyg"].includes(options.type)) {
       //Div header
       if (options.name)

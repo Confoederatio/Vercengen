@@ -7,6 +7,7 @@ ve.ComponentBIUF = class {
 		//Declare local instance variables
 		this.element = document.createElement("span");
 		var html_string = [];
+		var options = this.options;
 
 		if (options.name)
 			html_string.push(`<div class = "header">${options.name}</div>`);
@@ -29,9 +30,6 @@ ve.ComponentBIUF = class {
 			this.handleBIUF(e.target);
 		});
 		this.initBIUFToolbar();
-
-		//Return statement
-		return this.element;
 	}
 
 	getInput () {

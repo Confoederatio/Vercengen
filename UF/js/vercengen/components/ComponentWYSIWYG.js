@@ -7,6 +7,7 @@ ve.ComponentWYSIWYG = class {
 		//Declare local instance variables
 		this.element = document.createElement("span");
 		var html_string = [];
+		var options = this.options;
 
 		//Div header
 		if (options.name)
