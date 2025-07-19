@@ -14,14 +14,15 @@ ve.ComponentWYSIWYG = class {
 			html_string.push(`<div class = "header">${options.name}</div>`);
 
 		html_string.push(`<div id = "wysiwyg-editor" class = "wysiwyg-editor">`);
-		//Onload handler
-		html_string.push(`<img src = "" onerror = "initWYSIWYG('${options.id}');">`);
+			//Onload handler
+			html_string.push(`<img src = "" onerror = "initWYSIWYG('${options.id}');">`);
 
-		//Editor toolbar
-		{
-			html_string.push(`<div class = "toolbar">`);
-				//FIRST LINE
-				html_string.push(`<div class = "line">`);
+			//Editor toolbar
+			{
+				html_string.push(`<div class = "toolbar">`);
+					//FIRST LINE
+					html_string.push(`<div class = "line">`);
+
 					//First box: Bold, Italic, Underline, Strikethrough
 					html_string.push(`<div class = "box">`);
 						//Bold
@@ -62,10 +63,12 @@ ve.ComponentWYSIWYG = class {
 						//Outdent
 						html_string.push(`<span class = "editor-button icon" data-action = "outdent" title = "Outdent" data-required-tag = "li"><img src = "https://img.icons8.com/fluency-systems-filled/48/000000/outdent.png"></span>`);
 					html_string.push(`</div>`);
+
 				html_string.push(`</div>`);
 
 				//SECOND LINE
 				html_string.push(`<div class = "line">`);
+
 					//Third box: Undo, clear formatting
 					html_string.push(`<div class = "box">`);
 						//Undo
@@ -91,18 +94,18 @@ ve.ComponentWYSIWYG = class {
 			html_string.push(`</div>`);
 		}
 
-		//Content area
-		html_string.push(`<div class = "content-area">`);
-			html_string.push(`<div class = "visual-view" contenteditable></div>`);
-			html_string.push(`<textarea class = "html-view"></textarea>`);
-		html_string.push(`</div>`);
+			//Content area
+			html_string.push(`<div class = "content-area">`);
+				html_string.push(`<div class = "visual-view" contenteditable></div>`);
+				html_string.push(`<textarea class = "html-view"></textarea>`);
+			html_string.push(`</div>`);
 
-		//Modal for hyperlinks
-		html_string.push(`<div class = "modal">`);
-			html_string.push(`<div class = "modal-bg"></div>`);
+			//Modal for hyperlinks
+			html_string.push(`<div class = "modal">`);
+				html_string.push(`<div class = "modal-bg"></div>`);
 				html_string.push(`<div class = "modal-wrapper">`);
 					html_string.push(`<div class = "close">x</div>`);
-						html_string.push(`<div class = "modal-content" id = "modal-create-link">`);
+					html_string.push(`<div class = "modal-content" id = "modal-create-link">`);
 						html_string.push(`<h3>Insert Link</h3>`);
 						html_string.push(`<input type = "text" id = "link-value" placeholder = "Link (example: https://google.com/)">`);
 						html_string.push(`<div class = "row">`);
@@ -156,18 +159,63 @@ ve.ComponentWYSIWYG = class {
 			var visual_view = editor.querySelector('.visual-view');
 
 			//Add change handlers for both views
-			visual_view.addEventListener("input", function() {
+			visual_view.addEventListener("input", () => {
 				var event = new Event("change");
 				event.target = visual_view;
 				event.value = visual_view.innerHTML;
 				this.options.onchange(event);
 			});
 
-			html_view.addEventListener("input", function() {
+			html_view.addEventListener("input", () => {
 				var event = new Event("change");
 				event.target = html_view;
 				event.value = html_view.value;
 				this.options.onchange(event);
+			});
+		}
+	}
+	
+	initWYSIWYG () {
+		//Declare local instance variables
+		var editor = this.element.querySelector(`.wysiwyg-editor`);
+		var modal = editor.getElementsByClassName("modal")[0];
+		var toolbar = editor.getElementsByClassName("toolbar")[0];
+		
+		var buttons = toolbar.querySelectorAll(`.editor-button:not(.has-submenu)`);
+		var content_area = editor.getElementsByClassName("content-area")[0];
+		var visual_view = content_area.getElementsByClassName(`visual-view`)[0];
+		
+		var html_view = content_area.getElementsByClassName(`html-view`)[0];
+		
+		//Add active tag event
+		document.addEventListener("selectionchange", function (e) {
+			selectionChange(e, buttons, editor);
+		});
+		
+		//Add paste event
+		visual_view.addEventListener("paste", pasteEvent);
+		
+		//Add paragraph tag on newline
+		content_area.addEventListener("keypress", addParagraphTag);
+		
+		//Add toolbar button actions
+		for (var i = 0; i < buttons.length; i++) {
+			var local_button = buttons[i];
+			
+			local_button.addEventListener("click", function (e) {
+				var action = this.dataset.action;
+				
+				//execCommand handler
+				switch (action) {
+					case "toggle-view":
+						execCodeAction(this, editor, visual_view, html_view);
+						break;
+					case "createLink":
+						execLinkAction(modal);
+						break;
+					default:
+						execDefaultAction(action);
+				}
 			});
 		}
 	}

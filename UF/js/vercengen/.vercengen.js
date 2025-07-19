@@ -629,13 +629,10 @@ global.ve = {
 			//Set component state
 			this.id = (options.id) ? options.id : "generic-component";
 			this.name = (options.name) ? options.name : "";
-
-			this.css_class = (options.css_class) ? options.css_class : "";
-			this.defines = (options.defines) ? options.defines : undefined;
-			this.disabled = (options.disabled == true) ? true : false;
-			this.do_not_change = (options.do_not_change == true) ? true : false;
-			this.type = (options.type) ? options.type : "text";
-			this.variable = options.variable;
+			
+			this.element = createInput(options);
+			this.processed_html = [];
+			this.raw_html = this.element;
 
 			this.attributes = (options.attributes) ? options.attributes : undefined;
 			this.height = returnSafeNumber(options.height, 1);
@@ -643,8 +640,6 @@ global.ve = {
 			this.x = returnSafeNumber(options.x);
 			this.y = returnSafeNumber(options.y);
 
-			this.processed_html = [];
-			this.raw_html = createInput(options);
 			var component_row = parent.table_rows[options.y];
 			var component_x;
 
