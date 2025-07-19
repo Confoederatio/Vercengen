@@ -26,6 +26,9 @@ Vercengen supports file explorers, nested hierarchies, delta action undo/redo tr
       <img src = "https://i.postimg.cc/6q3Q5GjK/vercengen-demo-01.png">
       <div align = "center">(Vercengen Demo)</div>
     </td>
-    <td></td>
+    <td>
+      <img src = "https://i.postimg.cc/fbzpF483/gearth-mc-01.png">
+      <div align = "center">(Placeholder image from G-Earth/MC)</div>
+    </td>
   </tr>
 </table>
