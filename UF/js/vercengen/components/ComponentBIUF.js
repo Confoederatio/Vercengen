@@ -1,8 +1,7 @@
 ve.ComponentBIUF = class {
-	constructor (arg0_parent, arg1_options) { //From BrowserUI createInput()
+	constructor (arg0_options) { //From BrowserUI createInput()
 		//Convert from parameters
-		this.parent = arg0_parent; //Class: Component
-		this.options = (arg1_options) ? arg1_options : {};
+		this.options = (arg0_options) ? arg0_options : {};
 
 		//Declare local instance variables
 		this.element = document.createElement("span");

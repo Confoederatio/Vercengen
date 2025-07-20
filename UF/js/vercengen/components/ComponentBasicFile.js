@@ -1,0 +1,26 @@
+ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
+	constructor (arg0_options) {
+		//Convert from parameters
+		this.options = (arg0_options) ? arg0_options : {};
+		
+		//Declare local instance variables
+		this.element = document.createElement("span");
+		var html_string = [];
+		var options = this.options;
+		
+		var folder_string = (options.is_folder) ? `webkitdirectory directory ` : "";
+		var multifile_string = (options.is_multifile) ? `multiple ` : "";
+		
+		if (options.name)
+			html_string.push(`<span>${options.name}</span> `);
+		
+		if (!options.is_save) {
+			html_string.push(`<input type = "file" ${objectToAttributes(options.attributes)} ${folder_string}${multifile_string}>`);
+		} else {
+			html_string.push(`<button id = "save-file">${(options.label) ? options.label : "Save File"}</button>`);
+		}
+		
+		//Populate element and initialise handlers
+		this.element.innerHTML = html_string.join("");
+	}
+};

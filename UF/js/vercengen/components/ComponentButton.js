@@ -1,4 +1,4 @@
-ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
+ve.ComponentButton = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
 		this.options = (arg0_options) ? arg0_options : {};
@@ -8,9 +8,12 @@ ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
 		var html_string = [];
 		var options = this.options;
 		
+		//Format html_string
+		this.element.setAttribute("class", "button");
+		if (options.icon)
+			html_string.push(`<img src = "${options.icon}">`);
 		if (options.name)
-			html_string.push(`<span>${options.name}</span> `);
-		html_string.push(`<input type = "color" ${objectToAttributes(options.attributes)}>`);
+			html_string.push(options.name);
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
