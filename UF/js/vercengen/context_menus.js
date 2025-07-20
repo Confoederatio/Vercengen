@@ -1083,29 +1083,7 @@
     } else if (options.type == "button") {
       return (new ve.ComponentButton(options));
     } else if (options.type == "checkbox") {
-      delete options.options.VALUE;
-      
-      if (options.name)
-        html_string.push(`<span>${options.name}</span><br>`);
-      if (!options.options) {
-        if (options.icon)
-          html_string.push(`<img src = "${options.icon}">`);
-        html_string.push(`<input type = "checkbox" ${objectToAttributes(options.attributes)}>`);
-      } else {
-        //Iterate over all options.options
-        var all_suboptions = Object.keys(options.options);
-
-        for (var i = 0; i < all_suboptions.length; i++) {
-          var local_option = options.options[all_suboptions[i]];
-
-          //Append checkbox
-          var checked_string = "";
-          if (all_suboptions[i] == options.default)
-            checked_string = " checked";
-          html_string.push(`<input id = "${all_suboptions[i]}" type = "checkbox" ${objectToAttributes(options.attributes)}${checked_string}>`);
-          html_string.push(`<label for = "${all_suboptions[i]}">${local_option}</label><br>`);
-        }
-      }
+      return (new ve.ComponentCheckbox(options));
     } else if (["color", "colour"].includes(options.type)) {
       if (options.name)
         html_string.push(`<div class = "header">${options.name}</div>`);
