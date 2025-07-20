@@ -1073,7 +1073,7 @@
 
     //Input type handling
     if (options.type == "biuf") {
-      html_string.push(new ve.ComponentBIUF(undefined, options).element.innerHTML);
+      return (new ve.ComponentBIUF(undefined, options));
     } else if (["rich_text", "wysiwyg"].includes(options.type)) {
       //Div header
       if (options.name)

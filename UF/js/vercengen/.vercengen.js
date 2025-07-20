@@ -178,7 +178,11 @@ global.ve = {
 			options.anchor = this.element.querySelector(`#window-body`);
 			options.can_close = true;
 
-			this.interface = new ve.Interface(options);
+			try {
+				this.interface = new ve.Interface(options);
+			} catch (e) {
+				console.error(e);
+			}
 		}
 
 		setName (arg0_name) {
@@ -464,11 +468,11 @@ global.ve = {
 			//Declare local instance variable	s
 			var all_options = Object.keys(options);
 			var default_keys = ["anchor", "class", "id", "maximum_height", "maximum_width"];
-			this.components = {};
-			this.interface_el = document.createElement("div");
+				this.components = {};
+				this.interface_el = document.createElement("div");
 			var query_selector_el;
 			var table_columns = 0;
-			this.table_rows = 0;
+				this.table_rows = 0;
 
 			//Set interface object in ve.interfaces
 			this.interface_id = (options.id) ? options.id : generateRandomID(ve.interfaces);
@@ -560,11 +564,10 @@ global.ve = {
 						local_option.x = local_x;
 					var local_component = new ve.Component(this, local_option);
 						this.components[(local_option.id) ? local_option.id : all_options[i]] = local_component;
-
-					local_el_html = local_component.processed_html;
+						//console.log(local_component.component);
 
 					//Set local_row[local_x]
-					local_row[local_x] = local_el_html.join("");
+					local_row[local_x] = local_component.component;
 				}
 			}
 
@@ -573,8 +576,12 @@ global.ve = {
 				var row_el = document.createElement("tr");
 
 				if (this.table_rows[i])
-					row_el.innerHTML = this.table_rows[i].join("");
+					for (var x = 0; x < this.table_rows[i].length; x++)
+						if (this.table_rows[i][x])
+							row_el.appendChild(this.table_rows[i][x]);
+				
 				if (row_el.innerHTML.length == 0) continue; //Internal guard clause if row is empty
+				
 				table_el.appendChild(row_el);
 			}
 
@@ -630,32 +637,31 @@ global.ve = {
 			this.id = (options.id) ? options.id : "generic-component";
 			this.name = (options.name) ? options.name : "";
 			
-			this.element = createInput(options);
-			this.processed_html = [];
-			this.raw_html = this.element;
-
+			this.component = createInput(options);
+			
 			this.attributes = (options.attributes) ? options.attributes : undefined;
 			this.height = returnSafeNumber(options.height, 1);
 			this.width = returnSafeNumber(options.width, 1);
 			this.x = returnSafeNumber(options.x);
 			this.y = returnSafeNumber(options.y);
-
-			var component_row = parent.table_rows[options.y];
-			var component_x;
-
-			if (this.raw_html) {
-				this.processed_html.push(`<td${(options.width) ? ` colspan = "${options.width}"` : ""}${(options.height) ? ` rowspan = "${options.height}"` : ""}>`);
-					this.processed_html.push(this.raw_html);
-				this.processed_html.push(`</td>`);
-
-				component_x = (options.x != undefined) ? options.x : component_row.length;
-				component_row[component_x] = this.processed_html.join("");
-			} else {
-				console.error(`Error when attempting to add UI element with options:`, options);
+			
+			//this.component handling for both non-element and element returns
+			var local_td_el = document.createElement("td");
+				if (options.height) local_td_el.setAttribute("rowspan", options.height);
+				if (options.width) local_td_el.setAttribute("colspan", options.width);
+			
+			if (typeof this.component == "object") {
+				local_td_el.appendChild(this.component.element);
+			} else if (typeof this.component == "string") {
+				local_td_el.innerHTML = JSON.parse(JSON.stringify(this.component));
 			}
-
-			//Return Component
-			return this;
+			
+			//Reset this.component to be an actual HTMLElement
+			var component_row = parent.table_rows[options.y];
+			var component_x = (options.x != undefined) ? options.x : component_row.length;
+			
+			this.component = local_td_el;
+			component_row[component_x] = this.component;
 		}
 	},
 };
