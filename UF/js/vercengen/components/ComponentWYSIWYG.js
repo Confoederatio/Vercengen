@@ -14,9 +14,6 @@ ve.ComponentWYSIWYG = class {
 			html_string.push(`<div class = "header">${options.name}</div>`);
 
 		html_string.push(`<div id = "wysiwyg-editor" class = "wysiwyg-editor">`);
-			//Onload handler
-			html_string.push(`<img src = "" onerror = "initWYSIWYG('${options.id}');">`);
-
 			//Editor toolbar
 			{
 				html_string.push(`<div class = "toolbar">`);
@@ -152,6 +149,8 @@ ve.ComponentWYSIWYG = class {
 	}
 
 	handleWYSIWYG () {
+		this.initWYSIWYG();
+		
 		//Add .onchange handler if specified
 		if (this.options && this.options.onchange) {
 			var editor = this.element.querySelector('.wysiwyg-editor');

@@ -650,7 +650,13 @@ global.ve = {
 				if (options.width) local_td_el.setAttribute("colspan", options.width);
 			
 			if (typeof this.component == "object") {
-				local_td_el.appendChild(this.component.element);
+				var local_context_menu_cell = document.createElement("div");
+					local_context_menu_cell.setAttribute("id", options.id);
+					local_context_menu_cell.setAttribute("class", "context-menu-cell");
+					local_context_menu_cell.setAttribute("type", options.type);
+				
+					local_context_menu_cell.appendChild(this.component.element);
+				local_td_el.appendChild(local_context_menu_cell);
 			} else if (typeof this.component == "string") {
 				local_td_el.innerHTML = JSON.parse(JSON.stringify(this.component));
 			}

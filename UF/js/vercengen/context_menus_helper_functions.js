@@ -644,54 +644,6 @@
     }
   }
 
-  function initWYSIWYG (arg0_parent_el_id) {
-    //Convert from parameters
-    var wysiwyg_parent_id = arg0_parent_el_id;
-
-    //Declare local instance variables
-    var editor = document.querySelector(`#${wysiwyg_parent_id} .wysiwyg-editor`);
-    var modal = editor.getElementsByClassName("modal")[0];
-    var toolbar = editor.getElementsByClassName("toolbar")[0];
-
-    var buttons = toolbar.querySelectorAll(`.editor-button:not(.has-submenu)`);
-    var content_area = editor.getElementsByClassName("content-area")[0];
-    var visual_view = content_area.getElementsByClassName(`visual-view`)[0];
-
-    var html_view = content_area.getElementsByClassName(`html-view`)[0];
-
-    //Add active tag event
-    document.addEventListener("selectionchange", function (e) {
-      selectionChange(e, buttons, editor);
-    });
-
-    //Add paste event
-    visual_view.addEventListener("paste", pasteEvent);
-
-    //Add paragraph tag on newline
-    content_area.addEventListener("keypress", addParagraphTag);
-
-    //Add toolbar button actions
-    for (var i = 0; i < buttons.length; i++) {
-      var local_button = buttons[i];
-
-      local_button.addEventListener("click", function (e) {
-        var action = this.dataset.action;
-
-        //execCommand handler
-        switch (action) {
-          case "toggle-view":
-            execCodeAction(this, editor, visual_view, html_view);
-            break;
-          case "createLink":
-            execLinkAction(modal);
-            break;
-          default:
-            execDefaultAction(action);
-        }
-      });
-    }
-  }
-
   function parentTagActive (arg0_el) {
     //Convert from parameters
     var element = arg0_el;
