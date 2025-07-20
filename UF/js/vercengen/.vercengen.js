@@ -564,7 +564,6 @@ global.ve = {
 						local_option.x = local_x;
 					var local_component = new ve.Component(this, local_option);
 						this.components[(local_option.id) ? local_option.id : all_options[i]] = local_component;
-						//console.log(local_component.component);
 
 					//Set local_row[local_x]
 					local_row[local_x] = local_component.component;

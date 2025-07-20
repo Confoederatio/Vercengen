@@ -491,7 +491,6 @@
 
         local_input_obj.anchor = context_menu_el.querySelector(interface_body_selector);
         local_input_obj.can_close = true;
-        console.log(local_input_obj);
         var local_interface = new ve.Interface(local_input_obj);
 
         if (options.parent)
