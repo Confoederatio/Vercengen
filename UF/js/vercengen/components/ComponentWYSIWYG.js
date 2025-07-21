@@ -247,3 +247,94 @@ ve.ComponentWYSIWYG = class {
 		}
 	}
 };
+
+//Initialise functions
+{
+	function execCodeAction (arg0_button_el, arg1_editor_el, arg2_visual_view_el, arg3_html_view_el) {
+		//Convert from parameters
+		var button_el = arg0_button_el;
+		var editor_el = arg1_editor_el;
+		var visual_view = arg2_visual_view_el;
+		var html_view = arg3_html_view_el;
+		
+		//Toggle visual/HTML view depending on current state
+		if (button_el.classList.contains("active")) { //Show visual view
+			visual_view.innerHTML = html_view.innerHTML = html_view.value;
+			html_view.style.display = "none";
+			visual_view.style.display = "block";
+			
+			button_el.classList.remove("active");
+		} else { //Show HTML view
+			html_view.innerText = visual_view.innerHTML;
+			visual_view.style.display = "none";
+			html_view.style.display = "block";
+			
+			button_el.classList.add("active");
+		}
+	}
+	
+	function execDefaultAction (arg0_action) {
+		//Convert from parameters
+		var action = arg0_action;
+		
+		//Invoke execCommand
+		document.execCommand(action, false);
+	}
+	
+	function execLinkAction (arg0_modal_el) {
+		//Convert from parameters
+		var modal = arg0_modal_el;
+		
+		//Declare local instance variables
+		var close = modal.querySelectorAll(".close")[0];
+		var selection = saveSelection();
+		var submit = modal.querySelectorAll("button.done")[0];
+		
+		//Set modal to visible
+		modal.style.display = "block";
+		
+		//Add link once done button is active
+		submit.addEventListener("click", function (e) {
+			e.preventDefault();
+			
+			var new_tab_checkbox = modal.querySelectorAll(`#new-tab`)[0];
+			var link_input = modal.querySelectorAll(`#link-value`)[0];
+			var link_value = link_input.value;
+			var new_tab = new_tab_checkbox.checked;
+			
+			//Restore selection
+			restoreSelection(selection);
+			
+			//Handle selection
+			if (window.getSelection().toString()) {
+				var local_a = document.createElement("a");
+				
+				local_a.href = link_value;
+				if (new_tab)
+					local_a.target = "_blank";
+				window.getSelection().getRangeAt(0).surroundContents(local_a);
+			}
+			
+			//Hide modal, deregister modal events
+			modal.style.display = "none";
+			link_input.value = "";
+			
+			submit.removeEventListener("click", arguments.callee);
+			close.removeEventListener("click", arguments.callee);
+		});
+		
+		//Close modal on close button click
+		close.addEventListener("click", function (e) {
+			e.preventDefault();
+			
+			var link_input = modal.querySelectorAll("#link-value")[0];
+			
+			//Hide modal, deregister modal events
+			modal.style.display = "none";
+			link_input.value = "";
+			
+			submit.removeEventListener("click", arguments.callee);
+			close.removeEventListener("click", arguments.callee);
+		});
+	}
+}
