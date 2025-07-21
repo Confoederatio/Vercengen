@@ -1089,74 +1089,15 @@
     } else if (options.type == "datalist") {
       return (new ve.ComponentDatalist(options));
     } else if (options.type == "date") {
-      if (options.name)
-        html_string.push(`<div class = "header">${options.name}</div>`);
-
-      //High-intensity - create date framework first
-      //Day/month/year container
-      if (options.multiple_rows) html_string.push(`<div class = "row-one">`);
-      html_string.push(`<input id = "day-input" class = "day-input" placeholder = "1st" size = "4">`);
-      html_string.push(`<input id = "month-input" class = "month-input" list = "months" placeholder = "January">`);
-      html_string.push(`
-        <datalist id = "months" name = "month">
-          <option value = "January">1</option>
-          <option value = "February">2</option>
-          <option value = "March">3</option>
-          <option value = "April">4</option>
-          <option value = "May">5</option>
-          <option value = "June">6</option>
-          <option value = "July">7</option>
-          <option value = "August">8</option>
-          <option value = "September">9</option>
-          <option value = "October">10</option>
-          <option value = "November">11</option>
-          <option value = "December">12</option>
-        </datalist>
-      `);
-      html_string.push(`<input id = "year-input" class = "year-input">`);
-      html_string.push(`
-        <select id = "year-type">
-          <option value = "AD">AD</option>
-          <option value = "BC">BC</option>
-        </select>
-      `);
-      if (options.multiple_rows) html_string.push(`</div>`);
-      //Hour-minute container
-      if (options.multiple_rows) html_string.push(`<div class = "row-two">`);
-      html_string.push(`
-        <input id = "hour-input" value = "00" placeholder = "00" size = "2"> :
-        <input id = "minute-input" value = "00" placeholder = "00" size = "2">
-      `);
-      if (options.multiple_rows) html_string.push(`</div>`);
+      return (new ve.ComponentDate(options));
     } else if (options.type == "date_length") {
-      if (options.name)
-        html_string.push(options.name);
-
-      //Place date_length containers on separate lines for better readability
-      html_string.push(`
-        <div id = "date-container">
-          <input id = "years-input" size = "6" placeholder = "2000" value = "2000"></input>
-          <input id = "months-input" size = "6" placeholder = "January" value = "January"></input>
-          <input id = "days-input" size = "5" placeholder = "1st" value = "1st" size = "4"></input>
-        </div>
-        <div id = "clock-container">
-          <input id = "hours-input" placeholder = "00" value = "00" size = "2"></input> :
-          <input id = "minutes-input" placeholder = "00" value = "00" size = "2"></input>
-        </div>
-      `);
+      return (new ve.ComponentDateLength(options));
     } else if (options.type == "email") {
-      if (options.name)
-        html_string.push(options.name);
-      html_string.push(`
-        <input type = "email" id = "email-input" pattern = ".+@example\.com" size = "30" ${objectToAttributes(options.attributes)}>
-      `);
+      return (new ve.ComponentEmail(options));
     } else if (options.type == "file") {
       //High-intensity; file input [WIP]
     } else if (options.type == "html") {
-      if (options.name)
-        html_string.push(`<div class = "header">${options.name}</div>`);
-      if (options.innerHTML)
-        html_string.push(options.innerHTML);
+      return (new ve.ComponentHTML(options));
     } else if (options.type == "image") {
       //High-intensity; image input [WIP]
     } else if (options.type == "interface") {
