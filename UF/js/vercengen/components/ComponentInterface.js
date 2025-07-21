@@ -25,5 +25,9 @@ ve.ComponentInterface = class { //[WIP] - Finish Class and refactoring
 		
 		if (this.options.parent)
 			this.options.parent.components[this.element.id] = local_interface;
+		
+		//Options parsing
+		if (this.options.is_open)
+			this.element.querySelector(`details[id="interface-folder-${this.options.id}"]`).open = true;
 	}
 };

@@ -46,6 +46,7 @@
 			y: 100,
 			interface: {
 				basic_inputs: {
+					is_open: true,
 					name: "Basic Inputs:",
 					type: "interface",
 					
