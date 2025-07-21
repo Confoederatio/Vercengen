@@ -49,7 +49,7 @@
         scopes: { VALUE: placeholder_obj }
       });
 
-    if (options.type == "basic_colour") {
+    if (options.type == "basic_colour") { //[WIP] - Already refactored
       if (Array.isArray(placeholder_obj)) {
         options.element.querySelector(`input[type="color"]`).value = RGBToHex(placeholder_obj);
       } else if (typeof placeholder_obj == "string") {
