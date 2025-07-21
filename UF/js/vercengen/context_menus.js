@@ -1113,85 +1113,22 @@
     } else if (options.type == "reset") {
       return (new ve.ComponentReset(options));
     } else if (options.type == "search_select") {
-      html_string.push(`<div class = "search-select-container" ${objectToAttributes(options.attributes)}>`);
-        html_string.push(`<input type = "text" id = "search" placeholder = "${(options.name) ? options.name : "Search..."}" onkeyup = "handleSearchSelect(this.parentElement);">`);
-
-        //Iterate over all options.options
-        if (options.options) {
-          var all_suboptions = Object.keys(options.options);
-
-          for (var i = 0; i < all_suboptions.length; i++) {
-            var local_option = options.options[all_suboptions[i]];
-
-            html_string.push(`<a class = "search-select-item" data-value = "${all_suboptions[i]}">${local_option}</a>`);
-          }
-        }
-      html_string.push(`</div>`);
+      return (new ve.ComponentSearchSelect(options));
     } else if (options.type == "select") {
-      if (options.name)
-        html_string.push(`<div class = "header">${options.name}</div>`);
-      //Similar to datalist
-      html_string.push(`<select class = "select-menu" ${objectToAttributes(options.attributes)}>`);
-        //Add .options to select
-        var all_options = Object.keys(options.options);
-
-        //Iterate over all_options
-        for (var i = 0; i < all_options.length; i++) {
-          var local_value = options.options[all_options[i]];
-
-          //Push option to html_string
-          html_string.push(`<option value = "${all_options[i]}">${local_value}</option>`);
-        }
-      html_string.push(`</select>`);
+      return (new ve.ComponentSelect(options));
     } else if (options.type == "sortable_list") {
       //Requires Sortable.js
-      if (options.name)
-        html_string.push(`<div class = "header">${options.name}</div>`);
-      if (options.has_controls != false || options.disable_add == false)
-        html_string.push(`<button id = "add-button">${(options.add_button_name) ? options.add_button_name : "Add Item"}</button>`);
-      if (options.has_controls != false)
-        if (options.other_header_buttons)
-          html_string.push(`${options.other_header_buttons}`);
-
-      html_string.push(`<ul class = "sortable-list" id = "${options.id}" ${objectToAttributes(options.attributes)}>`);
-
-      //Iterate over all options.options
-      if (options.options) {
-        var all_suboptions = Object.keys(options.options);
-
-        for (var i = 0; i < all_suboptions.length; i++) {
-          var local_option = options.options[all_suboptions[i]];
-
-          var local_delete_button_name = (options.delete_button_name) ? options.delete_button_name : "Delete";
-          var local_delete_button_string = (options.has_controls != false || options.disable_remove == false) ?
-            ` <button class = "delete-button">${local_delete_button_name}</button>` : "";
-
-          //Push option to html_string
-          html_string.push(`<li class = "sortable-list-item" data-value = "${all_suboptions[i]}"><span>${local_option}</span>${local_delete_button_string}</li>`);
-        }
-      }
-
-      html_string.push(`</ul>`);
+      return (new ve.ComponentSortableList(options));
     } else if (options.type == "submit") {
-      if (options.name)
-        html_string.push(`<div class = "header">${options.name}</div>`);
-      html_string.push(`<input type = "submit" value = "${(options.name) ? options.name : "Submit"}" ${objectToAttributes(options.attributes)}>`);
+      return (new ve.ComponentSubmit(options));
     } else if (["tel", "telephone"].includes(options.type)) {
-      if (options.name)
-        html_string.push(options.name);
-      html_string.push(`${(options.name) ? options.name + " " : ""}<input type = "tel" id = "telephone-input" ${objectToAttributes(options.attributes)}>`);
+      return (new ve.ComponentTelephone(options));
     } else if (options.type == "text") {
-      if (options.name)
-        html_string.push(options.name);
-      html_string.push(`<input type = "text" id = "text-input" ${objectToAttributes(options.attributes)}>`);
+      return (new ve.ComponentText(options));
     } else if (options.type == "time") {
-      if (options.name)
-        html_string.push(options.name);
-      html_string.push(`<input type = "time" id = "time-input" ${objectToAttributes(options.attributes)}>`);
+      return (new ve.ComponentTime(options));
     } else if (options.type == "url") {
-      if (options.name)
-        html_string.push(options.name);
-      html_string.push(`<input type = "url" id = "url-input" placeholder = "http://example.com" ${objectToAttributes(options.attributes)}>`);
+      return (new ve.ComponentURL(options));
     }
 
     //Close html_string div
