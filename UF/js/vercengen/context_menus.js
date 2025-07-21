@@ -1053,7 +1053,7 @@
     //Convert from parameters
     var options = (arg0_options) ? arg0_options : {};
 
-    //Intiialise options
+    //Initialise options
     if (!options.attributes) options.attributes = {};
     if (!options.options) options.options = {};
       if (!options.options.VALUE) {
@@ -1062,14 +1062,6 @@
         if (options.placeholder)
           options.options.VALUE = options.placeholder;
       }
-    if (options.name)
-      options.name = `<span id = "name-label">${options.name}</span><data id = "name-label" class = "display-none">${options.name}</data>`;
-
-    //Declare local instance variables
-    var html_string = [];
-
-    //Format html_string
-    html_string.push(`<div id = "${options.id}" class = "context-menu-cell" type = "${options.type}">`);
 
     //Input type handling
     if (options.type == "biuf") {
@@ -1130,11 +1122,5 @@
     } else if (options.type == "url") {
       return (new ve.ComponentURL(options));
     }
-
-    //Close html_string div
-    html_string.push(`</div>`);
-
-    //Return statement
-    return html_string.join("");
   }
 }

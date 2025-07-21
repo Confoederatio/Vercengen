@@ -636,13 +636,19 @@ global.ve = {
 			this.id = (options.id) ? options.id : "generic-component";
 			this.name = (options.name) ? options.name : "";
 			
-			this.component = createInput(options);
-			
 			this.attributes = (options.attributes) ? options.attributes : undefined;
 			this.height = returnSafeNumber(options.height, 1);
 			this.width = returnSafeNumber(options.width, 1);
 			this.x = returnSafeNumber(options.x);
 			this.y = returnSafeNumber(options.y);
+			
+			{
+				//Scaffold this.component
+				var component_obj = createInput(options);
+				if (!component_obj) console.error(`Invalid component type:`, options.type);
+				
+				this.component = component_obj;
+			}
 			
 			//this.component handling for both non-element and element returns
 			var local_td_el = document.createElement("td");

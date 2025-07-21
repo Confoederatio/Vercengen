@@ -53,7 +53,11 @@
 						name: "Basic Colour",
 						type: "basic_colour",
 						x: 0,
-						y: 0
+						y: 0,
+						
+						onclick: function (e) {
+							console.log(e, e.target.value);
+						}
 					},
 					button_grid_one: {
 						name: "Button Grid 1",
@@ -119,7 +123,7 @@
 					},
 					file: {
 						name: "Classic File Input",
-						type: "file",
+						type: "basic_file",
 						x: 0,
 						y: 6
 					},

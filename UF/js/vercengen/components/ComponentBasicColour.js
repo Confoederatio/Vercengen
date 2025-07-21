@@ -14,5 +14,19 @@ ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
+		
+		if (options.onclick)
+			this.handleOnclick(options.onclick);
+	}
+	
+	handleOnclick (arg0_function) {
+		//Convert from parameters
+		var local_function = arg0_function;
+		
+		//Set handler
+		this.element.querySelector(`input[type="color"]`).onchange = (e) => {
+			e.component = this;
+			local_function(e);
+		}
 	}
 };

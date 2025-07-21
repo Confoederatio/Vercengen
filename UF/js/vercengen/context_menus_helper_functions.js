@@ -610,7 +610,7 @@
                 all_inputs[i].onclick = function (e) { local_input_obj.onclick(e); };
               }
           } else if (local_type == "basic_colour") {
-            all_inputs[i].onchange = local_input_obj.onclick;
+            //all_inputs[i].onchange = local_input_obj.onclick;
           } else if (local_type == "colour") {
             all_inputs[i].onchange = local_input_obj.onclick;
           } else if (local_type == "number") {
