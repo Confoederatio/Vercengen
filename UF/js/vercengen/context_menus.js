@@ -1101,47 +1101,17 @@
     } else if (options.type == "image") {
       //High-intensity; image input [WIP]
     } else if (options.type == "interface") {
-      html_string.push(`<details id = "interface-folder-${options.id}">`);
-        html_string.push(`<summary>${(options.name) ? options.name : options.id}</summary>`);
-        html_string.push(`<div id = "interface-body"></div>`);
-      html_string.push(`</details>`);
+      return (new ve.ComponentInterface(options));
     } else if (options.type == "number") {
-      if (options.name)
-        html_string.push(options.name);
-      html_string.push(`<input type = "number" id = "number-input" ${objectToAttributes(options.attributes)}>`);
+      return (new ve.ComponentNumber(options));
     } else if (options.type == "password") {
-      if (options.name)
-        html_string.push(options.name);
-      html_string.push(`<input type = "password" id = "password-input" ${objectToAttributes(options.attributes)}>`);
+      return (new ve.ComponentPassword(options));
     } else if (options.type == "radio") {
-      delete options.options.VALUE;
-      if (!options.options) {
-        if (options.name)
-          html_string.push(options.name);
-        html_string.push(`<input type = "radio" id = "radio-input" ${objectToAttributes(options.attributes)}>`);
-      } else {
-        //Iterate over all options.options
-        var all_suboptions = Object.keys(options.options);
-
-        for (var i = 0; i < all_suboptions.length; i++) {
-          var local_option = options.options[all_suboptions[i]];
-
-          //Append radio
-          var checked_string = "";
-          if (all_suboptions[i] == options.default)
-            checked_string = " checked";
-          html_string.push(`<input type = "radio" id = "${all_suboptions[i]}" name = "radio-input" ${objectToAttributes(options.attributes)}${checked_string}>`);
-          html_string.push(`<label for = "${all_suboptions[i]}">${local_option}</label>`);
-        }
-      }
+      return (new ve.ComponentRadio(options));
     } else if (options.type == "range") {
-      var name_string = (options.name) ? `${options.name} ` : "";
-
-      html_string.push(`${name_string}<input type = "range" id = "range-input"${objectToAttributes(options.attributes)} value = "${returnSafeNumber(options.placeholder)}">`);
+      return (new ve.ComponentRange(options));
     } else if (options.type == "reset") {
-      if (options.name)
-        html_string.push(`<div class = "header">${options.name}</div>`);
-      html_string.push(`<input type = "reset" id = "reset-button" value = "Reset">`);
+      return (new ve.ComponentReset(options));
     } else if (options.type == "search_select") {
       html_string.push(`<div class = "search-select-container" ${objectToAttributes(options.attributes)}>`);
         html_string.push(`<input type = "text" id = "search" placeholder = "${(options.name) ? options.name : "Search..."}" onkeyup = "handleSearchSelect(this.parentElement);">`);
