@@ -587,7 +587,6 @@ global.ve = {
 			//Append table to interface
 			this.interface_el.appendChild(table_el);
 				options.parent = this;
-			handleContextMenu(this.interface_el, options);
 
 			//Window handler
 			{

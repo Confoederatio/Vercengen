@@ -117,6 +117,8 @@ ve.ComponentWYSIWYG = class {
 		//Set .innerHTML
 		this.element.innerHTML = html_string.join("");
 		this.handleWYSIWYG();
+		
+		this.handleEvents();
 	}
 
 	getInput () {
@@ -145,6 +147,33 @@ ve.ComponentWYSIWYG = class {
 		//Return statement
 		return (html_content_el.innerHTML.length > visual_content_el.innerHTML.length) ?
 			html_content_el.innerHTML : visual_content_el.innerHTML;
+	}
+	
+	handleEvents () {
+		//Declare local instance variables
+		if (this.options.onchange) {
+			var editor_el = this.element.querySelector(`.wysiwyg-editor`);
+			var html_view_el = this.element.querySelector(`.html-view`);
+			var visual_view_el = this.element.querySelector(`.visual-view`);
+			
+			//Add change handlers
+			html_view_el.addEventListener("input", () => {
+				var event = new Event("change");
+					event.component = this;
+					event.target = html_view_el;
+					event.value = html_view_el.innerHTML;
+					
+				this.options.onchange(event);
+			});
+			visual_view_el.addEventListener("input", () => {
+				var event = new Event("change");
+					event.component = this;
+					event.target = visual_view_el;
+					event.value = visual_view_el.innerHTML;
+				
+				this.options.onchange(event);
+			});
+		}
 	}
 
 	handleWYSIWYG () {

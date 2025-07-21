@@ -15,5 +15,11 @@ ve.ComponentRange = class { //[WIP] - Finish Class and refactoring
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
+		this.handleEvents();
+	}
+	
+	handleEvents () {
+		if (this.options.onclick)
+			this.element.onchange = this.options.onclick;
 	}
 };

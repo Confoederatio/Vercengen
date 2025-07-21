@@ -41,4 +41,72 @@ ve.ComponentSortableList = class {
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
 	}
+	
+	handleEvents () {
+		//Declare local instance variables
+		var all_li_els = this.element.querySelectorAll(".sortable-list-item");
+		
+		//Functional handlers
+		Sortable.create(this.element.querySelector(".sortable-list"), {
+			animation: 150,
+			onEnd: (e) => {
+				e.component = this;
+				
+				if (this.options.onchange)
+					this.options.onchange(e);
+				if (this.options.onclick)
+					this.options.onclick(e);
+			},
+			multiDrag: true,
+			selectedClass: "selected"
+		});
+		
+		this.element.querySelector(`#add-button`).addEventListener("click", (e) => {
+			//Declare local instance variables
+			var local_delete_button_name = (this.options.delete_button_name) ?
+				this.options.delete_button_name : "Delete";
+			var local_delete_button_string = (this.options.has_controls != false || this.options.disable_remove == false) ?
+				` <button class = "delete-button">${local_delete_button_name}</button>` : "";
+			
+			//Push option to html_string
+			var new_li_el = document.createElement("li");
+				new_li_el.classList.add("sortable-list-item");
+				new_li_el.innerHTML = `<span>New Item</span>${local_delete_button_string}`;
+				new_li_el.setAttribute("data-value", generateRandomID());
+				
+			this.element.querySelector(".sortable-list").appendChild(new_li_el);
+			
+			var local_delete_button_el = new_li_el.querySelector(".delete-button");
+			if (local_delete_button_el)
+				local_delete_button_el.addEventListener("click", (e) => {
+					if (this.options.onchange)
+						this.options.onchange(this.element);
+					if (this.options.onremove)
+						this.options.onremove(new_li_el);
+					new_li_el.remove();
+				});
+			
+			if (this.options.onadd)
+				this.options.onadd(new_li_el);
+			if (this.options.onchange)
+				this.options.onchange(this.element);
+		});
+		
+		//Iterate over all_li_els; add .delete-button functionality
+		var all_li_els = this.element.querySelectorAll(".sortable-list-item");
+		
+		for (let i = 0; i < all_li_els.length; i++) {
+			let local_delete_button_el = all_li_els[i].querySelector(".delete-button");
+			
+			if (local_delete_button_el)
+				local_delete_button_el.addEventListener("click", (e) => {
+					e.component = this;
+					if (this.element.onchange)
+						this.element.onchange(e);
+					if (this.element.onremove)
+						this.element.onremove(e);
+					all_li_els[i].remove();
+				});
+		}
+	}
 };

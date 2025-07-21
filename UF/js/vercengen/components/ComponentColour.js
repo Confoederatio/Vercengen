@@ -49,5 +49,7 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 	
 	handleEvents () {
 		handleColourWheel(this.element);
+		if (this.options.onclick)
+			this.element.onchange = this.options.onclick;
 	}
 };

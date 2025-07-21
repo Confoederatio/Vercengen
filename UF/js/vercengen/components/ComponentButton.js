@@ -17,5 +17,19 @@ ve.ComponentButton = class { //[WIP] - Finish Class and refactoring
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
+		this.handleEvents();
+	}
+	
+	handleEvents () {
+		if (this.options.onclick)
+			if (this.options.onclick == "string") {
+				this.element.setAttribute("onclick", this.options.onclick);
+			} else {
+				this.element.onclick = (e) => {
+					e.component = this;
+					
+					this.options.onclick(e);
+				};
+			}
 	}
 };

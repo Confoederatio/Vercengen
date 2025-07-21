@@ -15,5 +15,18 @@ ve.ComponentText = class {
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
+		this.handleEvents();
+	}
+	
+	handleEvents () {
+		if (this.options.onclick)
+			if (typeof this.options.onclick == "string") {
+				this.element.setAttribute("onchange", this.options.onclick);
+			} else {
+				this.element.onchange = (e) => {
+					e.component = this;
+					this.options.onclick(e);
+				}
+			}
 	}
 };
