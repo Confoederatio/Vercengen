@@ -648,6 +648,16 @@ global.ve = {
 				if (!component_obj) console.error(`Invalid component type:`, options.type);
 				
 				this.component = component_obj;
+				
+				//Onload handler
+				if (options.onload) {
+					var return_value = options.onload(this.component.element);
+					
+					if (typeof return_value == "object")
+						this.component.element.innerHTML = createInput(
+							dumbMergeObjects(this.element, return_value)
+						);
+				}
 			}
 			
 			//this.component handling for both non-element and element returns

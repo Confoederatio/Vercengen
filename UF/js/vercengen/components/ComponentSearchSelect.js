@@ -26,5 +26,30 @@ ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
+		this.handleEvents();
+	}
+	
+	handleEvents () {
+		//Declare local instance variables
+		var all_a_els = this.element.querySelectorAll("a");
+		
+		//Functional handlers
+		this.element.querySelector(`#search`).addEventListener("click", (e) => {
+			this.element.classList.toggle("shown");
+		});
+		
+		//Iterate over all_a_els
+		for (let i = 0; i < all_a_els.length; i++)
+			all_a_els[i].addEventListener("click", (e) => {
+				e.component = this;
+				
+				all_a_els[i].classList.toggle("selected");
+				all_a_els[i].setAttribute("data-selected", all_a_els[i].getAttribute("data-value"));
+				
+				if (this.element.onchange)
+					this.element.onchange(e);
+				if (this.element.onclick)
+					this.element.onclick(e);
+			});
 	}
 };

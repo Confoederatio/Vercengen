@@ -22,5 +22,30 @@ ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
+		this.handleEvents();
+	}
+	
+	handleEvents () {
+		//Declare local instance variables
+		var file_input_el = this.element.querySelector(`input[type="file"]`);
+		var save_input_el = this.element.querySelector(`button[id="save-file"]`);
+		
+		if (file_input_el) {
+			file_input_el.onchange = (e) => {
+				e.component = this;
+				
+				if (this.options.onchange) this.options.onchange(e);
+				if (this.options.onclick) this.options.onclick(e);
+			};
+		} else {
+			save_input_el.onclick = (e) => {
+				showSaveFilePicker().then((e) => {
+					if (file_input_el.onchange)
+						file_input_el.onchange(e);
+					if (file_input_el.onclick)
+						file_input_el.onclick(e);
+				});
+			};
+		}
 	}
 };

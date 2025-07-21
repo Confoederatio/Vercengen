@@ -16,5 +16,14 @@ ve.ComponentInterface = class { //[WIP] - Finish Class and refactoring
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
+		
+		//Populate interface
+		var interface_body_selector = `[id="interface-folder-${this.options.id}"] #interface-body`;
+			this.options.anchor = this.element.querySelector(interface_body_selector);
+			this.options.can_close = true;
+		var local_interface = new ve.Interface(this.options);
+		
+		if (this.options.parent)
+			this.options.parent.components[this.element.id] = local_interface;
 	}
 };

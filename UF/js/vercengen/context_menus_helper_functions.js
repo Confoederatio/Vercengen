@@ -454,7 +454,7 @@
       let local_type = all_inputs[i].getAttribute("type");
         
       //.onload handler; returning an object will populate the input respectively
-      if (local_input_obj)
+      /*if (local_input_obj)
         if (local_input_obj.onload) {
           var return_value = local_input_obj.onload(all_inputs[i]);
 
@@ -462,11 +462,11 @@
             all_inputs[i].innerHTML = createInput(
               dumbMergeObjects(local_input_obj, return_value)
             );
-        }
+        }*/
 
       //Default type population (i.e. for 'sortable_list')
       if (local_type == "basic_file") {
-        var local_file_input = all_inputs[i].querySelector(`input[type="file"]`);
+        /*var local_file_input = all_inputs[i].querySelector(`input[type="file"]`);
         var local_save_input = all_inputs[i].querySelector(`button[id="save-file"]`);
 
         if (local_file_input) {
@@ -483,20 +483,20 @@
                 local_input_obj.onclick(e);
             });
           };
-        }
+        }*/
       } else if (local_type == "colour") {
-        handleColourWheel(all_inputs[i]);
+        //handleColourWheel(all_inputs[i]);
       } else if (local_type == "interface") {
-        var interface_body_selector = `[id="interface-folder-${local_input_obj.id}"] #interface-body`;
+        /*var interface_body_selector = `[id="interface-folder-${local_input_obj.id}"] #interface-body`;
 
         local_input_obj.anchor = context_menu_el.querySelector(interface_body_selector);
         local_input_obj.can_close = true;
         var local_interface = new ve.Interface(local_input_obj);
 
         if (options.parent)
-          options.parent.components[(local_input_obj.id) ? local_input_obj.id : all_inputs[i]] = local_interface;
+          options.parent.components[(local_input_obj.id) ? local_input_obj.id : all_inputs[i]] = local_interface;*/
       } else if (local_type == "search_select") {
-        all_inputs[i].querySelector(`#search`).addEventListener("click", function (e) {
+        /*all_inputs[i].querySelector(`#search`).addEventListener("click", function (e) {
           all_inputs[i].classList.toggle("shown");
         });
 
@@ -513,7 +513,7 @@
             if (local_input_obj.onclick)
               local_input_obj.onclick(e);
           });
-        }
+        }*/
       } else if (local_type == "sortable_list") {
         Sortable.create(all_inputs[i].querySelector(".sortable-list"), {
           animation: 150,

@@ -14,19 +14,18 @@ ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
-		
-		if (options.onclick)
-			this.handleOnclick(options.onclick);
+		this.handleEvents();
 	}
 	
-	handleOnclick (arg0_function) {
-		//Convert from parameters
-		var local_function = arg0_function;
+	handleEvents (arg0_function) {
+		//Declare local instance variables
+		var colour_input_el = this.element.querySelector(`input[type="color"]`);
 		
 		//Set handler
-		this.element.querySelector(`input[type="color"]`).onchange = (e) => {
-			e.component = this;
-			local_function(e);
-		}
+		if (this.options.onclick)
+			colour_input_el.onchange = (e) => {
+				e.component = this;
+				this.options.onclick(e);
+			}
 	}
 };

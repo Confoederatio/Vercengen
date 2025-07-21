@@ -44,5 +44,10 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 		
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
+		this.handleEvents();
+	}
+	
+	handleEvents () {
+		handleColourWheel(this.element);
 	}
 };
