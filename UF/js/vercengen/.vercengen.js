@@ -317,7 +317,7 @@ global.ve = {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
 
-			//Iterate over all_options and call ve.Component.autoFillInput()
+			//Iterate over all_options and call ve.Component.setValue()
 			var all_options = Object.keys(options);
 
 			for (var i = 0; i < all_options.length; i++) {
@@ -325,7 +325,7 @@ global.ve = {
 				var local_value = options[all_options[i]];
 
 				if (local_option_el)
-					ve.Component.autoFillInput({
+					ve.Component.setValue({
 						element: local_option_el,
 						placeholder: local_value,
 						type: local_option_el.getAttribute("type"),
@@ -690,7 +690,7 @@ global.ve = {
 			component_row[component_x] = this.component;
 		}
 		
-		static autoFillInput (arg0_options) {
+		static setValue (arg0_options) {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
 			

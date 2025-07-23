@@ -468,7 +468,7 @@
               if (!local_value.id) local_value.id = all_interface_keys[i];
 
               //Type handlers: set placeholders where applicable
-              ve.Component.autoFillInput({
+              ve.Component.setValue({
                 element: local_element,
                 type: local_value.type,
                 placeholder: local_value.placeholder,
@@ -570,7 +570,7 @@
                   if (!local_value.id) local_value.id = all_interface_keys[i];
 
                   //Type handlers: set placeholders where applicable
-                  ve.Component.autoFillInput({
+                  ve.Component.setValue({
                     element: local_element,
                     type: local_value.type,
                     placeholder: local_value.placeholder,
@@ -682,7 +682,7 @@
               if (!local_value.id) local_value.id = all_interface_keys[i];
 
               //Type handlers: set placeholders where applicable
-              ve.Component.autoFillInput({
+              ve.Component.setValue({
                 element: local_element,
                 type: local_value.type,
                 placeholder: local_value.placeholder,
