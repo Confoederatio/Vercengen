@@ -36,12 +36,12 @@ ve.ComponentBIUF = class {
 		return this.element.querySelector(`#biuf-input`).innerHTML;
 	}
 
-	setInput (arg0_string) {
+	fill (arg0_value) {
 		//Convert from parameters
-		var string = (arg0_string) ? arg0_string : "";
+		var value = (arg0_value) ? arg0_value : "";
 
 		//Set #biuf-input value
-		this.element.querySelector(`#biuf-input`).innerHTML = string;
+		this.element.querySelector(`#biuf-input`).innerHTML = value;
 	}
 
 	//Internal helper functions

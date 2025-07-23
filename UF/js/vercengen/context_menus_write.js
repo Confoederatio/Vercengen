@@ -94,7 +94,7 @@
 
     //Make sure element is declared; look over options.type and fill in the input with variable
     if (options.element)
-      if (options.type == "basic_file") {
+      if (options.type == "basic_file") { //[WIP] - Already refactored
         var file_input_el = options.element.querySelector(`input[type="file"]`);
         var save_file_el = options.element.querySelector(`button[id="save-file"]`);
 
@@ -103,9 +103,9 @@
         } else if (save_file_el) {
           save_file_el.setAttribute("value", options.placeholder);
         }
-      } else if (options.type == "biuf") {
+      } else if (options.type == "biuf") { //[WIP] - Already refactored
         options.element.querySelector(`#biuf-input`).innerHTML = options.placeholder;
-      } else if (["rich_text", "wysiwyg"].includes(options.type)) {
+      } else if (["rich_text", "wysiwyg"].includes(options.type)) { //[WIP] - Already refactored
         options.element.querySelector(`.html-view`).value = options.placeholder;
         options.element.querySelector(`.visual-view`).innerHTML = options.placeholder;
       } else if (options.type == "checkbox") {

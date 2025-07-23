@@ -25,6 +25,21 @@ ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Declare local instance variables
+		var file_input_el = this.element.querySelector(`input[type="file"]`);
+		var save_file_el = this.element.querySelector(`button[id="save-file"]`);
+		
+		if (file_input_el) {
+			file_input_el.setAttribute("value", value);
+		} else if (save_file_el) {
+			save_file_el.setAttribute("value", value);
+		}
+	}
+	
 	handleEvents () {
 		//Declare local instance variables
 		var file_input_el = this.element.querySelector(`input[type="file"]`);

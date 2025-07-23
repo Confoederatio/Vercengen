@@ -120,19 +120,19 @@ ve.ComponentWYSIWYG = class {
 		
 		this.handleEvents();
 	}
+	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = (arg0_value) ? arg0_value : "";
+		
+		//Set element .html-view, .visual-view content
+		this.element.querySelector(`.html-view`).value = value;
+		this.element.querySelector(`.visual-view`).innerHTML = value;
+	}
 
 	getInput () {
 		//Return statement
 		return this.getWYSIWYGFromFields(this.element);
-	}
-
-	setInput (arg0_string) {
-		//Convert from parameters
-		var string = (arg0_string) ? arg0_string : "";
-
-		//Set element .html-view, .visual-view content
-		this.element.querySelector(`.html-view`).value = string;
-		this.element.querySelector(`.visual-view`).innerHTML = string;
 	}
 
 	//Internal helper functions
