@@ -18,6 +18,23 @@ ve.ComponentRange = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Declare local instance variables
+		var actual_number_in_range = calculateNumberInRange(
+			[
+				returnSafeNumber(this.options.value.attributes.min, 0),
+				returnSafeNumber(this.options.value.attributes.max, 100)
+			], value, this.options.value.value_equation
+		);
+		var range_el = this.element.querySelector(`input[type="range"]`);
+		
+		//Set value
+		range_el.value = actual_number_in_range;
+	}
+	
 	handleEvents () {
 		if (this.options.onclick)
 			this.element.onchange = this.options.onclick;

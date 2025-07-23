@@ -55,12 +55,12 @@
       } else if (typeof placeholder_obj == "string") {
         options.element.querySelector(`input[type="color"]`).value = placeholder_obj;
       }
-    } else if (options.type == "date") {
+    } else if (options.type == "date") { //[WIP] - Already refactored
       populateDateFields(options.element, convertTimestampToDate(placeholder_obj));
     } else if (options.type == "date_length") {
       //Guard clause if typeof is invalid; i.e. a custom template
       if (typeof placeholder_obj == "string") return;
-    } else if (options.type == "range") {
+    } else if (options.type == "range") { //[WIP] - Already refactored
       var actual_number_in_range = calculateNumberInRange(
         [returnSafeNumber(options.value.attributes.min, 0), returnSafeNumber(options.value.attributes.max, 100)],
         placeholder_obj,
@@ -90,7 +90,7 @@
     var options = (arg0_options) ? arg0_options : {};
 
     //Initialise options
-    if (!options.type) options.type = "text";
+    if (!options.type) options.type = "text"
 
     //Make sure element is declared; look over options.type and fill in the input with variable
     if (options.element)
