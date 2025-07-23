@@ -34,6 +34,7 @@ ve.ComponentDatalist = class { //[WIP] - Finish Class and refactoring
 	fill (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
+			if (value == undefined) return;
 		
 		//Declare local instance variables
 		this.element.querySelector(`input[list*="datalist"]`).value = value;

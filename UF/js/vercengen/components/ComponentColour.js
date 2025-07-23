@@ -50,6 +50,7 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 	fill (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
+			if (value == undefined) return;
 		
 		//Declare local instance variables
 		var b_el = this.element.querySelector(`input#b`);

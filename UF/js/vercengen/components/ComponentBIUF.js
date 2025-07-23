@@ -39,6 +39,7 @@ ve.ComponentBIUF = class {
 	fill (arg0_value) {
 		//Convert from parameters
 		var value = (arg0_value) ? arg0_value : "";
+			if (value == undefined) return;
 
 		//Set #biuf-input value
 		this.element.querySelector(`#biuf-input`).innerHTML = value;

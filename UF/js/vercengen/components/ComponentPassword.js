@@ -16,4 +16,12 @@ ve.ComponentPassword = class { //[WIP] - Finish Class and refactoring
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
 	}
+	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Set value
+		this.element.querySelector(`input[type="password"]`).value = value;
+	}
 };

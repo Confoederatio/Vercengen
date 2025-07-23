@@ -18,6 +18,14 @@ ve.ComponentText = class {
 		this.handleEvents();
 	}
 	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Set value
+		this.element.innerHTML = value;
+	}
+	
 	handleEvents () {
 		if (this.options.onclick)
 			if (typeof this.options.onclick == "string") {

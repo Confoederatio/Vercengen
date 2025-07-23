@@ -28,4 +28,26 @@ ve.ComponentDateLength = class { //[WIP] - Finish Class and refactoring
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
 	}
+	
+	fill (arg0_value)  {
+		//Convert from parameters
+		var value = arg0_value;
+			if (value == undefined) return;
+		
+		//Declare local instance variables
+		var days_el = this.element.querySelector(`#days-input`);
+		var hours_el = this.element.querySelector(`#hours-input`);
+		var minutes_el = this.element.querySelector(`#minutes-input`);
+		var months_el = this.element.querySelector(`#months-input`);
+		var years_el = this.element.querySelector(`#years-input`);
+		
+		//Set local values from value
+		value = convertTimestampToDate(value);
+		
+		years_el.value = value.year;
+		months_el.value = value.month;
+		days_el.value = value.day;
+		hours_el.value = value.hour;
+		minutes_el.value = value.minute;
+	}
 };

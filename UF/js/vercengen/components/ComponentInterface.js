@@ -30,4 +30,13 @@ ve.ComponentInterface = class { //[WIP] - Finish Class and refactoring
 		if (this.options.is_open)
 			this.element.querySelector(`details[id="interface-folder-${this.options.id}"]`).open = true;
 	}
+	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Declare local instance variables
+		if (this.options.parent)
+			this.options.parent.components[this.element.id] = value;
+	}
 };

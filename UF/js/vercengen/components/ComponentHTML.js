@@ -17,4 +17,16 @@ ve.ComponentHTML = class { //[WIP] - Finish Class and refactoring
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
 	}
+	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Set element fill
+		if (typeof value == "object") {
+			this.element = value;
+		} else if (typeof value == "string") {
+			this.element.innerHTML = value;
+		}
+	}
 };

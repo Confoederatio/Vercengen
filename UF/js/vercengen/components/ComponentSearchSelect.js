@@ -29,6 +29,15 @@ ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Set value
+		this.element.setAttribute("data-selected", value);
+		this.element.querySelector(`[data-value="${value}"]`).classList.add("selected");
+	}
+	
 	handleEvents () {
 		//Declare local instance variables
 		var all_a_els = this.element.querySelectorAll("a");
