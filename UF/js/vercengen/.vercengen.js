@@ -317,7 +317,7 @@ global.ve = {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
 
-			//Iterate over all_options and call autoFillInput()
+			//Iterate over all_options and call ve.Component.autoFillInput()
 			var all_options = Object.keys(options);
 
 			for (var i = 0; i < all_options.length; i++) {
@@ -325,7 +325,7 @@ global.ve = {
 				var local_value = options[all_options[i]];
 
 				if (local_option_el)
-					autoFillInput({
+					ve.Component.autoFillInput({
 						element: local_option_el,
 						placeholder: local_value,
 						type: local_option_el.getAttribute("type"),
@@ -673,8 +673,11 @@ global.ve = {
 					local_context_menu_cell.appendChild(this.component.element);
 				local_td_el.appendChild(local_context_menu_cell);
 				
-				//Attach .instance whereever available
-				local_context_menu_cell.instance = component_obj;
+				//Bindings handling
+				{
+					//Attach .instance whereever available
+					local_context_menu_cell.instance = component_obj;
+				}
 			} else if (typeof this.component == "string") {
 				local_td_el.innerHTML = JSON.parse(JSON.stringify(this.component));
 			}
@@ -685,6 +688,50 @@ global.ve = {
 			
 			this.component = local_td_el;
 			component_row[component_x] = this.component;
+		}
+		
+		static autoFillInput (arg0_options) {
+			//Convert from parameters
+			var options = (arg0_options) ? arg0_options : {};
+			
+			//Initalise options
+			if (!options.value) options.value = {};
+			
+			//Guard clause if options.placeholder doesn't exist
+			if (options.placeholder == undefined) return undefined;
+			
+			//Declare local instance variables
+			var placeholder_obj = JSON.parse(JSON.stringify(options.placeholder));
+			
+			//Parse placeholder_obj
+			if (typeof placeholder_obj == "object") {
+				var all_placeholder_keys = Object.keys(options.placeholder);
+				
+				for (var i = 0; i < all_placeholder_keys.length; i++) {
+					var local_placeholder = placeholder_obj[all_placeholder_keys[i]];
+					var local_placeholder_string = JSON.parse(JSON.stringify(local_placeholder));
+					
+					if (local_placeholder != undefined)
+						placeholder_obj[all_placeholder_keys[i]] = (options.value.value_equation) ?
+							parseVariableString(options.value.value_equation, { VALUE: parseVariableString(local_placeholder) }) :
+							parseVariableString(local_placeholder, { ignore_errors: true });
+				}
+				
+				if (all_placeholder_keys.length == 1 && placeholder_obj.VALUE != undefined)
+					placeholder_obj = placeholder_obj.VALUE;
+			}
+			
+			//Modify name_label_el
+			var name_data_el = options.element.querySelector(`data#name-label`);
+			var name_label_el = options.element.querySelector(`span#name-label`);
+			
+			if (name_data_el && name_label_el)
+				name_label_el.innerHTML = parseLocalisation(name_data_el.innerHTML, {
+					is_html: true,
+					scopes: { VALUE: placeholder_obj }
+				});
+			
+			options.element.instance.fill(placeholder_obj);
 		}
 	},
 };
