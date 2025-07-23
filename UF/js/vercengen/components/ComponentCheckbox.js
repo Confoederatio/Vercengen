@@ -41,4 +41,21 @@ ve.ComponentCheckbox = class { //[WIP] - Finish Class and refactoring
 		//Populate element and initialise handlers
 		this.element.innerHTML = html_string.join("");
 	}
+	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Declare local instance variables
+		var all_checkbox_els = this.element.querySelectorAll(`[type="checkbox"]`);
+		
+		//Iterate over all_checkbox_els
+		for (let i = 0; i < all_checkbox_els.length; i++) try {
+			if (value[all_checkbox_els[i].id]) {
+				all_checkbox_els[i].checked = value[all_checkbox_els[i].id];
+			} else {
+				all_checkbox_els[i].checked = true;
+			}
+		} catch {}
+	}
 };

@@ -47,6 +47,21 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	fill (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Declare local instance variables
+		var b_el = this.element.querySelector(`input#b`);
+		var g_el = this.element.querySelector(`input#g`);
+		var r_el = this.element.querySelector(`input#r`);
+		
+		//Set numbers and update colour wheel
+		r_el.value = value[0];
+		g_el.value = value[1];
+		b_el.value = value[2];
+	}
+	
 	handleEvents () {
 		handleColourWheel(this.element);
 		if (this.options.onclick)
