@@ -485,11 +485,7 @@
                     parseVariableString(local_value.value_equation, { VALUE: parseFloat(local_input) }) : parseFloat(local_input);
 
                   if (local_value.value_equation)
-                    fillInput({
-                      element: this,
-                      type: local_value.type,
-                      placeholder: local_actual_value
-                    });
+                    this.instance.fill(local_actual_value);
 
                   parseEffect(undefined, local_value.effect, { timestamp: local_options.timestamp, ui_type: options.namespace });
 
@@ -591,11 +587,7 @@
                       placeholder_dictionary[entity_anchor_attributes[x].name] = entity_anchor_attributes[x].value;
                     placeholder_dictionary = dumbMergeObjects(placeholder_dictionary, local_options.options);
 
-                    fillInput({
-                      element: local_element,
-                      type: local_value.type,
-                      placeholder: placeholder_dictionary[local_value.placeholder]
-                    });
+                    local_element.instance.fill(placeholder_dictionary[local_value.placeholder]);
                   }
 
                   //Parse .effect to .onclick event handler
@@ -608,11 +600,7 @@
                         parseVariableString(local_value.value_equation, { VALUE: parseFloat(local_input) }) : parseFloat(local_input);
 
                       if (local_value.value_equation)
-                        fillInput({
-                          element: this,
-                          type: local_value.type,
-                          placeholder: local_actual_value
-                        });
+                        this.instance.fill(local_actual_value);
                       parseEffect(local_options.entity_id, local_value.effect, {
                         timestamp: local_options.timestamp,
                         ui_type: options.config_key
@@ -1010,12 +998,8 @@
               //Make sure local_value.placeholder is a valid field before filling it in
               var local_input_el = namespace_context_menus[i].querySelector(`#${local_value.id}`);
               if (local_value.placeholder)
-                fillInput({
-                  element: local_input_el,
-                  type: local_input_el.getAttribute("type"),
-                  placeholder: (input_obj[local_value.placeholder]) ?
-                    input_obj[local_value.placeholder] : local_value.placeholder
-                });
+                local_input_el.instance.fill((input_obj[local_value.placeholder]) ?
+                  input_obj[local_value.placeholder] : local_value.placeholder);
             }
           }
       }
