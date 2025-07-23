@@ -672,6 +672,9 @@ global.ve = {
 				
 					local_context_menu_cell.appendChild(this.component.element);
 				local_td_el.appendChild(local_context_menu_cell);
+				
+				//Attach .instance whereever available
+				local_context_menu_cell.instance = component_obj;
 			} else if (typeof this.component == "string") {
 				local_td_el.innerHTML = JSON.parse(JSON.stringify(this.component));
 			}

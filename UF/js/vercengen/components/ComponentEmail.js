@@ -25,5 +25,6 @@ ve.ComponentEmail = class { //[WIP] - Finish Class and refactoring
 		
 		//Set value
 		this.element.querySelector(`input[type="email"]`).value = value;
+		console.log(`Called:`, this.element.instance, value);
 	}
 };
