@@ -317,7 +317,7 @@ global.ve = {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
 
-			//Iterate over all_options and call ve.Component.setValue()
+			//Iterate over all_options and call ve.Component.setInput()
 			var all_options = Object.keys(options);
 
 			for (var i = 0; i < all_options.length; i++) {
@@ -325,7 +325,7 @@ global.ve = {
 				var local_value = options[all_options[i]];
 
 				if (local_option_el)
-					ve.Component.setValue({
+					ve.Component.setInput({
 						element: local_option_el,
 						placeholder: local_value,
 						type: local_option_el.getAttribute("type"),
@@ -690,7 +690,7 @@ global.ve = {
 			component_row[component_x] = this.component;
 		}
 		
-		static setValue (arg0_options) {
+		static setInput (arg0_options) {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
 			
