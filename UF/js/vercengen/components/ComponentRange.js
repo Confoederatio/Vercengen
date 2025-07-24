@@ -18,7 +18,12 @@ ve.ComponentRange = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
-	fill (arg0_value) {
+	handleEvents () {
+		if (this.options.onclick)
+			this.element.onchange = this.options.onclick;
+	}
+	
+	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
 		
@@ -33,10 +38,5 @@ ve.ComponentRange = class { //[WIP] - Finish Class and refactoring
 		
 		//Set value
 		range_el.value = actual_number_in_range;
-	}
-	
-	handleEvents () {
-		if (this.options.onclick)
-			this.element.onchange = this.options.onclick;
 	}
 };

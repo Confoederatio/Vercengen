@@ -34,7 +34,7 @@ ve.ComponentRadio = class { //[WIP] - Finish Class and refactoring
 		this.element.innerHTML = html_string.join("");
 	}
 	
-	fill (arg0_value) {
+	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
 		

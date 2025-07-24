@@ -120,15 +120,6 @@ ve.ComponentWYSIWYG = class {
 		
 		this.handleEvents();
 	}
-	
-	fill (arg0_value) {
-		//Convert from parameters
-		var value = (arg0_value) ? arg0_value : "";
-		
-		//Set element .html-view, .visual-view content
-		this.element.querySelector(`.html-view`).value = value;
-		this.element.querySelector(`.visual-view`).innerHTML = value;
-	}
 
 	getInput () {
 		//Return statement
@@ -245,6 +236,15 @@ ve.ComponentWYSIWYG = class {
 				}
 			});
 		}
+	}
+	
+	setInput (arg0_value) {
+		//Convert from parameters
+		var value = (arg0_value) ? arg0_value : "";
+		
+		//Set element .html-view, .visual-view content
+		this.element.querySelector(`.html-view`).value = value;
+		this.element.querySelector(`.visual-view`).innerHTML = value;
 	}
 };
 

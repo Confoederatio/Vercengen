@@ -30,16 +30,16 @@ ve.ComponentSelect = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
-	fill (arg0_value) {
+	handleEvents () {
+		if (this.options.onclick)
+			this.element.onchange = this.options.onclick;
+	}
+	
+	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
 		
 		//Declare local instance variables
 		this.element.querySelector(`select`).value = value;
-	}
-	
-	handleEvents () {
-		if (this.options.onclick)
-			this.element.onchange = this.options.onclick;
 	}
 };

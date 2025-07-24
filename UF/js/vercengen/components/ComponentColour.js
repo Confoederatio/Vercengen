@@ -47,10 +47,16 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
-	fill (arg0_value) {
+	handleEvents () {
+		handleColourWheel(this.element);
+		if (this.options.onclick)
+			this.element.onchange = this.options.onclick;
+	}
+	
+	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
-			if (value == undefined) return;
+		if (value == undefined) return;
 		
 		//Declare local instance variables
 		var b_el = this.element.querySelector(`input#b`);
@@ -61,12 +67,6 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 		r_el.value = value[0];
 		g_el.value = value[1];
 		b_el.value = value[2];
-	}
-	
-	handleEvents () {
-		handleColourWheel(this.element);
-		if (this.options.onclick)
-			this.element.onchange = this.options.onclick;
 	}
 };
 

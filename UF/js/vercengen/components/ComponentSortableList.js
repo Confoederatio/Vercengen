@@ -25,31 +25,7 @@ ve.ComponentSortableList = class {
 		this.element.innerHTML = html_string.join("");
 		
 		//Call fill for options.options
-		this.fill(options.options);
-	}
-	
-	fill (arg0_value) {
-		//Convert from parameters
-		var value = arg0_value;
-		
-		//Declare local instance variables
-		var all_suboptions = Object.keys(value);
-		var html_string = [];
-		
-		for (var i = 0; i < all_suboptions.length; i++) {
-			var local_option = value[all_suboptions[i]];
-			
-			var local_delete_button_name = (this.options.delete_button_name) ?
-				this.options.delete_button_name : "Delete";
-			var local_delete_button_string = (this.options.has_controls != false || this.options.disable_remove == false) ?
-				`<button class = "delete-button">${local_delete_button_name}</button>` : "";
-			
-			//Push option to html_string
-			html_string.push(`<li class = "sortable-list-item" data-value = "${all_suboptions[i]}"><span>${local_option}</span>${local_delete_button_string}</li>`);
-		}
-		
-		//Set value
-		this.element.querySelector(`ul[id="${this.options.id}"]`).innerHTML = html_string.join("");
+		this.setInput(options.options);
 	}
 	
 	handleEvents () {
@@ -118,5 +94,29 @@ ve.ComponentSortableList = class {
 					all_li_els[i].remove();
 				});
 		}
+	}
+	
+	setInput (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Declare local instance variables
+		var all_suboptions = Object.keys(value);
+		var html_string = [];
+		
+		for (var i = 0; i < all_suboptions.length; i++) {
+			var local_option = value[all_suboptions[i]];
+			
+			var local_delete_button_name = (this.options.delete_button_name) ?
+				this.options.delete_button_name : "Delete";
+			var local_delete_button_string = (this.options.has_controls != false || this.options.disable_remove == false) ?
+				`<button class = "delete-button">${local_delete_button_name}</button>` : "";
+			
+			//Push option to html_string
+			html_string.push(`<li class = "sortable-list-item" data-value = "${all_suboptions[i]}"><span>${local_option}</span>${local_delete_button_string}</li>`);
+		}
+		
+		//Set value
+		this.element.querySelector(`ul[id="${this.options.id}"]`).innerHTML = html_string.join("");
 	}
 };

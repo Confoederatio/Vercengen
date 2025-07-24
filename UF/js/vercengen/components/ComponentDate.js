@@ -53,38 +53,6 @@ ve.ComponentDate = class { //[WIP] - Finish Class and refactoring
 		this.element.innerHTML = html_string.join("");
 	}
 	
-	fill (arg0_value) {
-		//Convert from parameters
-		var value = arg0_value;
-			if (value == undefined) return;
-		
-		//Declare local instance variables
-		var months = ve.ComponentDate.getMonths();
-		
-		var day_el = this.element.querySelector(`#day-input`);
-		var hour_el = this.element.querySelector(`#hour-input`);
-		var minute_el = this.element.querySelector(`#minute-input`);
-		var month_el = this.element.querySelector(`#month-input`);
-		var year_el = this.element.querySelector(`#year-input`);
-		var year_type_el = this.element.querySelector(`#year-type`);
-		
-		//Set local values from value
-		value = convertTimestampToDate(value);
-		
-		if (value.placeholder.year < 0) {
-			year_el.value = value.year*-1;
-			year_type_el.value = "BC";
-		} else {
-			year_el.value = value.year;
-			year_type_el.value = "AD";
-		}
-		
-		month_el.value = (!isNaN(value.month)) ? months[value.month - 1] : "January";
-		day_el.value = value.day;
-		hour_el.value = `${(value.hour < 10) ? "0" : ""}${value.hour}`;
-		minute_el.value = `${(value.minute < 10) ? "0" : ""}${value.minute}`;
-	}
-	
 	static getMonths () {
 		//Return statement
 		return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -179,5 +147,37 @@ ve.ComponentDate = class { //[WIP] - Finish Class and refactoring
 		month_el.value = months[date.month - 1];
 		year_el.value = Math.abs(date.year); //[WIP] - BC handling
 		year_type_el.value = (date.year >= 0) ? "AD" : "BC";
+	}
+	
+	setInput (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		if (value == undefined) return;
+		
+		//Declare local instance variables
+		var months = ve.ComponentDate.getMonths();
+		
+		var day_el = this.element.querySelector(`#day-input`);
+		var hour_el = this.element.querySelector(`#hour-input`);
+		var minute_el = this.element.querySelector(`#minute-input`);
+		var month_el = this.element.querySelector(`#month-input`);
+		var year_el = this.element.querySelector(`#year-input`);
+		var year_type_el = this.element.querySelector(`#year-type`);
+		
+		//Set local values from value
+		value = convertTimestampToDate(value);
+		
+		if (value.placeholder.year < 0) {
+			year_el.value = value.year*-1;
+			year_type_el.value = "BC";
+		} else {
+			year_el.value = value.year;
+			year_type_el.value = "AD";
+		}
+		
+		month_el.value = (!isNaN(value.month)) ? months[value.month - 1] : "January";
+		day_el.value = value.day;
+		hour_el.value = `${(value.hour < 10) ? "0" : ""}${value.hour}`;
+		minute_el.value = `${(value.minute < 10) ? "0" : ""}${value.minute}`;
 	}
 };

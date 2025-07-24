@@ -36,15 +36,6 @@ ve.ComponentBIUF = class {
 		return this.element.querySelector(`#biuf-input`).innerHTML;
 	}
 
-	fill (arg0_value) {
-		//Convert from parameters
-		var value = (arg0_value) ? arg0_value : "";
-			if (value == undefined) return;
-
-		//Set #biuf-input value
-		this.element.querySelector(`#biuf-input`).innerHTML = value;
-	}
-
 	//Internal helper functions
 	handleBIUF (arg0_biuf_el) {
 		//Convert from parameters
@@ -107,6 +98,15 @@ ve.ComponentBIUF = class {
 		underline_button.addEventListener("click", function () {
 			document.execCommand("underline");
 		});
+	}
+	
+	setInput (arg0_value) {
+		//Convert from parameters
+		var value = (arg0_value) ? arg0_value : "";
+		if (value == undefined) return;
+		
+		//Set #biuf-input value
+		this.element.querySelector(`#biuf-input`).innerHTML = value;
 	}
 };
 

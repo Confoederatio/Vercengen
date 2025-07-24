@@ -731,7 +731,7 @@ global.ve = {
 					scopes: { VALUE: placeholder_obj }
 				});
 			
-			options.element.instance.fill(placeholder_obj);
+			options.element.instance.setInput(placeholder_obj);
 		}
 	},
 };

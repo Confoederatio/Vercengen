@@ -18,14 +18,6 @@ ve.ComponentNumber = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
-	fill (arg0_value) {
-		//Convert from parameters
-		var value = arg0_value;
-		
-		//Set value
-		this.element.querySelector(`input[type="number"]`).value = value;
-	}
-	
 	handleEvents () {
 		if (this.options.onclick)
 			if (typeof this.options.onclick == "string") {
@@ -40,5 +32,13 @@ ve.ComponentNumber = class { //[WIP] - Finish Class and refactoring
 						this.options.onchange(e);
 				};
 			}
+	}
+	
+	setInput (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Set value
+		this.element.querySelector(`input[type="number"]`).value = value;
 	}
 };

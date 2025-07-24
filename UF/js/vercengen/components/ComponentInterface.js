@@ -31,7 +31,7 @@ ve.ComponentInterface = class { //[WIP] - Finish Class and refactoring
 			this.element.querySelector(`details[id="interface-folder-${this.options.id}"]`).open = true;
 	}
 	
-	fill (arg0_value) {
+	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
 		

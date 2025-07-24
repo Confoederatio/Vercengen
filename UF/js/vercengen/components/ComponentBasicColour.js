@@ -17,21 +17,6 @@ ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
-	fill (arg0_value) {
-		//Convert from parameters
-		var value = arg0_value;
-			if (value == undefined) return;
-		
-		//Declare local instance variables
-		var input_el = this.element.querySelector(`input[type="color"]`);
-		
-		if (Array.isArray(value)) {
-			input_el.value = RGBToHex(value);
-		} else if (typeof value == "string") {
-			input_el.value = value;
-		}
-	}
-	
 	handleEvents (arg0_function) {
 		//Declare local instance variables
 		var colour_input_el = this.element.querySelector(`input[type="color"]`);
@@ -42,5 +27,20 @@ ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
 				e.component = this;
 				this.options.onclick(e);
 			}
+	}
+	
+	setInput (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		if (value == undefined) return;
+		
+		//Declare local instance variables
+		var input_el = this.element.querySelector(`input[type="color"]`);
+		
+		if (Array.isArray(value)) {
+			input_el.value = RGBToHex(value);
+		} else if (typeof value == "string") {
+			input_el.value = value;
+		}
 	}
 };
