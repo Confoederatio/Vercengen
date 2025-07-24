@@ -17,6 +17,23 @@ ve.ComponentTime = class {
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	getInput () {
+		//Declare local instance variables
+		var output = this.element.querySelector(`input[type="time"]`).value;
+		
+		//Parse time
+		if (output && output != "n/a") {
+			output = output.split(":");
+			output = {
+				hour: parseInt(output[0]),
+				minute: parseInt(output[1])
+			};
+		}
+		
+		//Return statement
+		return output;
+	}
+	
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

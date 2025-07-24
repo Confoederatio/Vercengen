@@ -17,6 +17,11 @@ ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	getInput () {
+		//Return statement
+		return this.element.querySelector(`input[type="color"]`).value;
+	}
+	
 	handleEvents (arg0_function) {
 		//Declare local instance variables
 		var colour_input_el = this.element.querySelector(`input[type="color"]`);

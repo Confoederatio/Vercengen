@@ -18,6 +18,11 @@ ve.ComponentRange = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	getInput () {
+		//Return statement
+		return this.element.querySelector(`input[type="range"]`).value;
+	}
+	
 	handleEvents () {
 		if (this.options.onclick)
 			this.element.onchange = this.options.onclick;

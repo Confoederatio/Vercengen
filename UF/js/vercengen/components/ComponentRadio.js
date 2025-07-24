@@ -34,6 +34,22 @@ ve.ComponentRadio = class { //[WIP] - Finish Class and refactoring
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	getInput () {
+		//Declare local instance variables
+		var all_radio_els = this.element.querySelectorAll(`[type="radio"]`);
+		var output;
+		
+		//Iterate over all radio_els
+		for (var i = 0; i < all_radio_els.length; i++)
+			if (all_radio_els[i].checked) {
+				output = all_radio_els[i].id;
+				break;
+			}
+		
+		//Return statement
+		return output;
+	}
+	
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

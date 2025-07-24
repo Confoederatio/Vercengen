@@ -622,6 +622,11 @@ global.ve = {
 			delete ve.interfaces[this.interface_id];
 			this.interface_el.parentElement.remove();
 		}
+		
+		getState () {
+			//Return statement
+			return getInputsAsObject(this.interface_el);
+		}
 	},
 
 	//5. Component class

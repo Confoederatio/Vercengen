@@ -18,6 +18,11 @@ ve.ComponentNumber = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	getInput () {
+		//Return statement
+		return parseFloat(this.element.querySelector(`input[type="number"]`).value);
+	}
+	
 	handleEvents () {
 		if (this.options.onclick)
 			if (typeof this.options.onclick == "string") {

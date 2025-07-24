@@ -29,6 +29,11 @@ ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	getInput () {
+		//Return statement
+		return this.element.getAttribute(`data-selected`);
+	}
+	
 	handleEvents () {
 		//Declare local instance variables
 		var all_a_els = this.element.querySelectorAll("a");

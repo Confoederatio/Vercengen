@@ -17,6 +17,11 @@ ve.ComponentURL = class {
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	getInput () {
+		//Return statement
+		return this.element.querySelector(`input[type="url"]`).value;
+	}
+	
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

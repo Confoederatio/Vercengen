@@ -28,6 +28,11 @@ ve.ComponentSortableList = class {
 		this.setInput(options.options);
 	}
 	
+	getInput () {
+		//Return statement
+		return this.element.querySelectorAll(`ul.sortable-list > li > span`);
+	}
+	
 	handleEvents () {
 		//Declare local instance variables
 		var all_li_els = this.element.querySelectorAll(".sortable-list-item");

@@ -53,6 +53,11 @@ ve.ComponentDate = class { //[WIP] - Finish Class and refactoring
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	getInput () {
+		//Return statement
+		return getDateFromFields(this.element);
+	}
+	
 	static getMonths () {
 		//Return statement
 		return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -181,3 +186,71 @@ ve.ComponentDate = class { //[WIP] - Finish Class and refactoring
 		minute_el.value = `${(value.minute < 10) ? "0" : ""}${value.minute}`;
 	}
 };
+
+//Initialise functions
+{
+	/*
+		getDateFromFields() - Fetches a date object from input fields.
+		arg0_date_container_el: (HTMLElement) - The container for all the date fields.
+
+		Returns: (Object, Date)
+	*/
+	function getDateFromFields (arg0_date_container_el) {
+		//Convert from parameters
+		var date_container_el = arg0_date_container_el;
+		
+		//Declare local instance variables
+		var day_el = date_container_el.querySelector(`#day-input`);
+		var hour_el = date_container_el.querySelector(`#hour-input`);
+		var minute_el = date_container_el.querySelector(`#minute-input`);
+		var month_el = date_container_el.querySelector(`#month-input`);
+		var year_el = date_container_el.querySelector(`#year-input`);
+		var year_type_el = date_container_el.querySelector(`#year-type`);
+		
+		//Declare local instance variables
+		var new_date = {};
+		
+		//Check if year is valid
+		if (!isNaN(year_el.value))
+			if (year_el.value > 0) {
+				new_date.year = (year_type_el.value == "AD") ?
+					parseInt(year_el.value) :
+					parseInt(year_el.value)*-1;
+			} else if (year_el.value == 0) {
+				//Assume this means AD 1
+				year_el.value = 1;
+			} else {
+				new_date.year = year_el.value;
+				year_type_el.value = (year_type_el.value == "AD") ? "BC" : "AD";
+			}
+		
+		//Set month; day; hour; minute
+		new_date.month = getMonth(month_el.value); //[WIP] - This is flawed
+		new_date.day = parseInt(day_el.value);
+		
+		var hour_value = returnSafeNumber(parseInt(hour_el.value));
+		var minute_value = returnSafeNumber(parseInt(minute_el.value));
+		
+		//Set min, max bounds
+		if (hour_value < 0) hour_value = 0;
+		if (hour_value > 23) hour_value = 23;
+		if (minute_value < 0) minute_value = 0;
+		if (minute_value > 59) minute_value = 59;
+		
+		//New Year's exception (change to 00:01 if date is January 1)
+		if (new_date.month == 1 && new_date.day == 1)
+			if (hour_value == 0 && minute_value == 0)
+				minute_value = 1;
+		
+		new_date.hour = hour_value;
+		new_date.minute = minute_value;
+		
+		month_el.value = (!isNaN(new_date.month)) ? months[new_date.month - 1] : "January";
+		day_el.value = new_date.day;
+		hour_el.value = `${(new_date.hour < 10) ? "0" : ""}${new_date.hour}`;
+		minute_el.value = `${(new_date.minute < 10) ? "0" : ""}${new_date.minute}`;
+		
+		//Return statement
+		return new_date;
+	}
+}

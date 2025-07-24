@@ -47,6 +47,11 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	getInput () {
+		//Return statement
+		return getColourFromFields(this.element);
+	}
+	
 	handleEvents () {
 		handleColourWheel(this.element);
 		if (this.options.onclick)
@@ -167,6 +172,19 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 			this.value = Math.max(Math.min(this.value, 255), 0);
 			setColourWheelCursor(parent_el, [r_el.value, g_el.value, b_el.value]);
 		};
+	}
+	
+	function getColourFromFields (arg0_colour_el) {
+		//Convert from parameters
+		var colour_el = arg0_colour_el;
+		
+		//Declare local instance variables
+		var b_el = colour_el.querySelector(`input#b`);
+		var g_el = colour_el.querySelector(`input#g`);
+		var r_el = colour_el.querySelector(`input#r`);
+		
+		//Return statement
+		return [parseInt(r_el.value), parseInt(g_el.value), parseInt(b_el.value)];
 	}
 	
 	function setColourWheelCursor (arg0_parent_selector, arg1_colour, arg2_do_not_change) {

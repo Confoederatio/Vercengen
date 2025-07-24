@@ -21,14 +21,19 @@ ve.ComponentInterface = class { //[WIP] - Finish Class and refactoring
 		var interface_body_selector = `[id="interface-folder-${this.options.id}"] #interface-body`;
 			this.options.anchor = this.element.querySelector(interface_body_selector);
 			this.options.can_close = true;
-		var local_interface = new ve.Interface(this.options);
+		this.interface = new ve.Interface(this.options);
 		
 		if (this.options.parent)
-			this.options.parent.components[this.element.id] = local_interface;
+			this.options.parent.components[this.element.id] = this.interface;
 		
 		//Options parsing
 		if (this.options.is_open)
 			this.element.querySelector(`details[id="interface-folder-${this.options.id}"]`).open = true;
+	}
+	
+	getInput () {
+		//Return statement
+		return this.interface.getState();
 	}
 	
 	setInput (arg0_value) {

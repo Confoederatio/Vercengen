@@ -18,6 +18,11 @@ ve.ComponentText = class {
 		this.handleEvents();
 	}
 	
+	getInput () {
+		//Return statement
+		return this.element.querySelector(`input[type="text"]`).value;
+	}
+	
 	handleEvents () {
 		if (this.options.onclick)
 			if (typeof this.options.onclick == "string") {
