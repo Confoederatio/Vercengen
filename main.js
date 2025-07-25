@@ -3,7 +3,7 @@ var path = require("path");
 var { performance } = require("perf_hooks");
 
 var latest_fps = 0;
-var vercengen_version = "0.5b";
+var vercengen_version = "0.6b";
 var title_update_interval;
 var win;
 

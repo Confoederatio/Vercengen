@@ -51,11 +51,12 @@ global.ve = {
 				</div>
 				<div id = "window-body"></div>
 			`;
+			this.element.instance = this;
 			
 			//Initialise style
-			setTimeout(() => {
+			/*setTimeout(() => {
 				this.element.style.width = `${this.element.offsetWidth}px`;
-			}, 1);
+			}, 1);*/
 			this.element.style.zIndex = Object.keys(ve.windows).length.toString();
 
 			//Set Instance to sync with global.ve.windows
