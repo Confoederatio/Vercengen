@@ -70,6 +70,8 @@ ve.ComponentBIUF = class {
 		var underline_button = toolbar_el.querySelector("#underline-button");
 
 		//Show toolbar when text is selected
+		toolbar_el.style.display = "none";
+		
 		document.addEventListener("mouseup", (e) => {
 			var selection = window.getSelection();
 
@@ -79,7 +81,7 @@ ve.ComponentBIUF = class {
 
 				toolbar_el.style.display = "block";
 				toolbar_el.style.top = rect.top - toolbar_el.offsetHeight + "px";
-				toolbar_el.style.left = rect.left + "px";
+				toolbar_el.style.left = `${rect.left - toolbar_el.offsetWidth/2}px`;
 			} else {
 				toolbar_el.style.display = "none";
 			}
