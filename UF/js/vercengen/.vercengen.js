@@ -684,7 +684,7 @@ global.ve = {
 			
 			{
 				//Scaffold this.component
-				var component_obj = createInput(options);
+				var component_obj = ve.Component.createInput(options);
 				if (!component_obj) console.error(`Invalid component type:`, options.type);
 				
 				this.component = component_obj;
@@ -694,7 +694,7 @@ global.ve = {
 					var return_value = options.onload(this.component.element);
 					
 					if (typeof return_value == "object")
-						this.component.element.innerHTML = createInput(
+						this.component.element.innerHTML = ve.Component.createInput(
 							dumbMergeObjects(this.element, return_value)
 						);
 				}
@@ -729,6 +729,51 @@ global.ve = {
 			
 			this.component = local_td_el;
 			component_row[component_x] = this.component;
+		}
+		
+		/*
+			createInput() - Returns a string representing the HTML input element.
+			arg0_options: (Object)
+				id: (String) - The ID to associate this input with.
+				type: (String) - The input type to return the HTML of. 'biuf'/'rich_text'/'wysiwyg'/'button'/'checkbox'/'color'/'colour'/'datalist'/'date'/'date_length'/'email'/'file'/'hidden'/'hierarchy'/'html'/'image'/'number'/'password'/'radio'/'range'/'reset'/'search_select'/'select'/'submit'/'tel'/'text'/'time'/'url'
+	
+				icon: (String) - Optional. The path to the display icon image.
+				name: (String) - Optional. The HTML string of the button to display.
+				onclick: (String) - Optional. The onclick/confirm attribute of the button.
+				onload: (String) - Optional. The onload attribute of the button.
+				tooltip: (String) - Optional. The HTML tooltip a user can see by hovering over this input.
+	
+				attributes: - Optional.
+					<attribute_name>: <value> - The attribute to pass to the focus element.
+				options: - Optional. Used for checkbox/datalist/select/radio
+					<option_id>: <value> - The datalist/select option ID to pass to the focus element.
+	
+				//Individual input type options.
+				//'biuf'
+					default: (String) - Optional. The default string to input as a placeholder value. 'Name' by default
+				//'checkbox'
+					default: (String) - Optional. The default ID to be checked. None by default.
+				//'date'
+					default_date: (Object) - The date to set defaults to if applicable.
+				//'html'
+					innerHTML: (String) - The HTML to append to this cell.
+		*/
+		static createInput (arg0_options) {
+			//Convert from parameters
+			var options = (arg0_options) ? arg0_options : {};
+			
+			//Initialise options
+			if (!options.attributes) options.attributes = {};
+			if (!options.options) options.options = {};
+			if (!options.options.VALUE) {
+				if (options.attributes.value)
+					options.options.VALUE = options.attributes.value;
+				if (options.placeholder)
+					options.options.VALUE = options.placeholder;
+			}
+			
+			//Input type handling
+			return (new ve[ve.component_dictionary[options.type]](options));
 		}
 		
 		static setInput (arg0_options) {
