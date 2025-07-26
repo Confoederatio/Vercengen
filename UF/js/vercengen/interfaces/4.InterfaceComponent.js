@@ -1,6 +1,45 @@
 if (!global.ve) global.ve = {};
 
+/**
+ * Represents a Vercengen Component. Components are composition-based. These must be placed in Interfaces.
+ *
+ * Components are input types that allow for users to submit and change data. They directly alter state as defined by developer rulesets.
+ *
+ * ##### DOM:
+ * - `.instance`: this:{@link ve.Component}
+ *
+ * ##### Instance:
+ * - `.options`: <span style = "color: lime">{@link ve.Component.options}</span>
+ * <br>
+ * - `.element`: {@link HTMLElement}
+ * - `.id="generic-component"`: {@link string}
+ * <br>
+ * - `.attributes`: {@link Object}
+ * - `.height=1`: {@link number}
+ * - `.width=1`: {@link number}
+ * - `.x=0`: {@link number}
+ * - `.y=0`: {@link number}
+ *
+ * @type {ve.Component} ve.Component
+ */
 ve.Component = class {
+	/**
+	 * - `.id`: {@link string}
+	 * - `.placeholder`: {@link any}
+	 * <br>
+	 * - `.attributes`: {@link Object}
+	 * - `.tooltip`: {@link string}
+	 * <br>
+	 * - `.height=1`: {@link number}
+	 * - `.width=1`: {@link number}
+	 * - `.x=0`: {@link number}- The X position of the element in the current Interface.
+	 * - `.y=n + 1`: {@link number} - The Y position of the element in a grid. n + 1 by default, where n = last row.
+	 *
+	 * @typedef {Object} ve.Component.options
+	 *
+	 * @property {function(HTMLElement.prototype.onclick)} [options.onclick] - The function to fire upon an onclick Event.
+	 * @property {function(HTMLElement.prototype.onload)} [options.onload] - If this method returns an Object, the Component takes`options following that Object.
+	 */
 	constructor (arg0_parent, arg1_options) {
 		//Convert from parameters
 		var parent = arg0_parent; //Class: Interface
@@ -12,6 +51,7 @@ ve.Component = class {
 		
 		this.attributes = (options.attributes) ? options.attributes : undefined;
 		this.height = returnSafeNumber(options.height, 1);
+		this.parent = parent;
 		this.width = returnSafeNumber(options.width, 1);
 		this.x = returnSafeNumber(options.x);
 		this.y = returnSafeNumber(options.y);
@@ -65,33 +105,12 @@ ve.Component = class {
 		component_row[component_x] = this.component;
 	}
 	
-	/*
-		createInput() - Returns a string representing the HTML input element.
-		arg0_options: (Object)
-			id: (String) - The ID to associate this input with.
-			type: (String) - The input type to return the HTML of. 'biuf'/'rich_text'/'wysiwyg'/'button'/'checkbox'/'color'/'colour'/'datalist'/'date'/'date_length'/'email'/'file'/'hidden'/'hierarchy'/'html'/'image'/'number'/'password'/'radio'/'range'/'reset'/'search_select'/'select'/'submit'/'tel'/'text'/'time'/'url'
-
-			icon: (String) - Optional. The path to the display icon image.
-			name: (String) - Optional. The HTML string of the button to display.
-			onclick: (String) - Optional. The onclick/confirm attribute of the button.
-			onload: (String) - Optional. The onload attribute of the button.
-			tooltip: (String) - Optional. The HTML tooltip a user can see by hovering over this input.
-
-			attributes: - Optional.
-				<attribute_name>: <value> - The attribute to pass to the focus element.
-			options: - Optional. Used for checkbox/datalist/select/radio
-				<option_id>: <value> - The datalist/select option ID to pass to the focus element.
-
-			//Individual input type options.
-			//'biuf'
-				default: (String) - Optional. The default string to input as a placeholder value. 'Name' by default
-			//'checkbox'
-				default: (String) - Optional. The default ID to be checked. None by default.
-			//'date'
-				default_date: (Object) - The date to set defaults to if applicable.
-			//'html'
-				innerHTML: (String) - The HTML to append to this cell.
-	*/
+	/**
+	 * Functions as a helper constructor for the present Component.
+	 * @param {ve.Component.options} [arg0_options]
+	 *
+	 * @returns {ve.Component}
+	 */
 	static createInput (arg0_options) {
 		//Convert from parameters
 		var options = (arg0_options) ? arg0_options : {};
@@ -110,6 +129,17 @@ ve.Component = class {
 		return (new ve[ve.component_dictionary[options.type]](options));
 	}
 	
+	/**
+	 * Sets the current placeholder value and updates the input value.
+	 *
+	 * @param {Object} [arg0_options] - Options for setting the input.
+	 *  @param {HTMLElement} [arg0_options.element] - The DOM element containing the input and label.
+	 *  @param {Object|string} [arg0_options.placeholder] - The placeholder value(s) to use. If an object, keys are placeholder names (often 'VALUE').
+	 *  @param {Object} [arg0_options.value] - Optional. Value object.
+	 *   @param {string} [arg0_options.value.value_equation] - Optional. An equation string to compute the value.
+	 *
+	 * @returns {*}
+	 */
 	static setInput (arg0_options) {
 		//Convert from parameters
 		var options = (arg0_options) ? arg0_options : {};
@@ -152,5 +182,8 @@ ve.Component = class {
 			});
 		
 		options.element.instance.setInput(placeholder_obj);
+		
+		//Return statement
+		return placeholder_obj;
 	}
 };

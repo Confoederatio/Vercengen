@@ -1,71 +1,42 @@
 if (!global.ve) global.ve = {};
 
-/*
-	new Interface()
-	arg0_options: (Object)
-		anchor: (String/Element) - The query selector to pin a context menu to.
-		class: (String) - The class prefix to prepend.
-		close_function: (String) - The function to execute when the close button is clicked.
-		can_close: (Boolean) - Whether to not add a close button to the input. False by default.
-		do_not_append: (Boolean) - Whether to append or not.
-		id: (String) - The ID of the context menu.
-		is_resizable: (Boolean) - Whether to allow the context menu to be resized. True by default if is_window is true.
-		is_window: (Boolean) - Whether to treat the context menu as a window. False by default.
-		name: (String) - Optional. Title of the context menu. Undefined; will not display by default.
-		maximum_height: (String) - Optional. The height after which a scrollbar should appear in CSS units.
-		maximum_width: (String) - Optional. Maximum width in CSS units.
-
-		<input_key>: (Object)
-			type: (String) - The type of HTML input to grab.
-				- biuf
-				- rich_text/wysiwyg
-
-				- basic_colour
-				- button
-				- checkbox
-				- color/colour
-				- context_menu
-				- datalist
-				- date
-				- date_length
-				- email
-				- file
-				- hierarchy
-				- hidden
-				- html
-				- image
-				- number
-				- password
-				- radio
-				- range
-				- reset
-				- search_select
-				- select
-				- sortable_list
-				- submit
-				- tel/telephone
-				- text
-				- time
-				- url/URL
-
-			icon: (String) - Optional. The path to the display icon image.
-			name: (String) - Optional. The HTML text of the button to display.
-			onclick: (String) - Optional. The JS code to execute on button click.
-			options: (Object) - For 'checkbox'/'search_select'/'select'/'sortable_list'/'radio'
-				<option_key>: (String) - The datalist/select option ID to pass to the focus element.
-			tooltip: (String) - Optional. The HTML tooltip a user can see by hovering over this input.
-
-			height: (Number) - Optional. The row height of this element in a grid. 1 by default.
-			width: (Number) - Optional. The column width of this element in a grid. 1 by default.
-
-			x: (Number) - Optional. The X position of the element in a grid. 0 by default.
-			y: (Number) - Optional. The Y position of the element in a grid. n + 1 by default, where n = last row.
-
-			return_html: (Boolean) - Optional. Whether to return the html_string instead of modifying the anchor element. False by default.
-
-	Returns: (HTMLElement)
+/**
+ * Represents a Vercengen Interface. Contains a number of components.
+ *
+ * Interfaces are a sort of form/UI that stores local states. It can be recursively nested via the use of ComponentInterface as a sub-component, which utilises the same options.
+ *
+ * DOM:
+ * - `,instance`: (this)
+ *
+ * Instance:
+ * @property {HTMLElement} element
+ *
+ * @property {Object<ve.Component>} components
+ * @property {Object<Array<Array<ve.Component>>>} table_rows - Stores all ve.Component instances in a 2D array.
+ *
+ * @property {ve.Interface.options} [options]
+ *
+ * @type {ve.Interface}
  */
 ve.Interface = class {
+	/**
+	 * @typedef {Object} ve.Interface.options
+	 * @property {HTMLElement|string} [anchor] - The element the present Interface should be attached to.
+	 *  @property {string} [class=""] - The CSS class to apply to the present Interface.
+	 *  @property {string} [id=generateRandomNumber(ve.interfaces)]
+	 *
+	 *  @property {boolean} [can_close=false]
+	 *  @property {boolean} [do_not_append=false]
+	 *  @property {boolean} [is_resizable=false]
+	 *  @property {boolean] [is_window=false]
+	 *  @property {string} [name=""]
+	 *  @property {string} [maximum_height] - The height after which a scrollbar should appear in CSS units.
+	 *  @property {string} [maximum_width] - The maximum width in CSS units.
+	 *
+	 *  @property {function(HTMLElement.prototype.onclick)} [options.close_function]
+	 *
+	 *  @property {Object<ve.Component.options>} [options.'input_key']
+	 */
 	constructor (arg0_options) {
 		//Convert from parameters
 		var options = (arg0_options) ? arg0_options : {};
@@ -111,6 +82,8 @@ ve.Interface = class {
 			close_button_el.className = "uf-close-button";
 			close_button_el.draggable = false;
 			close_button_el.onclick = (e) => {
+				if (options.close_function)
+					options.close_function(e);
 				this.close();
 			};
 			

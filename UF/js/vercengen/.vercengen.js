@@ -2,7 +2,9 @@
 global.ve = {
 	//Set defines
 	component_dictionary: {
+		/** @type {ve.ComponentBasicColour} */
 		basic_colour: "ComponentBasicColour",
+		/** @type {ve.ComponentBasicFile} */
 		basic_file: "ComponentBasicFile",
 		biuf: "ComponentBIUF",
 		button: "ComponentButton",
