@@ -131,12 +131,11 @@ ve.Component = class {
 	
 	/**
 	 * Sets the current placeholder value and updates the input value.
-	 *
-	 * @param {Object} [arg0_options] - Options for setting the input.
-	 *  @param {HTMLElement} [arg0_options.element] - The DOM element containing the input and label.
-	 *  @param {Object|string} [arg0_options.placeholder] - The placeholder value(s) to use. If an object, keys are placeholder names (often 'VALUE').
-	 *  @param {Object} [arg0_options.value] - Optional. Value object.
-	 *   @param {string} [arg0_options.value.value_equation] - Optional. An equation string to compute the value.
+	 * - `arg0_options`: {@link Object}
+	 *   - `.element`: {@link HTMLElement} - The DOM element containing the input and label.
+	 *   - `.placeholder`: {@link Object|string} - The placeholder value to use, as computed against `.value_equation`.
+	 *   - `.value`: {@link any} - Value object.
+ *     - `.value_equation`: {@link string} - An equation string to compute the value, where the value is represented as `VALUE`.
 	 *
 	 * @returns {*}
 	 */
@@ -144,11 +143,7 @@ ve.Component = class {
 		//Convert from parameters
 		var options = (arg0_options) ? arg0_options : {};
 		
-		//Initalise options
-		if (!options.value) options.value = {};
-		
-		//Guard clause if options.placeholder doesn't exist
-		if (options.placeholder == undefined) return undefined;
+		if (options.placeholder == undefined) return undefined; //Guard clause if options.placeholder doesn't exist
 		
 		//Declare local instance variables
 		var placeholder_obj = JSON.parse(JSON.stringify(options.placeholder));
@@ -162,8 +157,8 @@ ve.Component = class {
 				var local_placeholder_string = JSON.parse(JSON.stringify(local_placeholder));
 				
 				if (local_placeholder != undefined)
-					placeholder_obj[all_placeholder_keys[i]] = (options.value.value_equation) ?
-						parseVariableString(options.value.value_equation, { VALUE: parseVariableString(local_placeholder) }) :
+					placeholder_obj[all_placeholder_keys[i]] = (options.value_equation) ?
+						parseVariableString(options.value_equation, { VALUE: parseVariableString(local_placeholder) }) :
 						parseVariableString(local_placeholder, { ignore_errors: true });
 			}
 			
