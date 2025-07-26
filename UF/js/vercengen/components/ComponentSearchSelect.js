@@ -67,3 +67,28 @@ ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 		this.element.querySelector(`[data-value="${value}"]`).classList.add("selected");
 	}
 };
+
+//Initialise functions
+{
+	function handleSearchSelect (arg0_parent_el) {
+		//Convert from parameters
+		var parent_el = arg0_parent_el;
+		
+		//Declare local instance variables
+		var all_a_els = parent_el.querySelectorAll(`a`);
+		var input_el = parent_el.querySelector(`#search`);
+		
+		var filter = input_el.value.toLowerCase();
+		
+		//Iterate over all_a_els
+		for (var i = 0; i < all_a_els.length; i++) {
+			var text_value = all_a_els[i].textContent || all_a_els[i].innerText;
+			
+			if (text_value.toLowerCase().indexOf(filter) > -1) {
+				all_a_els[i].style.display = "";
+			} else {
+				all_a_els[i].style.display = "none";
+			}
+		}
+	}
+}

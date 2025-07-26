@@ -390,7 +390,7 @@
       var all_context_menu_els = namespace_anchor_el.querySelectorAll(".context-menu");
 
       for (var i = 0; i < all_context_menu_els.length; i++)
-        inputs_obj = dumbMergeObjects(inputs_obj, getInputsAsObject(all_context_menu_els[i]));
+        inputs_obj = dumbMergeObjects(inputs_obj, ve.getInputsAsObject(all_context_menu_els[i]));
 
       //Return statement
       return inputs_obj;
@@ -985,7 +985,7 @@
       //Iterate over all namespace_context_menus; fetch their IDs and update their inputs based on placeholders
       for (var i = 0; i < namespace_context_menus.length; i++) {
         var namespace_obj = config[`flattened_${options.config_key}`][namespace_context_menus[i].id];
-        var input_obj = getInputsAsObject(namespace_context_menus[i], local_options);
+        var input_obj = ve.getInputsAsObject(namespace_context_menus[i], local_options);
 
         if (namespace_obj)
           if (namespace_obj.interface) {

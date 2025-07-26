@@ -250,6 +250,21 @@ ve.ComponentWYSIWYG = class {
 
 //Initialise functions
 {
+	//addParagraphTag() - Adds a paragraph tag when enter key is pressed
+	function addParagraphTag (arg0_e) {
+		//Convert from parameters
+		var e = arg0_e;
+		
+		//Check if keyCode was enter
+		if (e.keyCode == "13") {
+			//Guard clause; Don't add a p tag on list item
+			if (window.getSelection().anchorNode.parentNode.tagName == "LI") return;
+			
+			//Otherwise, add a p tag
+			document.execCommand("formatBlock", false, "p");
+		}
+	}
+	
 	function execCodeAction (arg0_button_el, arg1_editor_el, arg2_visual_view_el, arg3_html_view_el) {
 		//Convert from parameters
 		var button_el = arg0_button_el;
@@ -336,5 +351,107 @@ ve.ComponentWYSIWYG = class {
 			submit.removeEventListener("click", arguments.callee);
 			close.removeEventListener("click", arguments.callee);
 		});
+	}
+	
+	function parentTagActive (arg0_el) {
+		//Convert from parameters
+		var element = arg0_el;
+		
+		//Guard clause for visual view
+		if (!element || !element.classList || element.classList.contains("visual-view"))
+			return false;
+		
+		//Declare local instance variables
+		var tag_name = element.tagName.toLowerCase();
+		var text_align = element.style.textAlign;
+		var toolbar_button;
+		
+		//Active by tag name
+		toolbar_button = document.querySelectorAll(`.toolbar .editor-button[data-tag-name="${tag_name}"]`)[0];
+		
+		//Active by text-align
+		toolbar_button = document.querySelectorAll(`.toolbar .editor-button[data-style="textAlign:${text_align}"]`)[0];
+		
+		//Set toolbar_button to being active if toolbar_button is defined
+		if (toolbar_button)
+			toolbar_button.classList.add("active");
+		
+		//Return statement
+		return parentTagActive(element.parentNode);
+	}
+	
+	//pasteEvent() - Handles paste event by removing all HTML tags
+	function pasteEvent (arg0_e) {
+		//Convert from parameters
+		var e = arg0_e;
+		
+		//Declare local instance variables
+		var text = (e.originalEvent || e).clipboardData.getData("text/plain");
+		
+		e.preventDefault();
+		document.execCommand("insertHTML", false, text);
+	}
+	
+	function restoreSelection (arg0_saved_selection) {
+		//Convert from parameters
+		var saved_selection = arg0_saved_selection;
+		
+		//Restore selection
+		if (saved_selection)
+			if (window.getSelection) {
+				selection = window.getSelection();
+				selection.removeAllRanges();
+				
+				//Populate selection ranges
+				for (var i = 0, length = saved_selection.length; i < length; i++)
+					selection.addRange(saved_selection[i]);
+			} else if (document.selection && saved_selection.select) {
+				saved_selection.select();
+			}
+	}
+	
+	function saveSelection () {
+		if (window.getSelection) {
+			var selection = window.getSelection();
+			
+			if (selection.getRangeAt && selection.rangeCount) {
+				var ranges = [];
+				
+				//Iterate over selection.rangeCount to populate ranges
+				for (var i = 0, length = selection.rangeCount; i < length; i++)
+					ranges.push(selection.getRangeAt(i));
+				
+				//Return statement
+				return ranges;
+			}
+		} else if (document.selection && document.selection.createRange) {
+			//Return statement
+			return document.selection.createRange();
+		}
+	}
+	
+	function selectionChange (arg0_e, arg1_buttons, arg2_editor) {
+		//Convert from parameters
+		var e = arg0_e;
+		var buttons = arg1_buttons;
+		var editor = arg2_editor;
+		
+		//Declare local instance variables
+		for (var i = 0; i < buttons.length; i++) {
+			var local_button = buttons[i];
+			
+			//Don't remove active class on code toggle button
+			if (local_button.dataset.action == "toggle-view") continue;
+			
+			local_button.classList.remove("active");
+		}
+		
+		try {
+			if (!childOf(window.getSelection().anchorNode.parentNode, editor))
+				//Return statement; guard clause
+				return false;
+			
+			parentTagActive(window.getSelection().anchorNode.parentNode);
+		} catch {}
 	}
 }

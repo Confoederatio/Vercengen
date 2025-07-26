@@ -159,6 +159,16 @@
           if (array[i].matches(selector)) return true;
         } catch {}
   }
+  
+  //childOf() - Checks if passed child has passed parent
+  function childOf (arg0_child_el, arg1_parent_el) {
+    //Convert from parameters
+    var child_el = arg0_child_el;
+    var parent_el = arg1_parent_el;
+    
+    //Return statement
+    return parent_el.contains(child_el);
+  }
 
   /*
     closestPointInCircle() - Fetches the closest [x, y] point in a circle if the point is outside the circle.

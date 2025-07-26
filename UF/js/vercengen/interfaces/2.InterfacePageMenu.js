@@ -85,7 +85,7 @@ ve.PageMenu = class {
 	
 	getState () {
 		//Return statement
-		return getInputsAsObject(this.content_el);
+		return ve.getInputsAsObject(this.content_el);
 	}
 	
 	loadState (arg0_options) {
