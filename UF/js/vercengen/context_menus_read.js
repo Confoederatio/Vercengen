@@ -69,17 +69,4 @@
     //Return statement
     return return_obj;
   }
-
-  function getWysiwygFromFields (arg0_wysiwyg_el) {
-    //Convert from parameters
-    var wysiwyg_el = arg0_wysiwyg_el;
-
-    //Declare local instance variables
-    var html_content_el = wysiwyg_el.querySelector(`.html-view`);
-    var visual_content_el = wysiwyg_el.querySelector(`.visual-view`);
-
-    //Return statement
-    return (html_content_el.innerHTML.length > visual_content_el.innerHTML.length) ?
-      html_content_el.innerHTML : visual_content_el.innerHTML;
-  }
 }

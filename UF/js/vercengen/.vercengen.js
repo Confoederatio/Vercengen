@@ -1,5 +1,36 @@
 //Initialise functions
 global.ve = {
+	component_dictionary: {
+		basic_colour: "ComponentBasicColour",
+		basic_file: "ComponentBasicFile",
+		biuf: "ComponentBIUF",
+		button: "ComponentButton",
+		checkbox: "ComponentCheckbox",
+		colour: "ComponentColour",
+		datalist: "ComponentDatalist",
+		date: "ComponentDate",
+		date_length: "ComponentDateLength",
+		email: "ComponentEmail",
+		html: "ComponentHTML",
+		interface: "ComponentInterface",
+		number: "ComponentNumber",
+		password: "ComponentPassword",
+		radio: "ComponentRadio",
+		range: "ComponentRange",
+		reset: "ComponentReset",
+		search_select: "ComponentSearchSelect",
+		select: "ComponentSelect",
+		sortable_list: "ComponentSortableList",
+		submit: "ComponentSubmit",
+		telephone: "ComponentTelephone",
+			tel: "ComponentTelephone",
+		text: "ComponentText",
+		time: "ComponentTime",
+		url: "ComponentURL",
+		wysiwyg: "ComponentWYSIWYG",
+			rich_text: "ComponentWYSIWYG",
+	},
+	
 	//Set defines
 	default_class: `ve context-menu`,
 	interfaces: {}, //Stores all Interfaces and their Components in state
@@ -93,84 +124,49 @@ global.ve = {
 				this.setPageMenu(options.page_menu);
 		}
 
+		//1. State functions
+		getState () {
+			//Return statement
+			return getInputsAsObject(this.element);
+		}
+		
+		//2. UI functions (Header)
 		close () {
 			//Delete ve.windows[this.window_id], then remove element
 			delete ve.windows[this.window_id];
 			this.element.remove();
 		}
-
-		static getHighestZIndex (arg0_options) {
-			//Convert from parameters
-			var options = (arg0_options) ? arg0_options : {};
-
-			//Declare local instance variables
-			var highest_z_index = [-Infinity, undefined];
-
-			//Iterate over all ve.windows
-			var all_ve_windows = Object.keys(ve.windows);
-
-			for (let i = 0; i < all_ve_windows.length; i++) {
-				let local_window = ve.windows[all_ve_windows[i]];
-
-				highest_z_index[0] = Math.max(highest_z_index[0], local_window.getZIndex());
-				highest_z_index[1] = local_window;
-			}
-
-			//Return statement
-			return (!options.return_object) ? highest_z_index[0] : highest_z_index[1];
-		}
-
+		
 		getName () {
 			//Declare local instance variables
 			var name_el = this.element.querySelector(`#window-name`);
-
+			
 			//Update instance state
 			this.name = name_el.innerHTML;
-
+			
 			//Return statement
 			return this.name;
 		}
-
-		getState () {
-			//Return statement
-			return getInputsAsObject(this.element);
-		}
-
-		getZIndex () {
-			//Return statement
-			return parseInt(getComputedStyle(this.element)["z-index"]);
-		}
-
-		static normaliseZIndexes () {
-			//Declare local instance variables
-			var overlay_el = ve.window_overlay_el;
-
-			//Get all elements with [data-window-id] and their z-index values
-			var all_windows = Array.from(overlay_el.querySelectorAll('[data-window-id]'));
-
-			// Extract z-index values and sort them numerically
-			var z_indexes = all_windows
-				.map((window) => ({
-					element: window,
-					z_index: parseInt(window.style.zIndex || 0, 10),
-				}))
-				.sort((a, b) => a.z_index - b.z_index);
-
-			// Assign normalized z-index values (1, 2, 3, ...)
-			z_indexes.forEach((item, index) => {
-				item.element.style.zIndex = (index + 1).toString();
-			});
-		}
-
+		
 		select () {
 			//Declare local instance variables
 			var current_highest_z_index = JSON.parse(JSON.stringify(ve.Window.getHighestZIndex())) + 1;
-
+			
 			//Swap z-indices
 			this.element.style.zIndex = current_highest_z_index.toString();
 			ve.Window.normaliseZIndexes();
 		}
-
+		
+		setName (arg0_name) {
+			//Convert from parameters
+			var name = (arg0_name) ? arg0_name : "";
+			
+			//Set this.name; update DOM
+			this.name = name;
+			this.element.querySelector(`#window-name`).innerHTML = name;
+		}
+		
+		//3. UI functions (Body)
 		setInterface (arg0_options) {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
@@ -184,15 +180,6 @@ global.ve = {
 			} catch (e) {
 				console.error(e);
 			}
-		}
-
-		setName (arg0_name) {
-			//Convert from parameters
-			var name = (arg0_name) ? arg0_name : "";
-
-			//Set this.name; update DOM
-			this.name = name;
-			this.element.querySelector(`#window-name`).innerHTML = name;
 		}
 
 		setPage (arg0_page) {
@@ -223,6 +210,54 @@ global.ve = {
 
 			options.left_offset = 0.5; //In rem for bottom hr in .tabs-container
 			this.interface = new ve.PageMenu(options);
+		}
+		
+		//3. Helper functions
+		static getHighestZIndex (arg0_options) {
+			//Convert from parameters
+			var options = (arg0_options) ? arg0_options : {};
+			
+			//Declare local instance variables
+			var highest_z_index = [-Infinity, undefined];
+			
+			//Iterate over all ve.windows
+			var all_ve_windows = Object.keys(ve.windows);
+			
+			for (let i = 0; i < all_ve_windows.length; i++) {
+				let local_window = ve.windows[all_ve_windows[i]];
+				
+				highest_z_index[0] = Math.max(highest_z_index[0], local_window.getZIndex());
+				highest_z_index[1] = local_window;
+			}
+			
+			//Return statement
+			return (!options.return_object) ? highest_z_index[0] : highest_z_index[1];
+		}
+		
+		getZIndex () {
+			//Return statement
+			return parseInt(getComputedStyle(this.element)["z-index"]);
+		}
+		
+		static normaliseZIndexes () {
+			//Declare local instance variables
+			var overlay_el = ve.window_overlay_el;
+			
+			//Get all elements with [data-window-id] and their z-index values
+			var all_windows = Array.from(overlay_el.querySelectorAll('[data-window-id]'));
+			
+			// Extract z-index values and sort them numerically
+			var z_indexes = all_windows
+			.map((window) => ({
+				element: window,
+				z_index: parseInt(window.style.zIndex || 0, 10),
+			}))
+			.sort((a, b) => a.z_index - b.z_index);
+			
+			// Assign normalized z-index values (1, 2, 3, ...)
+			z_indexes.forEach((item, index) => {
+				item.element.style.zIndex = (index + 1).toString();
+			});
 		}
 	},
 

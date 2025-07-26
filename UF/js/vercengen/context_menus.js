@@ -1048,63 +1048,6 @@
       }
 
     //Input type handling
-    if (options.type == "biuf") {
-      return (new ve.ComponentBIUF(options));
-    } else if (["rich_text", "wysiwyg"].includes(options.type)) {
-      return (new ve.ComponentWYSIWYG(options));
-    } else if (options.type == "basic_colour") {
-      return (new ve.ComponentBasicColour(options));
-    } else if (options.type == "basic_file") {
-      return (new ve.ComponentBasicFile(options));
-    } else if (options.type == "button") {
-      return (new ve.ComponentButton(options));
-    } else if (options.type == "checkbox") {
-      return (new ve.ComponentCheckbox(options));
-    } else if (["color", "colour"].includes(options.type)) {
-      return (new ve.ComponentColour(options));
-    } else if (options.type == "datalist") {
-      return (new ve.ComponentDatalist(options));
-    } else if (options.type == "date") {
-      return (new ve.ComponentDate(options));
-    } else if (options.type == "date_length") {
-      return (new ve.ComponentDateLength(options));
-    } else if (options.type == "email") {
-      return (new ve.ComponentEmail(options));
-    } else if (options.type == "file") {
-      //High-intensity; file input [WIP]
-    } else if (options.type == "html") {
-      return (new ve.ComponentHTML(options));
-    } else if (options.type == "image") {
-      //High-intensity; image input [WIP]
-    } else if (options.type == "interface") {
-      return (new ve.ComponentInterface(options));
-    } else if (options.type == "number") {
-      return (new ve.ComponentNumber(options));
-    } else if (options.type == "password") {
-      return (new ve.ComponentPassword(options));
-    } else if (options.type == "radio") {
-      return (new ve.ComponentRadio(options));
-    } else if (options.type == "range") {
-      return (new ve.ComponentRange(options));
-    } else if (options.type == "reset") {
-      return (new ve.ComponentReset(options));
-    } else if (options.type == "search_select") {
-      return (new ve.ComponentSearchSelect(options));
-    } else if (options.type == "select") {
-      return (new ve.ComponentSelect(options));
-    } else if (options.type == "sortable_list") {
-      //Requires Sortable.js
-      return (new ve.ComponentSortableList(options));
-    } else if (options.type == "submit") {
-      return (new ve.ComponentSubmit(options));
-    } else if (["tel", "telephone"].includes(options.type)) {
-      return (new ve.ComponentTelephone(options));
-    } else if (options.type == "text") {
-      return (new ve.ComponentText(options));
-    } else if (options.type == "time") {
-      return (new ve.ComponentTime(options));
-    } else if (options.type == "url") {
-      return (new ve.ComponentURL(options));
-    }
+    return (new ve[ve.component_dictionary[options.type]](options));
   }
 }
