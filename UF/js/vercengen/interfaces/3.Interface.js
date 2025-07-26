@@ -77,7 +77,7 @@ ve.Interface = class {
 		var all_options = Object.keys(options);
 		var default_keys = ["anchor", "class", "id", "maximum_height", "maximum_width"];
 		this.components = {};
-		this.interface_el = document.createElement("div");
+		this.element = document.createElement("div");
 		var query_selector_el;
 		var table_columns = 0;
 		this.table_rows = 0;
@@ -93,9 +93,9 @@ ve.Interface = class {
 		var parent_style = `${height_string}${width_string}`;
 		
 		//Format interface_el
-		if (options.id) this.interface_el.id = options.id;
-		this.interface_el.setAttribute("class", `${(options.class) ? options.class + " " : ""}${global.ve.default_class}`);
-		if (parent_style.length > 0) this.interface_el.setAttribute("style", `${parent_style}`);
+		if (options.id) this.element.id = options.id;
+		this.element.setAttribute("class", `${(options.class) ? options.class + " " : ""}${global.ve.default_class}`);
+		if (parent_style.length > 0) this.element.setAttribute("style", `${parent_style}`);
 		
 		//Add close button
 		var can_close = (options.can_close);
@@ -114,7 +114,7 @@ ve.Interface = class {
 				this.close();
 			};
 			
-			this.interface_el.appendChild(close_button_el);
+			this.element.appendChild(close_button_el);
 		}
 		
 		//Fetch table_columns; table_rows
@@ -193,7 +193,7 @@ ve.Interface = class {
 		}
 		
 		//Append table to interface
-		this.interface_el.appendChild(table_el);
+		this.element.appendChild(table_el);
 		options.parent = this;
 		
 		//Window handler
@@ -202,7 +202,7 @@ ve.Interface = class {
 				var is_resizable = (options.is_resizable != false) ? true : false;
 				
 				//Invoke elementDragHandler()
-				elementDragHandler(this.interface_el, { is_resizable: is_resizable });
+				elementDragHandler(this.element, { is_resizable: is_resizable });
 			}
 		}
 		
@@ -212,27 +212,27 @@ ve.Interface = class {
 					options.anchor : document.querySelector(options.anchor);
 				
 				if (!options.do_not_append) {
-					query_selector_el.appendChild(this.interface_el);
+					query_selector_el.appendChild(this.element);
 				} else {
-					query_selector_el.replaceChildren(this.interface_el);
+					query_selector_el.replaceChildren(this.element);
 				}
 			}
 			
 			//Return statement
-			return this.interface_el;
+			return this.element;
 		} else {
 			//Return statement
-			return this.interface_el.innerHTML;
+			return this.element.innerHTML;
 		}
 	}
 	
 	close () {
 		delete ve.interfaces[this.interface_id];
-		this.interface_el.parentElement.remove();
+		this.element.parentElement.remove();
 	}
 	
 	getState () {
 		//Return statement
-		return ve.getInputsAsObject(this.interface_el);
+		return ve.getInputsAsObject(this.element);
 	}
 };

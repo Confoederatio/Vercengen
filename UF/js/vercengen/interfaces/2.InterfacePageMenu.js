@@ -34,20 +34,20 @@ ve.PageMenu = class {
 		
 		//Declare local instance variables
 		var all_pages = Object.keys(options.pages);
-		this.content_el = undefined;
+		this.element = undefined;
 		this.tabs_el = undefined;
 		
-		//Define this.content_el; tabs_el
+		//Define this.element; tabs_el
 		if (options.anchor && options.tab_anchor) {
 			try {
-				this.content_el = document.querySelector(options.anchor);
+				this.element = document.querySelector(options.anchor);
 				this.tabs_el = document.querySelector(options.tab_anchor);
 			} catch {
-				this.content_el = options.anchor;
+				this.element = options.anchor;
 				this.tabs_el = options.tab_anchor;
 			}
 		} else {
-			this.content_el = document.createElement("div");
+			this.element = document.createElement("div");
 			this.tabs_el = document.createElement("div");
 		}
 		
@@ -80,12 +80,12 @@ ve.PageMenu = class {
 			this.setPage(options.default) : this.setPage(all_pages[0]);
 		
 		//Return statement
-		return [this.tabs_el, this.content_el];
+		return [this.tabs_el, this.element];
 	}
 	
 	getState () {
 		//Return statement
-		return ve.getInputsAsObject(this.content_el);
+		return ve.getInputsAsObject(this.element);
 	}
 	
 	loadState (arg0_options) {
@@ -96,7 +96,7 @@ ve.PageMenu = class {
 		var all_options = Object.keys(options);
 		
 		for (var i = 0; i < all_options.length; i++) {
-			var local_option_el = this.content_el.querySelector(`[id="${all_options[i]}"]`);
+			var local_option_el = this.element.querySelector(`[id="${all_options[i]}"]`);
 			var local_value = options[all_options[i]];
 			
 			if (local_option_el)
@@ -122,7 +122,7 @@ ve.PageMenu = class {
 		var local_value = this.options.pages[page];
 		
 		//Initialise local_value options
-		if (!local_value.anchor) local_value.anchor = this.content_el;
+		if (!local_value.anchor) local_value.anchor = this.element;
 		
 		//Parse .onclick handler
 		if (this.options.special_function) this.options.special_function(e);
@@ -135,7 +135,7 @@ ve.PageMenu = class {
 		} catch (e) {
 			console.error(e);
 		}
-		this.content_el.innerHTML = "";
+		this.element.innerHTML = "";
 		
 		//Remove 'active' class from all pages; and set the current tab to active in terms of highlighting
 		for (var x = 0; x < all_pages.length; x++)
@@ -143,17 +143,17 @@ ve.PageMenu = class {
 		addClass(local_tab_button_el, "active");
 		hr_el.style.left = `calc(${local_tab_button_el.offsetLeft - local_tab_button_el.parentElement.offsetLeft}px + ${left_offset}rem)`;
 		
-		//Set "page" attribute for this.content_el; replace content
-		this.content_el.setAttribute("page", page);
+		//Set "page" attribute for this.element; replace content
+		this.element.setAttribute("page", page);
 		
 		if (local_value.can_close == undefined)
 			local_value.can_close = true;
 		if (!local_value.html) {
 			if (!local_value.class) local_value.class = "ve-transparent";
-			this.content_el.innerHTML = "";
+			this.element.innerHTML = "";
 			this.interfaces[(local_value.id) ? local_value.id : generateRandomID(this.interfaces)] = new ve.Interface(local_value);
 		} else {
-			this.content_el.innerHTML = (Array.isArray(local_value.html)) ?
+			this.element.innerHTML = (Array.isArray(local_value.html)) ?
 				local_value.html.join("") : local_value.html;
 		}
 		
