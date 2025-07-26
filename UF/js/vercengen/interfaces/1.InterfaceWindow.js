@@ -108,7 +108,7 @@ ve.Window = class {
 	 */
 	getState () {
 		//Return statement
-		return ve.getInputsAsObject(this.element);
+		return ve.getElementState(this.element);
 	}
 	
 	//2. UI functions (Header)

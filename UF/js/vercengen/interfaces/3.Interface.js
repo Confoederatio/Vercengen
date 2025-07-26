@@ -233,6 +233,6 @@ ve.Interface = class {
 	
 	getState () {
 		//Return statement
-		return ve.getInputsAsObject(this.element);
+		return ve.getElementState(this.element);
 	}
 };
