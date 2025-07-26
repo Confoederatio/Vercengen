@@ -36,6 +36,7 @@ global.ve = {
 	windows: {}, //Stores all Windows in state
 
 	//1. State functions
+	/** Initialises Vercengen for the present app session. */
 	initialise: function () {
 		//Declare Windows overlay element
 		ve.window_overlay_el = document.createElement("div");
@@ -148,7 +149,7 @@ global.ve = {
 
 		//1. State functions
 		/**
-		 * getState() - Returns the current Window state according to inputs. State functions return a merged flattened-nested object.
+		 * Returns the current Window state according to inputs. State functions return a merged flattened-nested object.
 		 *
 		 * @returns {{"<flattened.key>": *, "<key>": *}}
 		 */
@@ -158,7 +159,7 @@ global.ve = {
 		}
 		
 		//2. UI functions (Header)
-		/** close() - Closes the present Window. **/
+		/** Closes the present Window. **/
 		close () {
 			//Delete ve.windows[this.window_id], then remove element
 			delete ve.windows[this.window_id];
@@ -166,7 +167,7 @@ global.ve = {
 		}
 		
 		/**
-		 * getName() - Returns the name of the present Window.
+		 * Returns the name of the present Window.
 		 *
 		 * @returns {String}
 		 */
@@ -181,7 +182,7 @@ global.ve = {
 			return this.name;
 		}
 		
-		/** select() - Selects the present Window, raising its z-index above all other Windows. **/
+		/** Selects the present Window, raising its z-index above all other Windows. **/
 		select () {
 			//Declare local instance variables
 			var current_highest_z_index = JSON.parse(JSON.stringify(ve.Window.getHighestZIndex())) + 1;
@@ -192,7 +193,7 @@ global.ve = {
 		}
 		
 		/**
-		 * setName() - Sets the name of the present Window.
+		 * Sets the name of the present Window.
 		 * @param {String} arg0_name
 		 */
 		setName (arg0_name) {
@@ -206,7 +207,7 @@ global.ve = {
 		
 		//3. UI functions (Body)
 		/**
-		 * setInterface() - Sets a single-page interface for the present Window.
+		 * Sets a single-page interface for the present Window.
 		 * @param {Object<ve.Interface.options>} arg0_options
 		 */
 		setInterface (arg0_options) {
@@ -225,7 +226,7 @@ global.ve = {
 		}
 		
 		/**
-		 * setPage() - Sets the current page ID to be displayed in the Window. Top-level interface function.
+		 * Sets the current page ID to be displayed in the Window. Top-level interface function.
 		 * @param {String} arg0_page
 		 */
 		setPage (arg0_page) {
@@ -236,7 +237,7 @@ global.ve = {
 		}
 		
 		/**
-		 * setPageMenu() - Sets the PageMenu interface for the present Window.
+		 * Sets the PageMenu interface for the present Window.
 		 * @param {Object<ve.PageMenu.options>} arg0_options
 		 */
 		setPageMenu (arg0_options) {
@@ -264,11 +265,11 @@ global.ve = {
 		
 		//3. Helper functions
 		/**
-		 * getHighestZIndex() - Returns the highest z-index over the set of all Windows in ve.windows.
+		 * Returns the highest z-index over the set of all Windows in ve.windows.
 		 * @param {Object} [arg0_options]
 		 *  @param {boolean} [arg0_options.return_object=false] - Whether to return a Window instance.
 		 *
-		 * @returns {Number|this}
+		 * @returns {Number|ve.Window}
 		 */
 		static getHighestZIndex (arg0_options) {
 			//Convert from parameters
