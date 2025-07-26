@@ -10,8 +10,9 @@ if (!global.ve) global.ve = {};
  *
  * Instance:
  * @property {HTMLElement} element
- * @property {String} name
- * @property {String} window_id
+ *
+ * @property {string} name
+ * @property {string} window_id
  * @property {number} x
  * @property {number} y
  *
@@ -122,7 +123,7 @@ ve.Window = class {
 	/**
 	 * Returns the name of the present Window.
 	 *
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	getName () {
 		//Declare local instance variables
@@ -147,7 +148,7 @@ ve.Window = class {
 	
 	/**
 	 * Sets the name of the present Window.
-	 * @param {String} arg0_name
+	 * @param {string} arg0_name
 	 */
 	setName (arg0_name) {
 		//Convert from parameters
@@ -180,7 +181,7 @@ ve.Window = class {
 	
 	/**
 	 * Sets the current page ID to be displayed in the Window. Top-level interface function.
-	 * @param {String} arg0_page
+	 * @param {string} arg0_page
 	 */
 	setPage (arg0_page) {
 		//Convert from parameters
@@ -248,7 +249,7 @@ ve.Window = class {
 	/**
 	 * getZIndex() - Returns the current z-index of this Window.
 	 *
-	 * @returns {Number}
+	 * @returns {number}
 	 */
 	getZIndex () {
 		//Return statement
