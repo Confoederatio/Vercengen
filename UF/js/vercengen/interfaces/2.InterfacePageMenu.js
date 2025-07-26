@@ -12,6 +12,7 @@ if (!global.ve) global.ve = {};
  * @property {HTMLElement} element - The main content element.
  * @property {HTMLElement} tabs_el - The HTMLElement containing the tabs up top.
  *
+ * @property {string} current_page
  * @property {Object<ve.Interface>} interfaces
  * @property {Object} page_states - Internal cache for page states to restore them upon switch.
  *
@@ -92,11 +93,22 @@ ve.PageMenu = class {
 		return [this.tabs_el, this.element];
 	}
 	
+	/**
+	 * Returns the current PageMenu state according to inputs. State functions returns merged flattened-nested object.
+	 *
+	 * @returns {{"<flattened.key>": *, "<key>": *}}
+	 */
 	getState () {
 		//Return statement
 		return ve.getElementState(this.element);
 	}
 	
+	/**
+	 * Loads a PageMenu state, filling in all available inputs across all Interfaces associated with the PageMenu.
+	 *
+	 * @param {Object} [arg0_options]
+	 *  @param {*} [arg0_options.'component_id'] - Maps values to inputs.
+	 */
 	loadState (arg0_options) {
 		//Convert from parameters
 		var options = (arg0_options) ? arg0_options : {};
@@ -118,10 +130,13 @@ ve.PageMenu = class {
 		}
 	}
 	
-	setPage (arg0_page, arg1_event) {
+	/**
+	 * Sets the current page for the present PageMenu.
+	 * @param {string} arg0_page
+	 */
+	setPage (arg0_page) {
 		//Convert from parameters
 		var page = arg0_page;
-		var event = arg1_event;
 		
 		//Declare local instance variables
 		var all_pages = Object.keys(this.options.pages);
