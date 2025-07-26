@@ -1,5 +1,6 @@
 //Initialise functions
 global.ve = {
+	//Set defines
 	component_dictionary: {
 		basic_colour: "ComponentBasicColour",
 		basic_file: "ComponentBasicFile",
@@ -30,8 +31,6 @@ global.ve = {
 		wysiwyg: "ComponentWYSIWYG",
 			rich_text: "ComponentWYSIWYG",
 	},
-	
-	//Set defines
 	default_class: `ve context-menu`,
 	interfaces: {}, //Stores all Interfaces and their Components in state
 	windows: {}, //Stores all Windows in state
@@ -49,6 +48,29 @@ global.ve = {
 	},
 
 	//2. Window class
+	/**
+	 * Represents a Vercengen Window. Global-level windows are stored in `ve.windows`.
+	 *
+	 * DOM:
+	 * - `.instance`: (this)
+	 *
+	 * Instance:
+	 * @property {HTMLElement} element
+	 * @property {String} name
+	 * @property {String} window_id
+	 * @property {number} x
+	 * @property {number} y
+	 *
+	 * @property {{
+	 *   can_close: boolean,
+	 *   can_rename: boolean,
+	 *   draggable: boolean,
+	 *   headless: boolean,
+	 *   resizeable: boolean
+	 * }} [options]
+	 *
+	 * @type ve.Window
+	 */
 	Window: class {
 		constructor (arg0_options) {
 			//Convert from parameters
@@ -125,18 +147,29 @@ global.ve = {
 		}
 
 		//1. State functions
+		/**
+		 * getState() - Returns the current Window state according to inputs. State functions return a merged flattened-nested object.
+		 *
+		 * @returns {{"<flattened.key>": *, "<key>": *}}
+		 */
 		getState () {
 			//Return statement
 			return getInputsAsObject(this.element);
 		}
 		
 		//2. UI functions (Header)
+		/** close() - Closes the present Window. **/
 		close () {
 			//Delete ve.windows[this.window_id], then remove element
 			delete ve.windows[this.window_id];
 			this.element.remove();
 		}
 		
+		/**
+		 * getName() - Returns the name of the present Window.
+		 *
+		 * @returns {String}
+		 */
 		getName () {
 			//Declare local instance variables
 			var name_el = this.element.querySelector(`#window-name`);
@@ -148,6 +181,7 @@ global.ve = {
 			return this.name;
 		}
 		
+		/** select() - Selects the present Window, raising its z-index above all other Windows. **/
 		select () {
 			//Declare local instance variables
 			var current_highest_z_index = JSON.parse(JSON.stringify(ve.Window.getHighestZIndex())) + 1;
@@ -157,6 +191,10 @@ global.ve = {
 			ve.Window.normaliseZIndexes();
 		}
 		
+		/**
+		 * setName() - Sets the name of the present Window.
+		 * @param {String} arg0_name
+		 */
 		setName (arg0_name) {
 			//Convert from parameters
 			var name = (arg0_name) ? arg0_name : "";
@@ -167,6 +205,10 @@ global.ve = {
 		}
 		
 		//3. UI functions (Body)
+		/**
+		 * setInterface() - Sets a single-page interface for the present Window.
+		 * @param {Object<ve.Interface.options>} arg0_options
+		 */
 		setInterface (arg0_options) {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
@@ -181,14 +223,22 @@ global.ve = {
 				console.error(e);
 			}
 		}
-
+		
+		/**
+		 * setPage() - Sets the current page ID to be displayed in the Window. Top-level interface function.
+		 * @param {String} arg0_page
+		 */
 		setPage (arg0_page) {
 			//Convert from parameters
 			var page = arg0_page;
 
 			this.interface.setPage(page);
 		}
-
+		
+		/**
+		 * setPageMenu() - Sets the PageMenu interface for the present Window.
+		 * @param {Object<ve.PageMenu.options>} arg0_options
+		 */
 		setPageMenu (arg0_options) {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
@@ -213,6 +263,13 @@ global.ve = {
 		}
 		
 		//3. Helper functions
+		/**
+		 * getHighestZIndex() - Returns the highest z-index over the set of all Windows in ve.windows.
+		 * @param {Object} [arg0_options]
+		 *  @param {boolean} [arg0_options.return_object=false] - Whether to return a Window instance.
+		 *
+		 * @returns {Number|this}
+		 */
 		static getHighestZIndex (arg0_options) {
 			//Convert from parameters
 			var options = (arg0_options) ? arg0_options : {};
@@ -234,11 +291,17 @@ global.ve = {
 			return (!options.return_object) ? highest_z_index[0] : highest_z_index[1];
 		}
 		
+		/**
+		 * getZIndex() - Returns the current z-index of this Window.
+		 *
+		 * @returns {Number}
+		 */
 		getZIndex () {
 			//Return statement
 			return parseInt(getComputedStyle(this.element)["z-index"]);
 		}
 		
+		/** Normalises all z-indexes over the set of ve.windows. */
 		static normaliseZIndexes () {
 			//Declare local instance variables
 			var overlay_el = ve.window_overlay_el;
