@@ -9,7 +9,7 @@ if (!global.ve) global.ve = {};
  * - `,instance`: this:{@link ve.Interface}
  *
  * ##### Instance:
- * - `.options`: <span style = "color: lime">{@link ve.Interface.options}</span>
+ * - `.options`: <span color = "lime">{@link ve.Interface.options}</span>
  * <br>
  * - `.element`: {@link HTMLElement}
  * <br>

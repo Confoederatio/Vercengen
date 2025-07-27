@@ -9,7 +9,7 @@ if (!global.ve) global.ve = {};
  * - `.instance`: this:{@link ve.PageMenu}
  *
  * ##### Instance:
- * - `.options`: <span style = "color: lime">{@link ve.PageMenu.options}</span>
+ * - `.options`: <span color = "lime">{@link ve.PageMenu.options}</span>
  * <br>
  * - `.element`: {@link HTMLElement} - The main content element. Also accessible via `.content_el`.
  * - `.tabs_el`: {@link HTMLElement} - The HTMLElement containing the tabs up top.
@@ -25,7 +25,7 @@ ve.PageMenu = class {
 	 * - `.default=all_pages[0]`: {@link string} - First page by default.
 	 * <br>
 	 * - `.left_offset=0.125`: {@link number} - Left offset in rem
-	 * - `.pages`: {@link Object}<<span style = "color: yellow">{@link ve.PageMenu.Page}</span>> - Object dictionary map to individual page options; sub-options type.
+	 * - `.pages`: {@link Object}<<span color = "yellow">{@link ve.PageMenu.Page}</span>> - Object dictionary map to individual page options; sub-options type.
 	 *
 	 * @typedef {Object} ve.PageMenu.options
 	 *
@@ -37,7 +37,7 @@ ve.PageMenu = class {
 		 * - `.name`: {@link string}
 		 * <br>
 		 * - `.html`: {@link string}
-		 * - `<component_key>`: <span style = "color: lime">{@link ve.Component.options}</span>
+		 * - `<component_key>`: <span color = "lime">{@link ve.Component.options}</span>
 		 *
 		 * @typedef {Object} ve.PageMenu.Page
 		 *

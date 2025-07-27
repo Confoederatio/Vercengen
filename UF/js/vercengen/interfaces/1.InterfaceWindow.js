@@ -5,28 +5,31 @@ if (!global.ve) global.ve = {};
  *
  * Windows are a type of draggable/resizeable Interface that is overlaid on top of the main app scene. They typically come with a header for minimisation/closing.
  *
- * DOM:
- * - `.instance`: (this)
+ * ##### DOM:
+ * - `.instance`: this:{@link ve.Window}
  *
- * Instance:
- * @property {HTMLElement} element
- *
- * @property {string} name
- * @property {string} window_id
- * @property {number} x
- * @property {number} y
- *
- * @property {{
- *   can_close: boolean,
- *   can_rename: boolean,
- *   draggable: boolean,
- *   headless: boolean,
- *   resizeable: boolean
- * }} [options]
+ * ##### Instance:
+ * - `.options`: <span color = "lime">{@link ve.Window.options}</span>
+ * <br>
+ * - `.element`: {@link HTMLElement}
+ * <br>
+ * - `.name`: {@link string}
+ * - `.window_id=generateRandomNumber(`<span color = "white">{@link ve.windows}</span>`)`: {@link string}
+ * - `.x=0`: {@link number}
+ * - `.y=0`: {@link number}
  *
  * @type ve.Window
  */
 ve.Window = class {
+	/**
+	 * - `.can_close=true`: {@link boolean}
+	 * - `.can_rename=true`: {@link boolean}
+	 * - `.draggable=true`: {@link boolean}
+	 * - `.headless=false`: {@link boolean}
+	 * - `.resizeable=true`: {@link boolean}
+	 *
+	 * @typedef {Object} ve.Window.options
+	 */
 	constructor (arg0_options) {
 		//Convert from parameters
 		var options = (arg0_options) ? arg0_options : {};
