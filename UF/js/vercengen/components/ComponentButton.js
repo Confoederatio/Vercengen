@@ -1,4 +1,21 @@
-ve.ComponentButton = class { //[WIP] - Finish Class and refactoring
+/**
+ * <span color = "yellow">{@link Class}</span>
+ * ComponentButton
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.icon`: {@link string} - The file path for the given button icon.
+ *   - `.name`: {@link string}
+ *
+ * - - `.onclick`: function({@link ve.ComponentButtonOnclickEvent})
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentButton.handleEvents|handleEvents}</span>
+ *
+ * @type {ve.ComponentButton}
+ */
+ve.ComponentButton = class {
 	constructor (arg0_options) {
 		//Convert from parameters
 		this.options = (arg0_options) ? arg0_options : {};
@@ -20,6 +37,16 @@ ve.ComponentButton = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	/**
+	 * Extends {@link HTMLElement.prototype.onclick}
+	 * - `.component`: this:{@link ve.ComponentButton}
+	 *
+	 * @typedef ve.ComponentButtonOnclickEvent
+	 */
+	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
 	handleEvents () {
 		if (this.options.onclick)
 			if (this.options.onclick == "string") {

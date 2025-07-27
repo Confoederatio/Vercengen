@@ -50,7 +50,8 @@ ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
 	
 	/**
 	 * Returns a {@link FileList} or {@link string} representing the present Component's filepath.
-	 * @returns {*}
+	 *
+	 * @returns {FileList|string}
 	 */
 	getInput () {
 		//Declare local instance variables
@@ -71,7 +72,7 @@ ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
 	 * Extends {@link HTMLElement.prototype.onclick}
 	 * - `.component`: this:{@link ve.ComponentBasicFile}
 	 *
-	 * @typedef ve.CoponentBasicFileOnclickEvent
+	 * @typedef ve.ComponentBasicFileOnclickEvent
 	 */
 	
 	/**

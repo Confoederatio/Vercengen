@@ -1,3 +1,20 @@
+/**
+ * <span color = "yellow">{@link Class}</span>
+ * ComponentColour
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
+ *   - `.placeholder`: {@link Array}<{@link number}, {@link number}, {@link number}>|{@link string}
+ *
+ * - - `.onclick`: function({@link ve.ComponentColourOnclickEvent})
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentColour.getInput|getInput}</span> | {@link Array}<{@link number}, {@link number}, {@link number}>
+ *
+ * @type {ve.ComponentColour}
+ */
 ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -47,17 +64,36 @@ ve.ComponentColour = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	/**
+	 * Returns the present component's RGB value.
+	 *
+	 * @returns {Array<number, number, number>}
+	 */
 	getInput () {
 		//Return statement
 		return getColourFromFields(this.element);
 	}
 	
+	/**
+	 * Extends {@link HTMLEvent.prototype.onchange}
+	 *
+	 * @typedef ve.ComponentColourOnclickEvent
+	 */
+	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
 	handleEvents () {
 		handleColourWheel(this.element);
 		if (this.options.onclick)
 			this.element.onchange = this.options.onclick;
 	}
 	
+	/**
+	 * Sets the RGB value for the present component with an RGB array.
+	 *
+	 * @param {Array<number, number, number>} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
