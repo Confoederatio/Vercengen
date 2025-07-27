@@ -1,4 +1,25 @@
-ve.ComponentDate = class { //[WIP] - Finish Class and refactoring
+/**
+ * <span color = "yellow">{@link Class}</span>
+ * ComponentDate
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.multiple_rows`: {@link boolean}
+ *   - `.name`: {@link string}
+ *   - `.placeholder`: {@link ve.Date}
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentDate.getInput|getInput}</span>
+ * - <span color=00ffff>{@link ve.ComponentDate.setInput|setInput}</span>(arg0_value: {@link ve.Date})
+ *
+ * Static Methods:
+ * - <span color=00ffff>{@link ve.ComponentDate.getMonths}</span>
+ * - <span color=00ffff>{@link ve.ComponentDate.populateDateFields}</span>(arg0_date_container_el: {@link HTMLElement}, arg1_date: {@link ve.Date})
+ *
+ * @type {ve.ComponentDate}
+ */
+ve.ComponentDate = class { //[WIP] - Finish Class and refactoring; missing handleEvents()
 	constructor (arg0_options) {
 		//Convert from parameters
 		this.options = (arg0_options) ? arg0_options : {};
@@ -53,16 +74,32 @@ ve.ComponentDate = class { //[WIP] - Finish Class and refactoring
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	/**
+	 * Returns a `ve.Date` Object from the present Component.
+	 *
+	 * @returns {ve.Date}
+	 */
 	getInput () {
 		//Return statement
 		return getDateFromFields(this.element);
 	}
 	
+	/**
+	 * Returns an Array<string> of all twelve months.
+	 *
+	 * @returns {Array<string>}
+	 */
 	static getMonths () {
 		//Return statement
 		return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	}
 	
+	/**
+	 * Populates all date fields given a ve.Date object or timestamp.
+	 *
+	 * @param {HTMLElement} arg0_date_container_el
+	 * @param {ve.Date} arg1_date
+	 */
 	static populateDateFields (arg0_date_container_el, arg1_date) {
 		//Convert from parameters
 		var date_container_el = arg0_date_container_el;
@@ -154,6 +191,11 @@ ve.ComponentDate = class { //[WIP] - Finish Class and refactoring
 		year_type_el.value = (date.year >= 0) ? "AD" : "BC";
 	}
 	
+	/**
+	 * Sets the date value for the present Component.
+	 *
+	 * @param {ve.Date} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
