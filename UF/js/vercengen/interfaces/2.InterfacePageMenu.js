@@ -5,33 +5,45 @@ if (!global.ve) global.ve = {};
  *
  * PageMenus represent a paginated Interface with multiple tabs. These are not typically numerically ordered for consistent UI/UX design.
  *
- * DOM:
- * - `.instance`: (this)
+ * ##### DOM:
+ * - `.instance`: this:{@link ve.PageMenu}
  *
- * Instance:
- * @property {HTMLElement} element - The main content element.
- * @property {HTMLElement} tabs_el - The HTMLElement containing the tabs up top.
- *
- * @property {string} current_page
- * @property {Object<ve.Interface>} interfaces
- * @property {Object} page_states - Internal cache for page states to restore them upon switch.
- *
- * @property [options]
- *  @property {string} [options.default=all_pages[0]] - First page by default.
- *
- *  @property {number} [options.left_offset=0.125]
- *  @property {Object} [options.pages]
- *   @property {Object} [options.pages.'page_key']
- *    @property {string} [options.pages.'page_key'.name]
- *    @property {string} [options.pages.'page_key'.html]
- *    @property {Object<ve.Component.options>} [options.pages.'page_key'.'key']
- *
- *    @property {Function} [options.pages.'page_key'.special_function] - The function to execute upon clicking this tab.
-*   @property {Function} [options.special_function] - The function to execute upon clicking any tab.
+ * ##### Instance:
+ * - `.options`: <span style = "color: lime">{@link ve.PageMenu.options}</span>
+ * <br>
+ * - `.element`: {@link HTMLElement} - The main content element. Also accessible via `.content_el`.
+ * - `.tabs_el`: {@link HTMLElement} - The HTMLElement containing the tabs up top.
+ * <br>
+ * - `.current_page`: {@link string}
+ * - `.interfaces`: {@link Object}<{@link ve.Interface}> - All .interfaces represented by the present PageMenu.
+ * - `.page_states`: {@link Object} - Internal cache for page states to restore them upon switching tabs.
  *
  * @type {ve.PageMenu}
  */
 ve.PageMenu = class {
+	/**
+	 * - `.default=all_pages[0]`: {@link string} - First page by default.
+	 * <br>
+	 * - `.left_offset=0.125`: {@link number} - Left offset in rem
+	 * - `.pages`: {@link Object}<<span style = "color: yellow">{@link ve.PageMenu.Page}</span>> - Object dictionary map to individual page options; sub-options type.
+	 *
+	 * @typedef {Object} ve.PageMenu.options
+	 *
+	 * @property {function(ve.PageMenu)} [special_function] - The function to execute upon clicking <i>any</i> tab.
+	 */
+		/**
+		 * Represents a Page within a PageMenu.
+		 *
+		 * - `.name`: {@link string}
+		 * <br>
+		 * - `.html`: {@link string}
+		 * - `<component_key>`: <span style = "color: lime">{@link ve.Component.options}</span>
+		 *
+		 * @typedef {Object} ve.PageMenu.Page
+		 *
+		 * @property {function(ve.PageMenu)} [special_function] - The function to execute upon clicking this tab.
+		 */
+	
 	constructor (arg0_options) {
 		//Convert from parameters
 		var options = (arg0_options) ? arg0_options : {};
@@ -60,6 +72,9 @@ ve.PageMenu = class {
 			this.element = document.createElement("div");
 			this.tabs_el = document.createElement("div");
 		}
+		
+		//Set alias
+		this.content_el = this.element;
 		
 		//Set this.tabs_el.innerHTML according to page_key
 		var tabs_html = [];
@@ -107,7 +122,7 @@ ve.PageMenu = class {
 	 * Loads a PageMenu state, filling in all available inputs across all Interfaces associated with the PageMenu.
 	 *
 	 * @param {Object} [arg0_options]
-	 *  @param {*} [arg0_options.'component_id'] - Maps values to inputs.
+	 *  @param {*} [arg0_options.'component_key'] - Maps values to inputs.
 	 */
 	loadState (arg0_options) {
 		//Convert from parameters
@@ -149,8 +164,8 @@ ve.PageMenu = class {
 		if (!local_value.anchor) local_value.anchor = this.element;
 		
 		//Parse .onclick handler
-		if (this.options.special_function) this.options.special_function(e);
-		if (local_value.special_function) local_value.special_function(e);
+		if (this.options.special_function) this.options.special_function(this);
+		if (local_value.special_function) local_value.special_function(this);
 		
 		//Save state before resetting it
 		try {
