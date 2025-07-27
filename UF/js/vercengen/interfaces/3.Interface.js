@@ -5,37 +5,36 @@ if (!global.ve) global.ve = {};
  *
  * Interfaces are a sort of form/UI that stores local states. It can be recursively nested via the use of ComponentInterface as a sub-component, which utilises the same options.
  *
- * DOM:
- * - `,instance`: (this)
+ * ##### DOM:
+ * - `,instance`: this:{@link ve.Interface}
  *
- * Instance:
- * @property {HTMLElement} element
- *
- * @property {Object<ve.Component>} components
- * @property {Object<Array<Array<ve.Component>>>} table_rows - Stores all ve.Component instances in a 2D array.
- *
- * @property {ve.Interface.options} [options]
+ * ##### Instance:
+ * - `.options`: <span style = "color: lime">{@link ve.Interface.options}</span>
+ * <br>
+ * - `.element`: {@link HTMLElement}
+ * <br>
+ * - `.components`: {@link Object}<{@link ve.Component}>
+ * - `.table_rows`: {@link Object}<{@link Array}<{@link Array}<{@link ve.Component}>>> - Shares all ve.Component instances in a 2D X/Y array.
  *
  * @type {ve.Interface}
  */
 ve.Interface = class {
 	/**
+	 * - `.anchor`: {@link HTMLElement|string} - The element the present Interface should be attached to.
+	 * - `.class`: {@link string} - The CSS class to apply to the present Interface.
+	 * - `.id=generateRandomNumber(`<span color = "white">{@link ve.interfaces}</span>`)`
+	 * <br>
+	 * - `.can_close=false` {@link boolean}
+	 * - `.do_not_append=false` {@link boolean}
+	 * - `.is_resizable=false` {@link boolean}
+	 * - `.is_window=false` {@link boolean}
+	 * - `.name=""` {@link string}
+	 * - `.maximum_height` {@link string} - The height after which a scrollbar should appear in CSS units. `calc` string.
+	 * - `.maximum_width` {@link string} - The maximum width in CSS units. `calc` string.
+	 *
 	 * @typedef {Object} ve.Interface.options
-	 * @property {HTMLElement|string} [anchor] - The element the present Interface should be attached to.
-	 *  @property {string} [class=""] - The CSS class to apply to the present Interface.
-	 *  @property {string} [id=generateRandomNumber(ve.interfaces)]
 	 *
-	 *  @property {boolean} [can_close=false]
-	 *  @property {boolean} [do_not_append=false]
-	 *  @property {boolean} [is_resizable=false]
-	 *  @property {boolean] [is_window=false]
-	 *  @property {string} [name=""]
-	 *  @property {string} [maximum_height] - The height after which a scrollbar should appear in CSS units.
-	 *  @property {string} [maximum_width] - The maximum width in CSS units.
-	 *
-	 *  @property {function(HTMLElement.prototype.onclick)} [options.close_function]
-	 *
-	 *  @property {Object<ve.Component.options>} [options.'input_key']
+	 * @property {function(HTMLElement.prototype.onclick)} [options.close_function]
 	 */
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -199,11 +198,19 @@ ve.Interface = class {
 		}
 	}
 	
+	/**
+	 * Closes the current interface and removes it from {@link ve.interfaces}.
+	 */
 	close () {
 		delete ve.interfaces[this.interface_id];
 		this.element.parentElement.remove();
 	}
 	
+	/**
+	 * Returns the current PageMenu state according to inputs. State functions return a merged flattened-nested object.
+	 *
+	 * @returns {{"<flattened.key>": *, "<key>": *}}
+	 */
 	getState () {
 		//Return statement
 		return ve.getElementState(this.element);
