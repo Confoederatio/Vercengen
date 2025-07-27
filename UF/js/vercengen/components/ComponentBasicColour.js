@@ -10,9 +10,9 @@
  *   - `.onclick`: function({@link ve.ComponentBasicColourOnclickEvent})
  *
  * ##### Methods:
- * - <span color = "#00ffff">{@link ve.ComponentBasicColour.getInput|getInput}</span> | {@link string}
- * - <span color = "#00ffff">{@link ve.ComponentBasicColour.handleEvents|handleEvents}</span>
- * - <span color = "#00ffff">{@link ve.ComponentBasicColour.setInput|setInput}</span>(arg0_value: {@link string})
+ * - <span color=#00ffff>{@link ve.ComponentBasicColour.getInput|getInput}</span> | {@link string}
+ * - <span color=#00ffff>{@link ve.ComponentBasicColour.handleEvents|handleEvents}</span>
+ * - <span color=#00ffff>{@link ve.ComponentBasicColour.setInput|setInput}</span>(arg0_value: {@link string})
  *
  * @type {ve.ComponentBasicColour}
  */

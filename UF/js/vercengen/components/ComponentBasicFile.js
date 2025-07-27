@@ -5,6 +5,7 @@
  * - `.element`: {@link HTMLElement}
  * - `.options`: {@link Object}
  *   - `.name`: {@link string}
+ *   - `.placeholder`: {@link string}
  *
  * - - `.is_folder`: {@link boolean}
  *   - `.is_multifile`: {@link boolean}
@@ -14,9 +15,9 @@
  *   - `.onclick`: function({@link ve.ComponentBasicFileOnclickEvent})
  *
  * ##### Methods:
- * - <span color = "#00ffff">{@link ve.ComponentBasicFile.getInput|getInput}</span> | {@link FileList}|{@link string}
- * - <span color = "#00ffff">{@link ve.ComponentBasicFile.handleEvents|handleEvents}</span>
- * - <span color = "#00ffff">{@link ve.ComponentBasicFile.setInput|setInput}</span>(arg0_value: {@link string})
+ * - <span color=00ffff>{@link ve.ComponentBasicFile.getInput|getInput}</span> | {@link FileList}|{@link string}
+ * - <span color=00ffff>{@link ve.ComponentBasicFile.handleEvents|handleEvents}</span>
+ * - <span color=00ffff>{@link ve.ComponentBasicFile.setInput|setInput}</span>(arg0_value: {@link string})
  *
  * @type {ve.ComponentBasicFile}
  */
