@@ -1,3 +1,25 @@
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentBasicFile
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.name`: {@link string}
+ *
+ * - - `.is_folder`: {@link boolean}
+ *   - `.is_multifile`: {@link boolean}
+ *   - `.label="Save File"`: {@link string}
+ *
+ * - - `.onchange`: function({@link ve.ComponentBasicFileOnchangeEvent})
+ *   - `.onclick`: function({@link ve.ComponentBasicFileOnclickEvent})
+ *
+ * ##### Methods:
+ * - <span color = "#00ffff">{@link ve.ComponentBasicFile.getInput|getInput}</span> | {@link FileList}|{@link string}
+ * - <span color = "#00ffff">{@link ve.ComponentBasicFile.handleEvents|handleEvents}</span>
+ * - <span color = "#00ffff">{@link ve.ComponentBasicFile.setInput|setInput}</span>(arg0_value: {@link string})
+ *
+ * @type {ve.ComponentBasicFile}
+ */
 ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -25,6 +47,10 @@ ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	/**
+	 * Returns a {@link FileList} or {@link string} representing the present Component's filepath.
+	 * @returns {*}
+	 */
 	getInput () {
 		//Declare local instance variables
 		var file_el = this.element.querySelector(`input[type="file"]`);
@@ -34,6 +60,22 @@ ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
 		return this.element.querySelector(`button[id="save-file"]`).value;
 	}
 	
+	/**
+	 * Extends {@link HTMLElement.prototype.onchange}
+	 * - `.component`: this:{@link ve.ComponentBasicFile}
+	 *
+	 * @typedef ve.ComponentBasicFileOnchangeEvent
+	 */
+	/**
+	 * Extends {@link HTMLElement.prototype.onclick}
+	 * - `.component`: this:{@link ve.ComponentBasicFile}
+	 *
+	 * @typedef ve.CoponentBasicFileOnclickEvent
+	 */
+	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
 	handleEvents () {
 		//Declare local instance variables
 		var file_input_el = this.element.querySelector(`input[type="file"]`);
@@ -58,6 +100,11 @@ ve.ComponentBasicFile = class { //[WIP] - Finish Class and refactoring
 		}
 	}
 	
+	/**
+	 * Sets the filepath value for the present Component as a relative/absolute string.
+	 *
+	 * @param {string} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

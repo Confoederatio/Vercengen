@@ -7,7 +7,7 @@
  *   - `.name`: {@link string}
  *
  * - - `.attributes`: {@link Object}
- *   - `.onclick`: function({@link ve.ComponentBasicColourEvent})
+ *   - `.onclick`: function({@link ve.ComponentBasicColourOnclickEvent})
  *
  * ##### Methods:
  * - <span color = "#00ffff">{@link ve.ComponentBasicColour.getInput|getInput}</span> | {@link string}
@@ -49,7 +49,7 @@ ve.ComponentBasicColour = class {
 	 * Extends {@link HTMLElement.prototype.onclick}
 	 * - `.component`: this:{@link ve.ComponentBasicColour}
 	 *
-	 * @typedef ve.ComponentBasicColourEvent
+	 * @typedef ve.ComponentBasicColourOnclickEvent
 	 */
 	
 	/**
