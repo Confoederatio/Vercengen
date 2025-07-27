@@ -1,21 +1,20 @@
 /**
+ * <span color = "yellow">{@link Class}</span>:ComponentBasicColour
+ *
  * ##### Instance:
  * - `.element`: {@link HTMLElement}
  * - `.options`: {@link Object}
  *   - `.name`: {@link string}
  *
  * - - `.attributes`: {@link Object}
+ *   - `.onclick`: function({@link ve.ComponentBasicColourEvent})
  *
  * ##### Methods:
- * - <span style = "color: rgb(0, 255, 255)">{@link ve.ComponentBasicColour.getInput|getInput}</span> | {@link string}
- * - <span style = "color: rgb(0, 255, 255)">{@link ve.ComponentBasicColour.handleEvents|handleEvents}</span>
- * - <span style = "color: rgb(0, 255, 255)">{@link ve.ComponentBasicColour.setInput|setInput}</span>(arg0_value: {@link string})
+ * - <span color = "#00ffff">{@link ve.ComponentBasicColour.getInput|getInput}</span> | {@link string}
+ * - <span color = "#00ffff">{@link ve.ComponentBasicColour.handleEvents|handleEvents}</span>
+ * - <span color = "#00ffff">{@link ve.ComponentBasicColour.setInput|setInput}</span>(arg0_value: {@link string})
  *
- * @class
- * @extends {@link ve.Component}
  * @type {ve.ComponentBasicColour}
- *
- * @param {function(ve.ComponentBasicColourEvent)} options.onclick - Fired upon `.onchange`.
  */
 ve.ComponentBasicColour = class {
 	constructor (arg0_options) {

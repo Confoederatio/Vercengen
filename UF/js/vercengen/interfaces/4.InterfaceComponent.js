@@ -21,7 +21,7 @@ if (!global.ve) global.ve = {};
  * - `.x=0`: {@link number}
  * - `.y=0`: {@link number}
  *
- * @typedef {ve.Component} ve.Component
+ * @type {ve.Component}
  */
 ve.Component = class {
 	/**
