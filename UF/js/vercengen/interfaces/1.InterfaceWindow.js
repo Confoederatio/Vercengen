@@ -22,6 +22,9 @@ if (!global.ve) global.ve = {};
  */
 ve.Window = class {
 	/**
+	 * - `.interface`: <span color = "lime">{@link ve.Interface.options}</span>
+	 * - `.page_menu`: <span color = "lime">{@link ve.PageMenu.options}</span>
+	 * <br>
 	 * - `.can_close=true`: {@link boolean}
 	 * - `.can_rename=true`: {@link boolean}
 	 * - `.draggable=true`: {@link boolean}

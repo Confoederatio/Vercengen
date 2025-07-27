@@ -1,10 +1,38 @@
 //Initialise functions
 global.ve = {
+	/**
+	 * - `"basic_colour"`: {@link ve.ComponentBasicColour}
+	 * - `"basic_file"`: {@link ve.ComponentBasicFile}
+	 * - `"biuf"`: {@link ve.ComponentBIUF}
+	 * - `"button"`: {@link ve.ComponentButton}
+	 * - `"checkbox"`: {@link ve.ComponentCheckbox}
+	 * - `"colour"`: {@link ve.ComponentColour}
+	 * - `"datalist"`: {@link ve.ComponentDatalist}
+	 * - `"date"`: {@link ve.ComponentDate}
+	 * - `"date_length"`: {@link ve.ComponentDateLength}
+	 * - `"email"`: {@link ve.ComponentEmail}
+	 * - `"html"`: {@link ve.ComponentHTML}
+	 * - `"interface"`: {@link ve.ComponentInterface} - Recursive component for {@link ve.Interface}.
+	 * - `"number"`: {@link ve.ComponentNumber}
+	 * - `"password"`: {@link ve.ComponentPassword}
+	 * - `"radio"`: {@link ve.ComponentRadio}
+	 * - `"range"`: {@link ve.ComponentRange}
+	 * - `"reset"`: {@link ve.ComponentReset}
+	 * - `"search_select"`: {@link ve.ComponentSearchSelect}
+	 * - `"select"`: {@link ve.ComponentSelect}
+	 * - `"sortable_list"`: {@link ve.ComponentSortableList}
+	 * - `"submit"`: {@link ve.ComponentSubmit}
+	 * - `"telephone"`/`"tel"`: {@link ve.ComponentTelephone}
+	 * - `"text"`: {@link ve.ComponentText}
+	 * - `"time"`: {@link ve.ComponentTime}
+	 * - `"url"`: {@link ve.ComponentURL}
+	 * - `"wysiwyg"`/`"rich_text"`: {@link ve.ComponentWYSIWYG}
+	 *
+	 * @typedef ve.component_dictionary
+	 */
 	//Set defines
 	component_dictionary: {
-		/** @type {ve.ComponentBasicColour} */
 		basic_colour: "ComponentBasicColour",
-		/** @type {ve.ComponentBasicFile} */
 		basic_file: "ComponentBasicFile",
 		biuf: "ComponentBIUF",
 		button: "ComponentButton",

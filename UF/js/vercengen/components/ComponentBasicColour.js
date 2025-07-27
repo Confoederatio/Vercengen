@@ -1,4 +1,23 @@
-ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
+/**
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.name`: {@link string}
+ *
+ * - - `.attributes`: {@link Object}
+ *
+ * ##### Methods:
+ * - <span style = "color: rgb(0, 255, 255)">{@link ve.ComponentBasicColour.getInput|getInput}</span> | {@link string}
+ * - <span style = "color: rgb(0, 255, 255)">{@link ve.ComponentBasicColour.handleEvents|handleEvents}</span>
+ * - <span style = "color: rgb(0, 255, 255)">{@link ve.ComponentBasicColour.setInput|setInput}</span>(arg0_value: {@link string})
+ *
+ * @class
+ * @extends {@link ve.Component}
+ * @type {ve.ComponentBasicColour}
+ *
+ * @param {function(ve.ComponentBasicColourEvent)} options.onclick - Fired upon `.onchange`.
+ */
+ve.ComponentBasicColour = class {
 	constructor (arg0_options) {
 		//Convert from parameters
 		this.options = (arg0_options) ? arg0_options : {};
@@ -17,12 +36,27 @@ ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	/**
+	 * Returns a hex-coded string of the present Component's colour.
+	 *
+	 * @returns string
+	 */
 	getInput () {
 		//Return statement
 		return this.element.querySelector(`input[type="color"]`).value;
 	}
 	
-	handleEvents (arg0_function) {
+	/**
+	 * Extends {@link HTMLElement.prototype.onclick}
+	 * - `.component`: this:{@link ve.ComponentBasicColour}
+	 *
+	 * @typedef ve.ComponentBasicColourEvent
+	 */
+	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
+	handleEvents () {
 		//Declare local instance variables
 		var colour_input_el = this.element.querySelector(`input[type="color"]`);
 		
@@ -34,6 +68,11 @@ ve.ComponentBasicColour = class { //[WIP] - Finish Class and refactoring
 			}
 	}
 	
+	/**
+	 * Sets the value for the present Component as either an RGBA/hex string.
+	 *
+	 * @param {Array<number, number, number>|string} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

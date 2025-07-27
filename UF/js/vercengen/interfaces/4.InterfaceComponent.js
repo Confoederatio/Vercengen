@@ -13,6 +13,7 @@ if (!global.ve) global.ve = {};
  * <br>
  * - `.element`: {@link HTMLElement}
  * - `.id="generic-component"`: {@link string}
+ * - `.type`: <span color = "white">{@link ve.component_dictionary}</span>
  * <br>
  * - `.attributes`: {@link Object}
  * - `.height=1`: {@link number}
@@ -20,12 +21,13 @@ if (!global.ve) global.ve = {};
  * - `.x=0`: {@link number}
  * - `.y=0`: {@link number}
  *
- * @type {ve.Component} ve.Component
+ * @typedef {ve.Component} ve.Component
  */
 ve.Component = class {
 	/**
 	 * - `.id`: {@link string}
 	 * - `.placeholder`: {@link any}
+	 * - `.type`: <span color = "white">{@link ve.component_dictionary}</span>
 	 * <br>
 	 * - `.attributes`: {@link Object}
 	 * - `.tooltip`: {@link string}
