@@ -1,5 +1,7 @@
 //Initialise functions
 global.ve = {
+	//Set defines
+	
 	/**
 	 * - `"basic_colour"`: {@link ve.ComponentBasicColour}
 	 * - `"basic_file"`: {@link ve.ComponentBasicFile}
@@ -30,7 +32,7 @@ global.ve = {
 	 *
 	 * @typedef ve.component_dictionary
 	 */
-	//Set defines
+	/** Documentation: <span color = "white">{@link ve.component_dictionary}</span> */
 	component_dictionary: {
 		basic_colour: "ComponentBasicColour",
 		basic_file: "ComponentBasicFile",
