@@ -1,4 +1,20 @@
-ve.ComponentTelephone = class {
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentTelephone
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
+ *   - `.name`: {@link string}
+ *   - `.placeholder`: {@link string}
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentTelephone.getInput|getInput}</span> | {@link string}
+ * - <span color=00ffff>{@link ve.ComponentTelephone.setInput|setInput}</span>(arg0_value: {@link string}})
+ *
+ * @type {ve.ComponentTelephone}
+ */
+ve.ComponentTelephone = class { //[WIP] - Missing handleEvents()
 	constructor (arg0_options) {
 		//Convert from parameters
 		this.options = (arg0_options) ? arg0_options : {};
@@ -17,11 +33,21 @@ ve.ComponentTelephone = class {
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	/**
+	 * Returns the telephone input value of the present Component.
+	 *
+	 * @returns {string}
+	 */
 	getInput () {
 		//Return statement
 		return this.element.querySelector(`input[type="tel"]`).value;
 	}
 	
+	/**
+	 * Sets the string value for the telephone input's number.
+	 *
+	 * @param {string} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

@@ -1,3 +1,14 @@
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentSubmit
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
+ *   - `.name`: {@link string}
+ *
+ * @type {ve.ComponentSubmit}
+ */
 ve.ComponentSubmit = class {
 	constructor (arg0_options) {
 		//Convert from parameters

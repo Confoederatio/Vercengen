@@ -9,11 +9,13 @@
  *   - `.disable_remove=false`: {@link boolean }
  *   - `.has_controls=false`: {@link boolean}
  *   - `.name`: {@link string}
- *   - `.other_header_buttons`: {@link string} - The .innerHTML to append after header controls.
+ *   - `.placeholder`: {@link HTMLElement|string}
  *
  * - - `.add_button_name="Add Item"`: {@link string}
  *   - `.delete_button_name="Delete"`: {@link string}
- *   - `.onadd`: function({@link HTMLElement})
+ *   - `.other_header_buttons`: {@link string} - The .innerHTML to append after header controls.
+ *
+ * - - `.onadd`: function({@link HTMLElement})
  *   - `.onchange`: function({@link ve.ComponentSortableListOnchangeEvent})
  *   - `.onclick`: function({@link ve.ComponentSortableListOnclickEvent})
  *   - `.onremove`: function({@link ve.ComponentSortableListOnremoveEvent})

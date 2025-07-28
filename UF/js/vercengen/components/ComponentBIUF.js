@@ -4,6 +4,7 @@
  * ##### Instance:
  * - `.element`: {@link HTMLElement}
  * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
  *   - `.name`: {@link string}
  *   - `.placeholder`: {@link string}
  *
