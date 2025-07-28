@@ -6,7 +6,9 @@
  * - `.name`: {@link string}
  * - `.options`: {@link Object}
  *   - `.attributes`: {@link Object}
- *   - `.options`: {@link Object}
+*    - `.placeholder`: {@link string}
+ *
+ * - - `.options`: {@link Object}
  *     - `<option_key>`: {@link string}
  *
  * - - `.onclick`: function({@link ve.ComponentSelectOnclickEvent})
