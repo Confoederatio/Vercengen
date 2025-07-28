@@ -10,7 +10,7 @@
  *
  * ##### Methods:
  * - <span color=00ffff>{@link ve.ComponentDateLength.getInput|getInput}</span>
- * - <span color=00ffff>{@link ve.ComponentDateLength.setInput|setInput}</span>
+ * - <span color=00ffff>{@link ve.ComponentDateLength.setInput|setInput}</span>(arg0_value: {@link ve.Date})
  *
  * @type {ve.ComponentDateLength}
  */
