@@ -45,11 +45,37 @@ ve.ComponentDateLength = class { //[WIP] - Finish Class and refactoring
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	/**
+	 * Returns a `ve.Date` Object from the present Component.
+	 *
+	 * @returns {ve.Date}
+	 */
 	getInput () {
+		//Declare local instance variables
+		var day_el = this.element.querySelector(`#days-input`);
+		var hour_el = this.element.querySelector(`#hours-input`);
+		var minute_el = this.element.querySelector(`#minutes-input`);
+		var month_el = this.element.querySelector(`#months-input`);
+		var year_el = this.element.querySelector(`#years-input`);
+		
+		var local_date = {
+			year: parseInt(year_el.value),
+			month: parseInt(month_el.value),
+			day: parseInt(month_el.value),
+			
+			hour: parseInt(month_el.value),
+			minute: parseInt(month_el.value)
+		};
+		
 		//Return statement
-		return getDateLengthFromFields(this.element);
+		return convertTimestampToDate(getTimestamp(local_date)); //Flatten date
 	}
 	
+	/**
+	 * Sets the date value for the present Component.
+	 *
+	 * @param {ve.Date} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
@@ -72,37 +98,3 @@ ve.ComponentDateLength = class { //[WIP] - Finish Class and refactoring
 		minutes_el.value = value.minute;
 	}
 };
-
-//Initialise functions
-{
-	/*
-    getDateLengthFromFields() - Fetchesa date object from input fields, representing a length of time.
-    arg0_date_range_container_el: (HTMLElement) - The container for all the date length fields.
-
-    Returns: (Object, Date)
-  */
-	function getDateLengthFromFields (arg0_date_range_container_el) {
-		//Convert from parameters
-		var date_range_container_el = arg0_date_range_container_el;
-		
-		//Declare local instance variables
-		var day_el = date_range_container_el.querySelector(`#days-input`);
-		var hour_el = date_range_container_el.querySelector(`#hours-input`);
-		var minute_el = date_range_container_el.querySelector(`#minutes-input`);
-		var month_el = date_range_container_el.querySelector(`#months-input`);
-		var year_el = date_range_container_el.querySelector(`#years-input`);
-		
-		//Declare local instance variables
-		var local_date = {
-			year: parseInt(year_el.value),
-			month: parseInt(month_el.value),
-			day: parseInt(month_el.value),
-			
-			hour: parseInt(month_el.value),
-			minute: parseInt(month_el.value)
-		};
-		
-		//Return statement
-		return convertTimestampToDate(getTimestamp(local_date)); //Flatten date
-	}
-}
