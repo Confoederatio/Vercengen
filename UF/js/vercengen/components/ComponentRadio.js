@@ -1,4 +1,22 @@
-ve.ComponentRadio = class { //[WIP] - Finish Class and refactoring
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentRadio
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
+ *   - `.name`: {@link string}
+ *   - `.placeholder`: {@link Object}<{@link boolean}>
+ *
+ * - - `.options`: {@link Object} - An `.id` to human-readable name map for all suboptions in the radio list component.
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentRadio.getInput|getInput}</span> | {@link string}
+ * - <span color=00ffff>{@link ve.ComponentRadio.setInput|setInput}</span>(arg0_value: {@link string})
+ *
+ * @type {ve.ComponentRadio}
+ */
+ve.ComponentRadio = class { //[WIP] - Finish Class and refactoring; missing handleEvents()
 	constructor (arg0_options) {
 		//Convert from parameters
 		this.options = (arg0_options) ? arg0_options : {};
@@ -34,6 +52,11 @@ ve.ComponentRadio = class { //[WIP] - Finish Class and refactoring
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	/**
+	 * Returns a string with the ID of the chosen option.
+	 *
+	 * @returns {string}
+	 */
 	getInput () {
 		//Declare local instance variables
 		var all_radio_els = this.element.querySelectorAll(`[type="radio"]`);
@@ -50,6 +73,11 @@ ve.ComponentRadio = class { //[WIP] - Finish Class and refactoring
 		return output;
 	}
 	
+	/**
+	 * Sets the value for the present Component as an `.id` string.
+	 *
+	 * @param {string} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

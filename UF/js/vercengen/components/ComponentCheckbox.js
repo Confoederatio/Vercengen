@@ -60,7 +60,7 @@ ve.ComponentCheckbox = class { //[WIP] - Missing handleEvents()
 	}
 	
 	/**
-	 * Returns an boolean Object map of the present Component's state.
+	 * Returns a boolean Object map of the present Component's state.
 	 *
 	 * @returns {{"'checkbox_id'": boolean}}
 	 */
