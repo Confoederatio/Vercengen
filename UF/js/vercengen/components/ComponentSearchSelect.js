@@ -1,3 +1,28 @@
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentSearchSelect
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
+ *   - `.name`: {@link string}
+ *
+ * - - `.options`: {@link Object}
+ *     - `<option_key>`: {@link string}
+ *
+ * - - `.onchange`: function({@link ve.ComponentSearchSelectOnchangeEvent})
+ *   - `.onclick`: function({@link ve.ComponentSearchSelectOnclickEvent}
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentSearchSelect.getInput|getInput}</span> | {@link string}
+ * - <span color=00ffff>{@link ve.ComponentSearchSelect.handleEvents|handleEvents}</span>
+ * - <span color=00ffff>{@link ve.ComponentSearchSelect.setInput|setInput}</span>(arg0_value: {@link string})
+ *
+ * ##### Methods (Helper):
+ * - <span color=00ffff>{@link ve.ComponentSearchSelect.handleSearchSelect|handleSearchSelect}</span>
+ *
+ * @type {ve.ComponentSearchSelect}
+ */
 ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -10,7 +35,7 @@ ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 		
 		//Format html_string
 		html_string.push(`<div class = "search-select-container" ${objectToAttributes(options.attributes)}>`);
-			html_string.push(`<input type = "text" id = "search" placeholder = "${(options.name) ? options.name : "Search..."}" onkeyup = "handleSearchSelect(this.parentElement);">`);
+			html_string.push(`<input type = "text" id = "search" placeholder = "${(options.name) ? options.name : "Search..."}">`);
 
 			//Iterate over all options.options
 			if (options.options) {
@@ -29,16 +54,38 @@ ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	/**
+	 * Returns the `data-selected` attribute of the present Component's selected option.
+	 *
+	 * @returns {string}
+	 */
 	getInput () {
 		//Return statement
 		return this.element.getAttribute(`data-selected`);
 	}
 	
+	/**
+	 * Extends {@link HTMLElement.prototype.oninput}
+	 *
+	 * @typedef ve.ComponentSearchSelectOnchangeEvent
+	 */
+	/**
+	 * Extends {@link HTMLElement.prototype.onclick}
+	 *
+	 * @typedef ve.ComponentSearchSelectOnclickEvent
+	 */
+	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
 	handleEvents () {
 		//Declare local instance variables
 		var all_a_els = this.element.querySelectorAll("a");
 		
 		//Functional handlers
+		this.element.addEventListener("keyup", (e) => {
+			this.handleSearchSelect();
+		});
 		this.element.querySelector(`#search`).addEventListener("click", (e) => {
 			this.element.classList.toggle("shown");
 		});
@@ -58,25 +105,13 @@ ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 			});
 	}
 	
-	setInput (arg0_value) {
-		//Convert from parameters
-		var value = arg0_value;
-		
-		//Set value
-		this.element.setAttribute("data-selected", value);
-		this.element.querySelector(`[data-value="${value}"]`).classList.add("selected");
-	}
-};
-
-//Initialise functions
-{
-	function handleSearchSelect (arg0_parent_el) {
-		//Convert from parameters
-		var parent_el = arg0_parent_el;
-		
+	/**
+	 * Handles keypress events for the present search_select Component.
+	 */
+	handleSearchSelect () {
 		//Declare local instance variables
-		var all_a_els = parent_el.querySelectorAll(`a`);
-		var input_el = parent_el.querySelector(`#search`);
+		var all_a_els = this.element.querySelectorAll(`a`);
+		var input_el = this.element.querySelector(`#search`);
 		
 		var filter = input_el.value.toLowerCase();
 		
@@ -91,4 +126,18 @@ ve.ComponentSearchSelect = class { //[WIP] - Finish Class and refactoring
 			}
 		}
 	}
-}
+	
+	/**
+	 * Sets the value for the given input as a `.id` string by modifying the `data-selected` attribute.
+	 *
+	 * @param {string} arg0_value
+	 */
+	setInput (arg0_value) {
+		//Convert from parameters
+		var value = arg0_value;
+		
+		//Set value
+		this.element.setAttribute("data-selected", value);
+		this.element.querySelector(`[data-value="${value}"]`).classList.add("selected");
+	}
+};
