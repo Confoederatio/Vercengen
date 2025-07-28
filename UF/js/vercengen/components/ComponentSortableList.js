@@ -25,6 +25,7 @@ ve.ComponentSortableList = class {
 		this.element.innerHTML = html_string.join("");
 		
 		//Call fill for options.options
+		this.handleEvents();
 		this.setInput(options.options);
 	}
 	
