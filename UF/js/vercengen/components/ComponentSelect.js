@@ -1,3 +1,23 @@
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentSelect - [WIP] - Documentation not yet complete.
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.name`: {@link string}
+ * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
+ *   - `.options`: {@link Object}
+ *     - `<option_key>`: {@link string}
+ *
+ * - - `.onclick`: function({@link ve.ComponentSelectOnclickEvent})
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentSelect.getInput|getInput}</span> | {@link string}
+ * - <span color=00ffff>{@link ve.ComponentSelect.handleEvents|handleEvents}</span>
+ * - <span color=00ffff>{@link ve.ComponentSelect.setInput|setInput}</span>(arg0_value: {@link number})
+ *
+ * @type {ve.ComponentSelect}
+ */
 ve.ComponentSelect = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -30,16 +50,29 @@ ve.ComponentSelect = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	/**
+	 * Returns the selected option ID of the present Component.
+	 *
+	 * @returns {string}
+	 */
 	getInput () {
 		//Return statement
 		return this.element.querySelector("select").value;
 	}
 	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
 	handleEvents () {
 		if (this.options.onclick)
 			this.element.onchange = this.options.onclick;
 	}
 	
+	/**
+	 * Sets the HTML value for the present Component of a string.
+	 *
+	 * @param {string} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
