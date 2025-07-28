@@ -1,3 +1,26 @@
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentWYSIWYG
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.name`: {@link string}
+ *   - `.placeholder`: {@link Object}
+ *
+ * - - `.onchange`: function({@link ve.ComponentWYSIWYGOnchangeEvent})
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentWYSIWYG.getInput|getInput}</span> | {@link string}
+ * - <span color=00ffff>{@link ve.ComponentWYSIWYG.handleEvents|handleEvents}</span>
+ * - <span color=00ffff>{@link ve.ComponentWYSIWYG.setInput|setInput}</span>(arg0_value: {@link string})
+ *
+ * ##### Methods (Helper):
+ * - <span color=00ffff>{@link ve.ComponentWYSIWYG.getWYSIWYGFromFields|getWYSIWYGFromFields}</span>(arg0_wysiwyg_el: {@link HTMLElement})
+ * - <span color=00ffff>{@link ve.ComponentWYSIWYG.handleWYSIWYG|handleWYSIWYG}</span>
+ * - <span color=00ffff>{@link ve.ComponentWYSIWYG.initWYSIWYG|initWYSIWYG}</span>
+ *
+ * @type {ve.ComponentWYSIWYG}
+ */
 ve.ComponentWYSIWYG = class {
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -120,13 +143,69 @@ ve.ComponentWYSIWYG = class {
 		
 		this.handleEvents();
 	}
-
+	
+	/**
+	 * Returns the innerHTML of the present Component's input value.
+	 *
+	 * @returns {string}
+	 */
 	getInput () {
 		//Return statement
 		return this.getWYSIWYGFromFields(this.element);
 	}
+	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
+	handleEvents () {
+		//Declare local instance variables
+		if (this.options.onchange) {
+			var editor_el = this.element.querySelector(`.wysiwyg-editor`);
+			var html_view_el = this.element.querySelector(`.html-view`);
+			var visual_view_el = this.element.querySelector(`.visual-view`);
+			
+			//Add change handlers
+			html_view_el.addEventListener("input", () => {
+				var event = new Event("change");
+				event.component = this;
+				event.target = html_view_el;
+				event.value = html_view_el.innerHTML;
+				
+				this.options.onchange(event);
+			});
+			visual_view_el.addEventListener("input", () => {
+				var event = new Event("change");
+				event.component = this;
+				event.target = visual_view_el;
+				event.value = visual_view_el.innerHTML;
+				
+				this.options.onchange(event);
+			});
+		}
+	}
+	
+	/**
+	 * Sets the HTML value for the present Component as a string.
+	 *
+	 * @param {string} arg0_value
+	 */
+	setInput (arg0_value) {
+		//Convert from parameters
+		var value = (arg0_value) ? arg0_value : "";
+		
+		//Set element .html-view, .visual-view content
+		this.element.querySelector(`.html-view`).value = value;
+		this.element.querySelector(`.visual-view`).innerHTML = value;
+	}
 
 	//Internal helper functions
+	/**
+	 * Fetches the internal .innerHTML value, negotiating between the visual and code view.
+	 *
+	 * @param {HTMLElement} arg0_wysiwyg_el
+	 *
+	 * @returns {string}
+	 */
 	getWYSIWYGFromFields (arg0_wysiwyg_el) {
 		//Convert from parameters
 		var wysiwyg_el = arg0_wysiwyg_el;
@@ -140,33 +219,9 @@ ve.ComponentWYSIWYG = class {
 			html_content_el.innerHTML : visual_content_el.innerHTML;
 	}
 	
-	handleEvents () {
-		//Declare local instance variables
-		if (this.options.onchange) {
-			var editor_el = this.element.querySelector(`.wysiwyg-editor`);
-			var html_view_el = this.element.querySelector(`.html-view`);
-			var visual_view_el = this.element.querySelector(`.visual-view`);
-			
-			//Add change handlers
-			html_view_el.addEventListener("input", () => {
-				var event = new Event("change");
-					event.component = this;
-					event.target = html_view_el;
-					event.value = html_view_el.innerHTML;
-					
-				this.options.onchange(event);
-			});
-			visual_view_el.addEventListener("input", () => {
-				var event = new Event("change");
-					event.component = this;
-					event.target = visual_view_el;
-					event.value = visual_view_el.innerHTML;
-				
-				this.options.onchange(event);
-			});
-		}
-	}
-
+	/**
+	 * Handles WYSIWYG functionality.
+	 */
 	handleWYSIWYG () {
 		this.initWYSIWYG();
 		
@@ -193,6 +248,9 @@ ve.ComponentWYSIWYG = class {
 		}
 	}
 	
+	/**
+	 * Initialises the present WYSIWYG Component.
+	 */
 	initWYSIWYG () {
 		//Declare local instance variables
 		var editor = this.element.querySelector(`.wysiwyg-editor`);
@@ -236,15 +294,6 @@ ve.ComponentWYSIWYG = class {
 				}
 			});
 		}
-	}
-	
-	setInput (arg0_value) {
-		//Convert from parameters
-		var value = (arg0_value) ? arg0_value : "";
-		
-		//Set element .html-view, .visual-view content
-		this.element.querySelector(`.html-view`).value = value;
-		this.element.querySelector(`.visual-view`).innerHTML = value;
 	}
 };
 
