@@ -1,3 +1,13 @@
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentReset
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.name`: {@link String}
+ *
+ * @type {ve.ComponentReset}
+ */
 ve.ComponentReset = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
