@@ -11,7 +11,7 @@
  * - - `.options`: {@link Object} - An `.id` to human-readable name map for all suboptions in the checkbox list component.
  *
  * ##### Methods:
- * - <span color=00ffff>{@link ve.ComponentCheckbox.getInput|getInput}</span>
+ * - <span color=00ffff>{@link ve.ComponentCheckbox.getInput|getInput}</span> | {@link Object}<{@link boolean}>
  * - <span color=00ffff>{@link ve.ComponentCheckbox.setInput|setInput}</span>(arg0_value: {@link string})
  *
  * @type {ve.ComponentCheckbox}

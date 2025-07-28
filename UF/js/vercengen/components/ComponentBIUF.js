@@ -12,7 +12,7 @@
  *   - `.onclick`: function({@link ve.ComponentBIUFOnclickEvent})
  *
  * ##### Methods:
- * - <span color=00ffff>{@link ve.ComponentBIUF.getInput|getInput}</span>
+ * - <span color=00ffff>{@link ve.ComponentBIUF.getInput|getInput}</span> | {@link string}
  * - <span color=00ffff>{@link ve.ComponentBIUF.handleEvents|handleEvents}</span>
  * - <span color=00ffff>{@link ve.ComponentBIUF.setInput|setInput}</span>(arg0_value: {@link string})
  *
