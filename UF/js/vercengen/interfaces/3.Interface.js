@@ -32,6 +32,8 @@ ve.Interface = class {
 	 * - `.maximum_height` {@link string} - The height after which a scrollbar should appear in CSS units. `calc` string.
 	 * - `.maximum_width` {@link string} - The maximum width in CSS units. `calc` string.
 	 *
+	 * - `<component_key>`: <span color = "lime">{@link ve.Component.options}</span>
+	 *
 	 * @typedef {Object} ve.Interface.options
 	 *
 	 * @property {function(HTMLElement.prototype.onclick)} [options.close_function]

@@ -1,4 +1,17 @@
-ve.ComponentInterface = class { //[WIP] - Finish Class and refactoring
+/**
+ * <span color = "yellow">{@link Class}</span>
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: <span color = "lime">{@link ve.Interface.options}</span>
+ *
+ * ##### Methods:
+ * - <span color=#00ffff>{@link ve.ComponentInterface.getInput|getInput}</span> | {@link Object}
+ * - <span color=#00ffff>{@link ve.ComponentInterface.setInput|setInput}</span>(arg0_value: {@link Object})
+ *
+ * @type {ve.ComponentInterface}
+ */
+ve.ComponentInterface = class { //[WIP] - Finish Class and refactoring; missing handleEvents()
 	constructor (arg0_options) {
 		//Convert from parameters
 		this.options = (arg0_options) ? arg0_options : {};
@@ -31,11 +44,20 @@ ve.ComponentInterface = class { //[WIP] - Finish Class and refactoring
 			this.element.querySelector(`details[id="interface-folder-${this.options.id}"]`).open = true;
 	}
 	
+	/**
+	 * Returns all values present in the given interface; the sub-interface's state.
+	 *
+	 * @returns {Object}
+	 */
 	getInput () {
 		//Return statement
 		return this.interface.getState();
 	}
 	
+	/**
+	 * Sets sub .placeholder values for the nested interface within the present Component.
+	 * @param {Object} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
