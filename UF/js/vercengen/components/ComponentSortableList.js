@@ -1,3 +1,30 @@
+/**
+ * <span color = "yellow">{@link Class}</span>
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
+ *   - `.disable_add=false`: {@link boolean}
+ *   - `.disable_remove=false`: {@link boolean }
+ *   - `.has_controls=false`: {@link boolean}
+ *   - `.name`: {@link string}
+ *   - `.other_header_buttons`: {@link string} - The .innerHTML to append after header controls.
+ *
+ * - - `.add_button_name="Add Item"`: {@link string}
+ *   - `.delete_button_name="Delete"`: {@link string}
+ *   - `.onadd`: function({@link HTMLElement})
+ *   - `.onchange`: function({@link ve.ComponentSortableListOnchangeEvent})
+ *   - `.onclick`: function({@link ve.ComponentSortableListOnclickEvent})
+ *   - `.onremove`: function({@link ve.ComponentSortableListOnremoveEvent})
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentSortableList.getInput|getInput}</span> | {@link string}
+ * - <span color=00ffff>{@link ve.ComponentSortableList.handleEvents|handleEvents}</span>
+ * - <span color=00ffff>{@link ve.ComponentSortableList.setInput|setInput}</span>(arg0_value: {@link HTMLElement}|{@link string})
+ *
+ * @type {ve.ComponentSortableList}
+ */
 ve.ComponentSortableList = class {
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -29,11 +56,38 @@ ve.ComponentSortableList = class {
 		this.setInput(options.options);
 	}
 	
+	/**
+	 * Returns an array of all elements within the present SortableList Component in order.
+	 *
+	 * @returns {NodeListOf<Element>}
+	 */
 	getInput () {
 		//Return statement
 		return this.element.querySelectorAll(`ul.sortable-list > li > span`);
 	}
 	
+	/**
+	 * Extends {@link HTMLElement.prototype.onclick}
+	 * - `.component`: this:{@link ve.ComponentSortableList}
+	 *
+	 * @typedef ve.ComponentSortableListOnchangeEvent
+	 */
+	/**
+	 * Extends {@link HTMLElement.prototype.onclick}
+	 * - `.component`: this:{@link ve.ComponentSortableList}
+	 *
+	 * @typedef ve.ComponentSortableListOnclickEvent
+	 */
+	/**
+	 * Extends {@link HTMLElement.prototype.onclick}
+	 * - `.component`: this:{@link ve.ComponentSortableList}
+	 *
+	 * @typedef ve.ComponentSortableListOnremoveEvent
+	 */
+	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
 	handleEvents () {
 		//Declare local instance variables
 		var all_li_els = this.element.querySelectorAll(".sortable-list-item");
@@ -54,6 +108,8 @@ ve.ComponentSortableList = class {
 		});
 		
 		this.element.querySelector(`#add-button`).addEventListener("click", (e) => {
+			e.component = this;
+			
 			//Declare local instance variables
 			var local_delete_button_name = (this.options.delete_button_name) ?
 				this.options.delete_button_name : "Delete";
@@ -71,17 +127,19 @@ ve.ComponentSortableList = class {
 			var local_delete_button_el = new_li_el.querySelector(".delete-button");
 			if (local_delete_button_el)
 				local_delete_button_el.addEventListener("click", (e) => {
+					e.component = this;
+					
 					if (this.options.onchange)
-						this.options.onchange(this.element);
+						this.options.onchange(e);
 					if (this.options.onremove)
-						this.options.onremove(new_li_el);
+						this.options.onremove(e);
 					new_li_el.remove();
 				});
 			
 			if (this.options.onadd)
-				this.options.onadd(new_li_el);
+				this.options.onadd(e);
 			if (this.options.onchange)
-				this.options.onchange(this.element);
+				this.options.onchange(e);
 		});
 		
 		//Iterate over all_li_els; add .delete-button functionality
@@ -93,6 +151,7 @@ ve.ComponentSortableList = class {
 			if (local_delete_button_el)
 				local_delete_button_el.addEventListener("click", (e) => {
 					e.component = this;
+					
 					if (this.element.onchange)
 						this.element.onchange(e);
 					if (this.element.onremove)
@@ -102,6 +161,11 @@ ve.ComponentSortableList = class {
 		}
 	}
 	
+	/**
+	 * Sets the HTML value as either an HTML string/HTMLElement for the present Component.
+	 *
+	 * @param {HTMLElement|string} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;
@@ -109,6 +173,7 @@ ve.ComponentSortableList = class {
 		//Declare local instance variables
 		var all_suboptions = Object.keys(value);
 		var html_string = [];
+		var list_el = this.element.querySelector(`ul[id="${this.options.id}"]`);
 		
 		for (var i = 0; i < all_suboptions.length; i++) {
 			var local_option = value[all_suboptions[i]];
@@ -123,6 +188,6 @@ ve.ComponentSortableList = class {
 		}
 		
 		//Set value
-		this.element.querySelector(`ul[id="${this.options.id}"]`).innerHTML = html_string.join("");
+		list_el.innerHTML = html_string.join("");
 	}
 };
