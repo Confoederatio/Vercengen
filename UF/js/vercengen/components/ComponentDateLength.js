@@ -1,3 +1,19 @@
+/**
+ * <span color = "yellow">{@link Class}</span>
+ * ComponentDateLength
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.name`: {@link string}
+ *   - `.placeholder`: {@link ve.Date}
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentDateLength.getInput|getInput}</span>
+ * - <span color=00ffff>{@link ve.ComponentDateLength.setInput|setInput}</span>
+ *
+ * @type {ve.ComponentDateLength}
+ */
 ve.ComponentDateLength = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
