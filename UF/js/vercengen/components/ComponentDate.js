@@ -1,6 +1,5 @@
 /**
- * <span color = "yellow">{@link Class}</span>
- * ComponentDate
+ * <span color = "yellow">{@link Class}</span>: ComponentDate
  *
  * ##### Instance:
  * - `.element`: {@link HTMLElement}

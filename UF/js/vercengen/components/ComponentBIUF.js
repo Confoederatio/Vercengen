@@ -1,6 +1,5 @@
 /**
- * <span color = "yellow">{@link Class}</span>
- * ComponentBIUF
+ * <span color = "yellow">{@link Class}</span>: ComponentBIUF
  *
  * ##### Instance:
  * - `.element`: {@link HTMLElement}

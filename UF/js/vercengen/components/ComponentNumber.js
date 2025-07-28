@@ -1,3 +1,21 @@
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentNumber
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.name`: {@link string}
+ *
+ * - - `.onchange`: function({@link ve.ComponentNumberOnchangeEvent})
+ *   - `.onclick`: function({@link ve.ComponentNumberOnclickEvent})
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentNumber.getInput|getInput}</span> | {@link number}
+ * - <span color=00ffff>{@link ve.ComponentNumber.handleEvents|handleEvents}</span>
+ * - <span color=00ffff>{@link ve.ComponentNumber.setInput|setInput}</span>(arg0_value: {@link number})
+ *
+ * @type {ve.ComponentNumber}
+ */
 ve.ComponentNumber = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -18,11 +36,19 @@ ve.ComponentNumber = class { //[WIP] - Finish Class and refactoring
 		this.handleEvents();
 	}
 	
+	/**
+	 * Returns a number from the present Component.
+	 *
+	 * @returns {number}
+	 */
 	getInput () {
 		//Return statement
 		return parseFloat(this.element.querySelector(`input[type="number"]`).value);
 	}
 	
+	/**
+	 * Initialises event handlers for the present Component.
+	 */
 	handleEvents () {
 		if (this.options.onclick)
 			if (typeof this.options.onclick == "string") {
@@ -39,6 +65,11 @@ ve.ComponentNumber = class { //[WIP] - Finish Class and refactoring
 			}
 	}
 	
+	/**
+	 * Sets the number value for the present Component.
+	 *
+	 * @param {number} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

@@ -1,3 +1,19 @@
+/**
+ * <span color = "yellow">{@link Class}</span>: ComponentPassword
+ *
+ * ##### Instance:
+ * - `.element`: {@link HTMLElement}
+ * - `.options`: {@link Object}
+ *   - `.attributes`: {@link Object}
+ *   - `.name`: {@link string}
+ *   - `.placeholder`: {@link string}
+ *
+ * ##### Methods:
+ * - <span color=00ffff>{@link ve.ComponentPassword.getInput|getInput}</span> | {@link string}
+ * - <span color=00ffff>{@link ve.ComponentPassword.setInput|setInput}</span>(arg0_value: {@link string})
+ *
+ * @type {ve.ComponentPassword}
+ */
 ve.ComponentPassword = class { //[WIP] - Finish Class and refactoring
 	constructor (arg0_options) {
 		//Convert from parameters
@@ -17,11 +33,21 @@ ve.ComponentPassword = class { //[WIP] - Finish Class and refactoring
 		this.element.innerHTML = html_string.join("");
 	}
 	
+	/**
+	 * Returns the present Component's value as a string.
+	 *
+	 * @returns {string}
+	 */
 	getInput () {
 		//Return statement
 		return this.element.querySelector(`input[type="password"]`).value;
 	}
 	
+	/**
+	 * Sets the value of the present Component.
+	 *
+	 * @param {string} arg0_value
+	 */
 	setInput (arg0_value) {
 		//Convert from parameters
 		var value = arg0_value;

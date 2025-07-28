@@ -1,6 +1,5 @@
 /**
- * <span color = "yellow">{@link Class}</span>
- * ComponentCheckbox
+ * <span color = "yellow">{@link Class}</span>: ComponentCheckbox
  *
  * ##### Instance:
  * - `.element`: {@link HTMLElement}

@@ -1,6 +1,5 @@
 /**
- * <span color = "yellow">{@link Class}</span>
- * ComponentHTML
+ * <span color = "yellow">{@link Class}</span>: ComponentHTML
  *
  * ##### Instance:
  * - `.element`: {@link HTMLElement}
