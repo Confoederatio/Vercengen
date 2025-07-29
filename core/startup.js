@@ -42,27 +42,16 @@ global.path = require("path");
 
 //Startup process
 {
-  //Load config
-  {
-    global.load_order = {
-      load_directories: [
-        "UF"
-      ],
-      load_files: []
-    };
-
-    loadAllScripts();
-  }
+  ve.start({
+    load_files: [
+      "!core/startup.js",
+      "core"
+    ],
+    special_function: function () {
+      initialiseVercengenWindowsDemo();
+    }
+  });
 
   initialiseGlobal();
   trackPerformance();
-
-  var initialise_ve_loop = setInterval(function(){
-    try {
-      ve.initialise();
-      clearInterval(initialise_ve_loop);
-
-      initialiseVercengenWindowsDemo();
-    } catch (e) {}
-  }, 100);
 }
