@@ -143,7 +143,7 @@ var path = require("path");
 	 *
 	 * @returns Array<string>
 	 */
-	ve.start = function (arg0_options) {
+	ve.start = function (arg0_options) { //[WIP] - Move Browser/Node/Eval selection to `.mode` optioning.
 		//Convert from parameters
 		var options = (arg0_options) ? arg0_options : {};
 		
