@@ -1,3 +1,4 @@
+//Import Node.js libraries
 var fs = require("fs");
 var path = require("path");
 
@@ -5,6 +6,14 @@ var path = require("path");
 {
 	if (!global.ve) global.ve = {};
 	
+	/**
+	 * Returns all non-evaluated files in a folder, so long as an evaluated set is provided.
+	 *
+	 * @param {string} arg0_folder_path
+	 * @param {Set<string>} arg1_evaluated_set
+	 *
+	 * @returns {Array<string>}
+	 */
 	ve.getFilesInFolder = function (arg0_folder_path, arg1_evaluated_set) {
 		//Convert from parameters
 		var folder_path = arg0_folder_path;
@@ -33,6 +42,13 @@ var path = require("path");
 		return return_files;
 	};
 	
+	/**
+	 * Returns an Array<String> from a list of patterns, including exclusionary patterns (!), wildcards (*), and folders/file paths, both absolute and relative.
+	 *
+	 * @param {Array<string>} arg0_patterns
+	 *
+	 * @returns {Array<string>}
+	 */
 	ve.getImportFiles = function (arg0_patterns) {
 		//Convert from parameters
 		var patterns = arg0_patterns;
@@ -90,6 +106,14 @@ var path = require("path");
 		return included;
 	};
 	
+	/**
+	 * Returns the absolute file paths of all wildcards within a given folder.
+	 *
+	 * @param {string} arg0_folder_path
+	 * @param {Array<string>} arg1_wildcard_pattern
+	 *
+	 * @returns {Array<string>}
+	 */
 	ve.getWildcardsInFolder = function (arg0_folder_path, arg1_wildcard_pattern) {
 		//Convert from parameters
 		var folder_path = arg0_folder_path;
