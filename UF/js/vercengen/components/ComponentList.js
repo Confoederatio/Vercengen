@@ -23,7 +23,7 @@
  * @memberof ve.Component
  * @type {ve.List}
  */
-ve.List = class extends ve.Component { //[WIP] - Refactor at a later date
+ve.List = class extends ve.Component { //[WIP] - Make empty lists valid
 	static instances = [];
 	
 	constructor (arg0_value, arg1_options) {
@@ -84,13 +84,9 @@ ve.List = class extends ve.Component { //[WIP] - Refactor at a later date
 					this.placeholder = source_component.v;
 					
 				} catch (e) {
-					//Disable button if we fail to resolve template
+					//Log error if it could not be resolved
 					console.error(`Class name/Placeholder could not be found for template:`, source_component, e);
-					this.add_item_button.hide();
 				}
-			} else {
-				//Empty array and no placeholder option provided, we cannot know what to insert, so we hide the add button.
-				this.add_item_button.hide();
 			}
 			
 			this.overlay_window = undefined;
@@ -215,7 +211,6 @@ ve.List = class extends ve.Component { //[WIP] - Refactor at a later date
         this.components_el.insertBefore(current_component.element, this.components_el.children[i] || null);
 
       current_component.setOwner(this, [this]);
-      current_component.element.style.display = "inline";
       
       //2. Define context menu interfaces (only if not already initialised)
       if (!current_component._ve_list_init) {

@@ -47,72 +47,26 @@ if (!global.v8) global.v8 = require("node:v8");
 		let ipc_main = electron.ipcMain;
 		
 		//ndjson
-		ipc_main.on("ndjson:diff", async (event, file_path, id, options) => {
-			let result = await NDJSON.diff(file_path, id, options);
-			event.sender.send("ndjson:diff_ready", result);
+		ipc_main.on("ndjson", async (event, function_key, ...argn_arguments) => {
+			if (NDJSON[function_key] === undefined) event.sender.send("ndjson:ready", null);
+			
+			//console.log(`Received`, function_key, argn_arguments);
+			let result = await NDJSON[function_key](...argn_arguments);
+			event.sender.send("ndjson:ready", result);
 		});
-		ipc_main.on("ndjson:diff-all", async (event, file_path, options) => {
-			let result = await NDJSON.diffAll(file_path, options);
-			event.sender.send("ndjson:diff_all_ready", result);
-		});
-		ipc_main.on("ndjson:get-diagnostics", async (event) => {
-			let result = await NDJSON.getDiagnostics();
-			event.sender.send("ndjson:get_diagnostics_ready", result);
-		});
-		ipc_main.on("ndjson:get-value", async (event, file_path, id) => {
-			let result = await NDJSON.getValue(file_path, id);
-			event.sender.send("ndjson:get_value_ready", result);
-		});
-		ipc_main.on("ndjson:get-worker_id", async (event, id, pool_length) => {
-			let result = NDJSON.getWorkerID(id, pool_length);
-			event.sender.send("ndjson:get_worker_id_ready", result);
-		});
-		ipc_main.on("ndjson:get-worker-pool", async (event, max_workers) => {
-			let pool = NDJSON.getWorkerPool(max_workers);
-			let serialised_pool = pool.map((w) => {
-				return {
-					threadId: w?.threadId,
-					resourceLimits: w?.resourceLimits ? {
-						maxYoungGenerationSizeMb: w.resourceLimits.maxYoungGenerationSizeMb,
-						maxOldGenerationSizeMb: w.resourceLimits.maxOldGenerationSizeMb,
-						codeRangeSizeMb: w.resourceLimits.codeRangeSizeMb,
-						stackSizeMb: w.resourceLimits.stackSizeMb
-					} : null
-				};
-			});
-			event.sender.send("ndjson:get-worker-pool-ready", serialised_pool);
-		});
-		ipc_main.on("ndjson:load", async (event, file_path) => {
-			await NDJSON.load(file_path);
-			event.sender.send("ndjson:load-ready", `${file_path}.ndjson`);
-		});
-		ipc_main.on("ndjson:partition_file", async (event, file_path) => {
-			await NDJSON.partitionFile(file_path);
-			event.sender.send("ndjson:partition-file-ready", `${file_path}.ndjson`);
-		});
-		ipc_main.on("ndjson:query", async (event, file_path, options) => {
-			let result = await NDJSON.query(file_path, options);
-			event.sender.send("ndjson:query-ready", result);
-		});
-		ipc_main.on("ndjson:remove-value", async (event, file_path, id) => {
-			let result = await NDJSON.removeValue(file_path, id);
-			event.sender.send("ndjson:remove-value-ready", result);
-		});
-		ipc_main.on("ndjson:remove_values", async (event, file_path, ids) => {
-			let result = await NDJSON.removeValues(file_path, ids);
-			event.sender.send("ndjson:remove-values-ready", result);
-		});
-		ipc_main.on("ndjson:save", async (event, file_path) => {
-			await NDJSON.save(file_path);
-			event.sender.send("ndjson:save-ready", `${file_path}.ndjson`);
-		});
-		ipc_main.on("ndjson:set-value", async (event, file_path, id, value) => {
-			let result = await NDJSON.setValue(file_path, id, value);
-			event.sender.send("ndjson:set-value-ready", result);
-		});
-		ipc_main.on("ndjson:set-values", async (event, file_path, update_map) => {
-			let result = await NDJSON.setValues(file_path, update_map);
-			event.sender.send("ndjson:set-values-ready", result);
+		//ndjson:get-all-functions
+		ipc_main.on("ndjson:get-all-functions", async (event) => {
+			let all_ndjson_function_keys = [];
+			let all_ndjson_keys = Object.keys(NDJSON);
+			
+			for (let i = 0; i < all_ndjson_keys.length; i++) {
+				let local_value = NDJSON[all_ndjson_keys[i]];
+				
+				if (typeof local_value === "function")
+					all_ndjson_function_keys.push(all_ndjson_keys[i]);
+			}
+			
+			event.sender.send("ndjson:get-all-functions:ready", all_ndjson_function_keys);
 		});
 		
 		//ontology
@@ -176,10 +130,38 @@ if (!global.v8) global.v8 = require("node:v8");
 			ipc_main.on('ontology:stream-next', sendNextBatch);
 			await sendNextBatch();
 		});
+		
+		//process
+		ipc_main.on("process", async (event, json) => {
+			if (proc.IPC_task === undefined) event.sender.send("process:ready", null);
+			
+			let result = await proc.IPC_task(json);
+			event.sender.send("process:ready", result);
+		});
+		ipc_main.on("process:get-diagnostics", async (event) => {
+			let result = await proc.IPC_getDiagnostics();
+			event.sender.send("process:get-diagnostics:ready", result);
+		});
+		ipc_main.on("process:get-worker-pool", async (event, max_workers) => {
+			let pool = proc.IPC_getWorkerPool(max_workers);
+			let serialised_pool = pool.map((w) => { 
+				return {
+					threadId: w?.threadId,
+					resourceLimits: w?.resourceLimits ? {
+						maxYoungGenerationSizeMb: w.resourceLimits.maxYoungGenerationSizeMb,
+						maxOldGenerationSizeMb: w.resourceLimits.maxOldGenerationSizeMb,
+						codeRangeSizeMb: w.resourceLimits.codeRangeSizeMb,
+						stackSizeMb: w.resourceLimits.stackSizeMb
+					} : null
+				};
+			});
+			event.sender.send("process:get-worker-pool:ready", serialised_pool);
+		});
 	};
 	
 	try {
 		require("../db/NDJSON_main.js");
+		require("../../../../core/process/workers/process_main.js");
 	} catch (e) {} //NDJSON handling
 }
 
