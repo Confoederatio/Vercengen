@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>date/date_basic.js - Documentation</title>
+    <title>vercengen/db_shared/NDJSON_history.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">date/date_basic.js</h1>
+    <h1 class="page-title">vercengen/db_shared/NDJSON_history.js</h1>
     
 
     
@@ -42,442 +42,456 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>//Initialise functions
+            <pre class="prettyprint source linenums"><code>//[VERCENGEN]
+if (!global.Boolean)
+	/**
+	 * The namespace for all UF/Boolean utility functions, typically for static methods.
+	 *
+	 * @namespace Boolean
+	 */
+	global.Boolean = {};
+if (!global?.History) global.History = {};
+
+//[WIP] - Temporary util functions
 {
-	if (!global.Date)
-		/**
-		 * The namespace for all UF/Object utility functions, typically for static methods.
-		 * 
-		 * @namespace Date
-		 */
-		global.Date = {};
-	
 	/**
-	 * @type {number[]}
-	 */
-	Date.bc_leap_years = [
-		-45, -42, -39, -36, -33, -30, -27, -24, -21, -18, -15, -12, -9 //(Ideler 1825); Triennial leap years
-	];
-	/**
-	 * @type {{"&lt;month_key>": { name: string, month: number, days: number, leap_year_days: number }}}
-	 */
-	Date.months = {
-		january: {
-			name: "January",
-			days: 31
-		},
-		february: {
-			name: "February",
-			days: 28,
-			leap_year_days: 29
-		},
-		march: {
-			name: "March",
-			days: 31
-		},
-		april: {
-			name: "April",
-			days: 30
-		},
-		may: {
-			name: "May",
-			days: 31
-		},
-		june: {
-			name: "June",
-			days: 30
-		},
-		july: {
-			name: "July",
-			days: 31
-		},
-		august: {
-			name: "August",
-			days: 31
-		},
-		september: {
-			name: "September",
-			days: 30
-		},
-		october: {
-			name: "October",
-			days: 31
-		},
-		november: {
-			name: "November",
-			days: 30
-		},
-		december: {
-			name: "December",
-			days: 31
-		}
-	};
-	
-	/**
-	 * @type {string[]}
-	 */
-	Date.all_months = Object.keys(Date.months);
-	
-	for (let i = 0; i &lt; Date.all_months.length; i++)
-		Date.months[Date.all_months[i]].month = i;
-	
-	/**
-	 * Returns a UF Date object from a proper {@link Date} object.
-	 * @alias Date.fromDate
-	 * 
-	 * @param arg0_date
-	 * @returns {{year: number, month, day: *|number, hour: number, minute: number}}
-	 */
-	Date.fromDate = function (arg0_date) {
-		//Convert from parameters
-		let date = Date.getDate(arg0_date);
-		
-		//Return statement
-		return {
-			year: date.getFullYear(),
-			month: date.getMonth() + 1,
-			day: date.getDate(),
-			hour: date.getHours(),
-			minute: date.getMinutes()
-		}
-	};
-	
-	/**
-	 * Returns a blank date template starting at '0AD'.
-	 * @alias Date.getBlankDate
-	 * 
-	 * @returns {{year: number, month: number, day: number, hour: number, minute: number}}
-	 */
-	Date.getBlankDate = function () {
-		//Return statement
-		return { year: 0, month: 1, day: 1, hour: 0, minute: 0 }; //Must be Year 0, even if it doesn't exist
-	};
-	
-	/**
-	 * Returns the present Date.
-	 * @alias Date.getCurrentDate
-	 * 
-	 * @returns {{year: number, month, day: number, hour: number, minute: number}}
-	 */
-	Date.getCurrentDate = function () {
-		//Return statement
-		return Date.fromDate(new Date());
-	};
-	
-	/**
-	 * Returns a Date object from a variable type.
-	 * @alias Date.getDate
-	 * 
-	 * @param {Date|Object|number|string} arg0_date
-	 * 
-	 * @returns {Date}
-	 */
-	Date.getDate = function (arg0_date) {
-		//Convert from parameters
-		let date = arg0_date;
-		
-		//Declare local instance variables
-		if (typeof date === "string" &amp;&amp; !isNaN(parseFloat(date))) date = parseFloat(date);
-		if (typeof date === "number") date = new Date(date);
-		if (typeof date === "string") date = Date.parse(date);
-		
-		if (typeof date === "object" &amp;&amp; !(date instanceof Date))
-			if (Object.hasKeys(date, ["year", "month", "day", "hour", "minute"], { mode: "any" }))
-				date = new Date(date.year, date.month, date.day, date.hour, date.minute);
-		
-		//Return statement
-		return date;
-	};
-	
-	/**
-	 * Returns the number of days in the `.months` value within a Date object.
-	 * @alias Date.getDaysInMonths
-	 * 
-	 * @param {Object} arg0_date_object
-	 * 
-	 * @returns {number}
-	 */
-	Date.getDaysInMonths = function (arg0_date_object) {
-		//Convert from parameters
-		let date_obj = arg0_date_object;
-		
-		//Declare local instance variables
-		let all_months = Object.keys(Date.months);
-		let days = 0;
-		
-		//Iterate over all elapsed months
-		for (let i = 0; i &lt; date_obj.month - 1; i++)
-			days += Date.months[all_months[i]].days;
-		if (Date.isLeapYear(date_obj.year) &amp;&amp; date_obj.month >= 2) days++;
-		
-		//Return statement
-		return days;
-	};
-	
-	/**
-	 * Fetches the number of leap years before a certain year.
-	 * @alias Date.getLeapYearsBefore
-	 * 
-	 * @param {number} arg0_year
-	 * 
-	 * @returns {number}
-	 */
-	Date.getLeapYearsBefore = function (arg0_year) {
-		//Convert from parameters
-		let year = parseInt(arg0_year);
-		
-		//Return statement
-		return year/4 - year/100 + year/400 - 1; //4AD was not a leap year
-	};
-	
-	/**
-	 * Fetches the number of leap years between two years.
-	 * @alias Date.getLeapYearsBetween
-	 * 
-	 * @param {number|string} arg0_start_year
-	 * @param {number|string} arg1_end_year
-	 * 
-	 * @returns {number}
-	 */
-	Date.getLeapYearsBetween = function (arg0_start_year, arg1_end_year) {
-		//Convert from parameters
-		let start_year = parseInt(arg0_start_year);
-		let end_year = parseInt(arg1_end_year);
-		
-		//Return statement
-		return Date.getLeapYearsBefore(end_year) - Date.getLeapYearsBefore(start_year + 1);
-	};
-	
-	/**
-	 * Fetches the month index from its name.
-	 * @alias Date.getMonth
-	 * 
-	 * @param {string} arg0_month_name
-	 * 
-	 * @returns {number}
-	 */
-	Date.getMonth = function (arg0_month_name) {
-		//Convert from parameters
-		let month_name = arg0_month_name.toString().toLowerCase();
-		
-		//Declare local instance variables
-		let all_months = Object.keys(Date.months);
-		let month_found = all_months.indexOf(month_name) + 1;
-		
-		if (!month_found)
-			for (let i = 0; i &lt; all_months.length; i++)
-				if (all_months[i].includes(month_name)) {
-					month_found = i + 1;
-					break;
-				}
-		if (!month_found) month_found = 1;
-		
-		//Return statement
-		return month_found;
-	};
-	
-	/**
-	 * Returns the number of months from the number of `.day` within the date object.
-	 * @alias Date.getMonthsFromDays
-	 * 
-	 * @param {Object} arg0_date_object
-	 * 
-	 * @returns {number}
-	 */
-	Date.getMonthsFromDays = function (arg0_date_object) {
-		// Convert from parameters
-		let date_obj = Date.convertTimestampToDate(arg0_date_object);
-		
-		//Declare local instance variables
-		let is_leap_year = Date.isLeapYear(date_obj.year);
-		let remaining_days = date_obj.day;
-		let months = 1;
-		
-		// Iterate over all months and count full ones
-		let all_months = Object.keys(Date.months);
-		for (let i = 0; i &lt; all_months.length; i++) {
-			let local_month = Date.months[all_months[i]];
-			let days_in_month = local_month.days;
-			
-			if (is_leap_year &amp;&amp; local_month.leap_year_days)
-				days_in_month = local_month.leap_year_days;
-			
-			if (remaining_days > days_in_month) {
-				remaining_days -= days_in_month;
-				months++;
-			} else {
-				break; // stop once we reach the current month
-			}
-		}
-		
-		// Clamp just in case (should never exceed 12)
-		if (months > 12) months = 12;
-		
-		// Return statement
-		return months;
-	};
-	
-	/**
-	 * Returns the modern timestamp (UNIX-based) for a given date.
-	 * @alias Date.getModernTimestamp
-	 * 
-	 * @param {Date|any} arg0_date
-	 * 
-	 * @returns {number}
-	 */
-	Date.getModernTimestamp = function (arg0_date) {
-		//Convert from parameters
-		let date = Date.getDate(arg0_date);
-		
-		//Return statement
-		return date.getTime();
-	};
-	
-	/**
-	 * Returns a numeric timestamp from a specific Date object. Number of minutes from 1 January, 00:00 on 1AD.
-	 * @alias Date.getTimestamp
-	 * 
-	 * @param {Object} arg0_date_object
-	 * 
-	 * @returns {number}
-	 */
-	Date.getTimestamp = function (arg0_date_object) {
-		let date = arg0_date_object ? arg0_date_object : Date.getBlankDate();
-		
-		if (!isNaN(date)) return date; //Internal guard clause if already a number
-		if (typeof date === "string") if (!isNaN(parseFloat(date))) return parseFloat(date); //Internal guard clause for string
-		
-		let date_obj = {
-			...Date.getBlankDate(),
-			...date,
-		};
-		let minutes = 0;
-		
-		// Normalise minor overflows
-		if (date_obj.minute >= 60) {
-			date_obj.hour += Math.floor(date_obj.minute / 60);
-			date_obj.minute %= 60;
-		}
-		if (date_obj.hour >= 24) {
-			date_obj.day += Math.floor(date_obj.hour / 24);
-			date_obj.hour %= 24;
-		}
-		while (date_obj.month > 12) {
-			date_obj.month -= 12;
-			date_obj.year++;
-		}
-		while (date_obj.month &lt; 1) {
-			date_obj.month += 12;
-			date_obj.year--;
-		}
-		
-		// 1. Add full years before the current one
-		//    Epoch = start of year 0, so we sum years [0 .. year-1] or
-		//    subtract years [-1 .. year] depending on direction.
-		if (date_obj.year > 0) {
-			for (let i = 0; i &lt; date_obj.year; i++)
-				minutes += (Date.isLeapYear(i) ? 366 : 365) * 24 * 60;
-		} else if (date_obj.year &lt; 0) {
-			for (let i = -1; i >= date_obj.year; i--)
-				minutes -= (Date.isLeapYear(i) ? 366 : 365) * 24 * 60;
-		}
-		// year === 0 contributes 0 full-year minutes (we're inside year 0)
-		
-		// 2. Add completed months of current year
-		let all_months = Object.keys(Date.months);
-		for (let i = 1; i &lt; date_obj.month; i++) {
-			let local_month = Date.months[all_months[i - 1]];
-			let dim = Date.isLeapYear(date_obj.year)
-				? local_month.leap_year_days || local_month.days
-				: local_month.days;
-			minutes += dim * 24 * 60;
-		}
-		
-		// 3. Add completed days
-		minutes += (date_obj.day - 1) * 24 * 60;
-		
-		// 4. Add partial day
-		minutes += date_obj.hour * 60 + date_obj.minute;
-		
-		return minutes;
-	};
-	
-	/**
-	 * Whether the given year is a leap year.
-	 * @alias Date.isLeapYear
-	 * 
-	 * @param {number} arg0_year
-	 * 
+	 * Checks if two objects are deeply equal. JSON-parsing only.
+	 * @alias Boolean.isDeepEqual
+	 *
+	 * @param {Object} arg0_object
+	 * @param {Object} arg1_object
+	 *
 	 * @returns {boolean}
 	 */
-	Date.isLeapYear = function (arg0_year) {
+	Boolean.isDeepEqual = function (arg0_object, arg1_object) {
 		//Convert from parameters
-		let year = parseInt(arg0_year);
+		let object = arg0_object;
+		let ot_object = arg1_object;
+		
+		if (object === ot_object) return true; //Internal guard clause if two objects are the same
+		if (typeof object !== "object" || object === null || typeof ot_object !== "object" || ot_object === null) return false; //Internal guard clause for falseys
+		
+		//Declare local instance variables
+		let all_object_keys = Object.keys(object);
+		let all_ot_object_keys = Object.keys(ot_object);
 		
 		//Return statement
-		if (Date.bc_leap_years.indexOf(year) !== -1) return true;
-		return (((year % 4 === 0) &amp;&amp; (year % 100 !== 0)) || (year % 400 === 0) &amp;&amp; year !== 4);
+		if (all_object_keys.length !== all_ot_object_keys.length) return false;
+		for (let local_key of all_object_keys)
+			if (!all_ot_object_keys[local_key] || !Boolean.isDeepEqual(object[local_key], ot_object[local_key]))
+				return false;
+		return true;
 	};
 	
-	/**
-	 * Parses a {@link float} number of years into a specific Date object.
-	 * @alias Date.parseYears
-	 * 
-	 * @param {number} arg0_years
-	 * 
-	 * @returns {{year: number, month: number, day: number, hour: number, minute: number}}
-	 */
-	Date.parseYears = function (arg0_years) {
-		// Convert from parameters
-		let years = parseFloat(arg0_years);
+	String.formatObject = function (arg0_object) {
+		//Convert from parameters
+		let object = (arg0_object) ? arg0_object : {};
 		
-		// Declare local instance variables
-		let date_obj = Date.getBlankDate();
+		//Internal guard clause if object is empty
+		if (Object.keys(object).length === 0) return "None";
 		
-		// 1. Parse whole years
-		date_obj.year = Math.floor(years);
-		let remainder = years - date_obj.year;
+		//Declare local instance variables
+		let string_array = [];
 		
-		// 2. Convert remaining fractional years into days
-		let days = remainder * 365; // Approximation
-		date_obj.day = Math.floor(days);
+		//Iterate over object and parse it to a string
+		let all_keys = Object.keys(object);
 		
-		// 3. Parse months (1-based)
-		date_obj.month = 1;
-		
-		let all_months = Object.keys(Date.months);
-		for (let i = 0; i &lt; all_months.length; i++) {
-			let local_month = Date.months[all_months[i]];
-			let days_in_month = local_month.days;
+		for (let i = 0; i &lt; all_keys.length; i++) {
+			let local_value = object[all_keys[i]];
 			
-			if (
-				Date.isLeapYear(date_obj.year) &amp;&amp;
-				local_month.leap_year_days
-			) {
-				days_in_month = local_month.leap_year_days;
-			}
-			
-			if (date_obj.day >= days_in_month) {
-				date_obj.day -= days_in_month;
-				date_obj.month++;
-				
-				if (date_obj.month > 12) {
-					date_obj.month = 1;
-					date_obj.year++;
+			if (typeof local_value === "object" &amp;&amp; local_value !== null) {
+				if (Array.isArray(local_value)) {
+					string_array.push(`${all_keys[i]}: [${local_value.length}]`);
+				} else {
+					string_array.push(`${all_keys[i]}: {${Object.keys(local_value).length}}`);
 				}
-			} else {
-				break;
+			} else if (local_value !== undefined) {
+				string_array.push(`${all_keys[i]}: ${local_value}`);
 			}
 		}
 		
-		// 4. Convert remaining day fraction into hours
-		let remaining_day_fraction = days - Math.floor(days);
-		date_obj.hour = Math.floor(remaining_day_fraction * 24);
-		
-		// Return statement
-		return date_obj;
+		//Return statement
+		return string_array.join(", ");
 	};
-}</code></pre>
+}
+
+History.addKeyframe = function (arg0_keyframes, arg1_timestamp, ...argn_arguments) {
+	//Convert from parameters
+	let keyframes_obj = arg0_keyframes;
+	let timestamp = arg1_timestamp;
+	
+	//Declare local instance variables
+	let keyframe_obj = keyframes_obj[timestamp];
+	
+	//Iterate over all argn_arguments and add it to .value, concatenating any objects if they exist
+	for (let i = 0; i &lt; argn_arguments.length; i++)
+		if (argn_arguments[i] !== undefined)
+			if (typeof argn_arguments === "object" &amp;&amp; argn_arguments[i] !== null) {
+				let old_variables = (keyframe_obj.value[i]?.variables) ? 
+					keyframe_obj.value[i].variables : {};
+				
+				//Handle initial value naively
+				keyframe_obj.value[i] = {
+					...(keyframe_obj.value[i]) ? keyframe_obj.value[i] : {},
+					...argn_arguments[i]
+				};
+				//Handle shallow nesting for .variables if extant
+				if (argn_arguments[i].variables)
+					keyframe_obj.value[i].variables = { 
+					...old_variables, 
+						...argn_arguments[i].variables 
+				};
+			} else {
+				keyframe_obj.value[i] = argn_arguments[i];
+			}
+	
+	//Set new keyframe_obj by mutating keyframes_obj
+	keyframes_obj[timestamp] = keyframe_obj;
+	
+	//Return statement
+	return keyframes_obj;
+};
+	
+History.cleanKeyframes = function (arg0_keyframes) {
+	//Convert from parameters
+	let keyframes_obj = arg0_keyframes;
+	
+	//Declare local instance variables
+	let all_timestamps = History.getTimestamps(keyframes_obj);
+	let running_state = []; //Tracks the accumulated values to find redundancies
+	
+	//Iterate over all_timestamps in the current history
+	for (let i = 0; i &lt; all_timestamps.length; i++) {
+		let timestamp = all_timestamps[i];
+		let local_keyframe = keyframes_obj[timestamp];
+		let has_meaningful_change = false;
+		
+		//Don't clean the very first keyframe, as it serves as the baseline
+		if (i === 0) {
+			//Update running state with the first keyframe's data
+			running_state = JSON.parse(JSON.stringify(local_keyframe.value));
+			continue;
+		}
+		
+		for (let x = 0; x &lt; local_keyframe.value.length; x++) {
+			let current_val = local_keyframe.value[x];
+			let prev_val = running_state[x];
+			
+			//Skip only if undefined; null is treated as a meaningful value change
+			if (current_val === undefined) continue;
+			
+			if (typeof current_val === "object" &amp;&amp; current_val !== null) {
+				// Handle object merging and variable delta checks
+				let is_redundant_obj = true;
+				let cleaned_obj = { ...current_val };
+				if (current_val.variables)
+					cleaned_obj.variables = { ...current_val.variables };
+				
+				//Check nested variables
+				if (current_val.variables &amp;&amp; prev_val &amp;&amp; prev_val.variables) {
+					for (let key in current_val.variables)
+						if (Boolean.isDeepEqual(current_val.variables[key], prev_val.variables[key])) {
+							delete cleaned_obj.variables[key];
+						} else {
+							is_redundant_obj = false;
+						}
+					//If variables becomes empty, remove the key
+					if (Object.keys(cleaned_obj.variables).length === 0) delete cleaned_obj.variables;
+				} else if (current_val.variables) {
+					is_redundant_obj = false;
+				}
+				
+				//Check other properties of the object (excluding variables which we just handled)
+				for (let key in current_val) {
+					if (key === "variables") continue;
+					if (prev_val &amp;&amp; Boolean.isDeepEqual(current_val[key], prev_val[key])) {
+						delete cleaned_obj[key];
+					} else {
+						is_redundant_obj = false;
+					}
+				}
+				
+				if (is_redundant_obj) {
+					//Remove this index from keyframe if it changes nothing
+					local_keyframe.value[x] = undefined;
+				} else {
+					//Update the keyframe with cleaned object and update running state
+					local_keyframe.value[x] = cleaned_obj;
+					has_meaningful_change = true;
+					
+					//Update running state for next iteration; ensure state is an object if merging
+					if (typeof running_state[x] !== "object" || running_state[x] === null)
+						running_state[x] = { variables: {} };
+					
+					if (cleaned_obj.variables)
+						running_state[x].variables = {
+							...running_state[x].variables,
+							...cleaned_obj.variables
+						};
+					running_state[x] = { ...running_state[x], ...cleaned_obj };
+				}
+			} else {
+				//Handle primitive values and null
+				if (current_val === prev_val) {
+					local_keyframe.value[x] = undefined;
+				} else {
+					running_state[x] = current_val;
+					has_meaningful_change = true;
+				}
+			}
+		}
+		
+		//If the keyframe now contains no unique data, delete the keyframe entirely
+		let is_empty = local_keyframe.value.every((val) => val === undefined);
+		if (is_empty || !has_meaningful_change) {
+			delete keyframes_obj[timestamp];
+		}
+	}
+	
+	//Return stateement
+	return keyframes_obj;
+};
+
+History.diffKeyframe = function (arg0_keyframe, arg1_keyframe) {
+	//Convert from parameters
+	let keyframe = (arg0_keyframe) ? arg0_keyframe : { value: [] };
+	let ot_keyframe = (arg1_keyframe) ? arg1_keyframe : {};
+	
+	//Declare local instance variables
+	if (ot_keyframe.value)
+		for (let i = 0; i &lt; ot_keyframe.value.length; i++) {
+			if (typeof ot_keyframe.value[i] === "object" &amp;&amp; ot_keyframe.value[i] !== null) {
+				let old_variables = (keyframe.value[i] &amp;&amp; keyframe.value[i].variables) ?
+					keyframe.value[i].variables : {};
+				
+				if (!keyframe.value[i]) keyframe.value[i] = {};
+				
+				keyframe.value[i] = { ...keyframe.value[i], ...ot_keyframe.value[i] };
+				
+				if (ot_keyframe.value[i] &amp;&amp; ot_keyframe.value[i].variables)
+					keyframe.value[i].variables = { ...old_variables, ...ot_keyframe.value[i].variables };
+			} else if (ot_keyframe.value[i] !== undefined) {
+				if (ot_keyframe.value[i] === "undefined") continue;
+				if (i !== 0 &amp;&amp; ot_keyframe.value[i] === null) continue;
+				keyframe.value[i] = ot_keyframe.value[i];
+			}
+		}
+	
+	//Return statement
+	return keyframe;
+};
+
+History.getFirstKey = function (arg0_keyframes) {
+	//Convert from parameters
+	let keyframes_obj = (arg0_keyframes) ? arg0_keyframes : {};
+	
+	//Declare local instance variables
+	let all_timestamps = History.getTimestamps(keyframes_obj);
+	
+	//Return statement
+	return (all_timestamps.length > 0) ? all_timestamps[0] : null;
+};
+
+History.getFirstKeyframe = function (arg0_keyframes) {
+	//Convert from parameters
+	let keyframes_obj = (arg0_keyframes) ? arg0_keyframes : {};
+	
+	//Declare local instance variables
+	let all_timestamps = History.getTimestamps(keyframes_obj);
+	
+	//Return statement
+	return (all_timestamps.length > 0) ? 
+		keyframes_obj[all_timestamps[0]] : null;
+};
+
+History.getLastKey = function (arg0_keyframes) {
+	//Convert from parameters
+	let keyframes_obj = (arg0_keyframes) ? arg0_keyframes : {};
+	
+	//Declare local instance variables
+	let all_timestamps = History.getTimestamps(keyframes_obj);
+	
+	//Return statement
+	return (all_timestamps.length > 0) ? all_timestamps[all_timestamps.length - 1] : null;
+};
+
+History.getLastKeyframe = function (arg0_keyframes) {
+	//Convert from parameters
+	let keyframes_obj = (arg0_keyframes) ? arg0_keyframes : {};
+	
+	//Declare local instance variables
+	let all_timestamps = History.getTimestamps(keyframes_obj);
+	
+	//Return statement
+	return (all_timestamps.length > 0) ? 
+		keyframes_obj[all_timestamps[all_timestamps.length - 1]] : null;
+};
+	
+History.getLocalisation = function (arg0_keyframe, arg1_keyframe) {
+	//Convert from parameters
+	let old_keyframe = (arg0_keyframe) ? arg0_keyframe : {};
+	let new_keyframe = (arg1_keyframe) ? arg1_keyframe  : {};
+	
+	//Declare local instance variables
+	let return_string = [];
+	
+	try {
+		//[0] .geometry change
+		if (new_keyframe.value[0])
+			return_string.push(`Geometry changed`);
+		if (new_keyframe.value[0] === null)
+			return_string.push(`Geometry removed`);
+		
+		//[1] .symbol change
+		if (new_keyframe.value[1])
+			return_string.push(`Symbol changed to: ${String.formatObject(new_keyframe.value[1])}`);
+		
+		//[2] .properties change
+		if (new_keyframe.value[2]?.hidden === false)
+			return_string.push(`Geometry visible`);
+		if (new_keyframe.value[2]?.hidden === true)
+			return_string.push(`Geometry hidden`);
+		if (new_keyframe.value[2]?.label_geometries)
+			if (new_keyframe.value[2].label_geometries.length > 0)
+				return_string.push(`Set custom label geometries`);
+		if (new_keyframe.value[2]?.label_name)
+			return_string.push(`Label name changed to: ${new_keyframe.value[2].label_name}`);
+		if (new_keyframe.value[2]?.label_symbol)
+			return_string.push(`Label symbol changed to: ${String.formatObject(new_keyframe.value[2].label_symbol)}`);
+		if (new_keyframe.value[2]?.max_zoom !== undefined)
+			return_string.push(`Maximum zoom set to ${new_keyframe.value[2].max_zoom}`);
+		if (new_keyframe.value[2]?.min_zoom !== undefined)
+			return_string.push(`Minimum zoom set to ${new_keyframe.value[2].min_zoom}`);
+		if (new_keyframe.value[2]?.name)
+			return_string.push(`Name changed to ${new_keyframe.value[2].name}`);
+		if (new_keyframe.value[2]?.variables)
+			return_string.push(`Variables changed to: ${String.formatObject(new_keyframe.value[2].variables)}`);
+	} catch (e) {
+		console.error(`History.getLocalisation - new_keyframe:`, new_keyframe, `old_keyframe:`, old_keyframe, `Error:`, e);
+	}
+	
+	return return_string;
+};
+
+History.getKeyframe = function (arg0_keyframes, arg1_timestamp) {
+	//Convert from parameters
+	let keyframes = arg0_keyframes;
+	let timestamp = parseInt(arg1_timestamp);
+	
+	//Declare local instance variables
+	let all_keyframes = History.getTimestamps(keyframes);
+	let return_keyframe = { timestamp: timestamp, value: [] };
+	
+	//Iterate over all_keyframes in order
+	for (let i = 0; i &lt; all_keyframes.length; i++) {
+		let local_keyframe = keyframes[all_keyframes[i]];
+		
+		//Check that the keyframe is still valid
+		if (parseInt(all_keyframes[i]) &lt;= return_keyframe.timestamp) {
+			if (!local_keyframe.value) continue;
+			
+			//Merge keys using diffKeyframe
+			return_keyframe = History.diffKeyframe(return_keyframe, local_keyframe);
+		} else { break; }
+	}
+	
+	//Return statement
+	return return_keyframe.value;
+};
+
+History.getKeyframes = function (arg0_keyframes) {
+	//Convert from parameters
+	let keyframes = arg0_keyframes;
+	
+	//Declare local instance variables
+	let all_keyframes = History.getTimestamps(keyframes);
+	let return_keyframe = { value: [] };
+	
+	//Iterate over all_keyframes in order
+	for (let i = 0; i &lt; all_keyframes.length; i++) {
+		let local_keyframe = keyframes[all_keyframes[i]];
+		
+		local_keyframe.localisation = History.getLocalisation(return_keyframe, local_keyframe);
+		return_keyframe = History.diffKeyframe(return_keyframe, local_keyframe);
+	}
+	
+	//Return statement
+	return keyframes;
+};
+
+History.getName = function (arg0_keyframes) {
+	//Convert from parameters
+	let keyframes = arg0_keyframes;
+	
+	//Declare local instance variables
+	let all_keyframes = History.getTimestamps(keyframes);
+	let entity_name;
+	
+	//Iterate over all_keyframes in order
+	for (let i = 0; i &lt; all_keyframes.length; i++) {
+		let local_keyframe = keyframes[all_keyframes[i]];
+		
+		if (local_keyframe.value?.[2]?.name) entity_name = local_keyframe.value[2].name;
+	}
+	
+	//Return statement
+	return entity_name;
+};
+
+History.getTimestamps = function (arg0_keyframes) {
+	//Convert from parameters
+	let keyframes = (arg0_keyframes) ? arg0_keyframes : {};
+	
+	//Return statement
+	return Object.keys(keyframes)
+		.sort((a, b) => parseInt(a) - parseInt(b));
+};
+
+History.moveKeyframe = function (arg0_keyframes, arg1_timestamp, arg2_timestamp) {
+	//Convert from parameters
+	let keyframes_obj = arg0_keyframes;
+	let timestamp = parseInt(arg1_timestamp);
+	let ot_timestamp = parseInt(arg2_timestamp);
+	
+	//Internal guard clause if timestamps are the same
+	if (timestamp === ot_timestamp) return keyframes_obj;
+	
+	//Check if keyframe_obj exists; if it does, move it
+	let keyframe_obj = keyframes_obj[timestamp];
+	
+	if (keyframe_obj) {
+		keyframe_obj[ot_timestamp] = keyframe_obj[timestamp];
+		delete keyframe_obj[timestamp];
+	}
+	
+	//Return statement
+	return keyframes_obj;
+};
+
+History.removeKeyframe = function (arg0_keyframes, arg1_timestamp) {
+	//Convert from parameters
+	let keyframes_obj = arg0_keyframes;
+	let timestamp = parseInt(arg1_timestamp);
+	
+	//Return statement; delete timestamp key
+	delete keyframes_obj[timestamp];
+	return keyframes_obj;
+};
+
+History.replaceKeyframe = function (arg0_keyframes, arg1_timestamp, arg2_keyframe, arg3_options) {
+	//Convert from parameters
+	let keyframes_obj = arg0_keyframes;
+	let timestamp = arg1_timestamp;
+	let keyframe = arg2_keyframe;
+	let options = (arg3_options) ? arg3_options : {};
+	
+	//Declare local instance variables
+	keyframes_obj = History.removeKeyframe(keyframes_obj, timestamp);
+	keyframes_obj = History.addKeyframe(keyframes_obj, timestamp, ...keyframe.value);
+	
+	//Return statement
+	return keyframes_obj;
+};</code></pre>
         </article>
     </section>
 
