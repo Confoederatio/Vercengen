@@ -1,6 +1,6 @@
 {
   "name": "vercengen",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Universal Framework/Vercengen variant for Browser/Electron versions.",
   "main": "main.js",
   "scripts": {
