@@ -107,8 +107,6 @@ ve.ObjectEditor = class extends ve.Component { //[WIP] - Fix documentation; rewo
 	 * @param {string} arg4_parent_path
 	 * 
 	 * @returns {ve.HierarchyDatatype}
-	 *
-	 * @private
 	 */
 	_generateRecursive (arg0_current_data, arg1_current_key, arg2_depth, arg3_parent_object, arg4_parent_path) {
 		//Convert from parameters
@@ -295,7 +293,6 @@ ve.ObjectEditor = class extends ve.Component { //[WIP] - Fix documentation; rewo
 	 * @param {any} arg0_value
 	 * 
 	 * @returns {string}
-	 * @private
 	 */
 	_getType (arg0_value) {
 		//Convert from parameters
@@ -316,8 +313,6 @@ ve.ObjectEditor = class extends ve.Component { //[WIP] - Fix documentation; rewo
 	 * 
 	 * @param {Object} arg0_v
 	 * @param {Object} arg1_e
-	 * 
-	 * @private
 	 */
 	_handleReorder (arg0_v, arg1_e) {
 		//Convert from parameters
@@ -405,7 +400,6 @@ ve.ObjectEditor = class extends ve.Component { //[WIP] - Fix documentation; rewo
 	 * @param {number} arg2_new_index
 	 * 
 	 * @returns {any[]}
-	 * @private
 	 */
 	_moveArrayItem (arg0_array, arg1_old_index, arg2_new_index) {
 		//Convert from parameters
@@ -442,8 +436,6 @@ ve.ObjectEditor = class extends ve.Component { //[WIP] - Fix documentation; rewo
 	 * @memberof ve.Component.ve.ObjectEditor
 	 * 
 	 * @param {Object} arg0_target_obj
-	 * 
-	 * @private
 	 */
 	_openAddModal (arg0_target_obj) {
 		//Convert from parameters
@@ -519,8 +511,6 @@ ve.ObjectEditor = class extends ve.Component { //[WIP] - Fix documentation; rewo
 	 * 
 	 * @param {Object} arg0_target_object
 	 * @param {string} arg1_key
-	 * 
-	 * @private
 	 */
 	_openChangeTypeModal (arg0_target_object, arg1_key) {
 		//Convert from parameters
@@ -594,8 +584,6 @@ ve.ObjectEditor = class extends ve.Component { //[WIP] - Fix documentation; rewo
 	 * @param {Object} arg0_obj
 	 * @param {string} arg1_old_key
 	 * @param {string} arg2_new_key
-	 * 
-	 * @private
 	 */
 	_renameObjectKey (arg0_obj, arg1_old_key, arg2_new_key) {
 		//Convert from parameters
