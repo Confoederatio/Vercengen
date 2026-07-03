@@ -2,13 +2,16 @@ name: deploy_github_pages
 
 on:
   push:
-    branches: ["docs"] # Ensure this matches your docs branch
+    branches: ["main"]
+  # This line allows you to trigger a fresh run manually from the Actions tab
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# This ensures only one deployment happens at a time
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -26,7 +29,7 @@ jobs:
       - name: upload_pages_artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # This should point to the folder containing your index.html
+          # Your files are here. This makes 'docs' the root of your site.
           path: "docs"
 
       - name: deploy_to_pages
