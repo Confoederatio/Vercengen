@@ -2,26 +2,37 @@ name: deploy_github_pages
 
 on:
   push:
-    branches: ["main"] # Change this to "docs" or your default branch name
+    branches: ["docs"] # Change to your branch name
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   deploy_site:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout_code
         uses: actions/checkout@v4
 
+      # DEBUG STEP: This will show in your logs what files are actually found
+      - name: list_files_to_verify
+        run: ls -R docs
+
       - name: upload_pages_artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # If your prebuilt HTML is inside the 'docs' folder, use "docs"
-          # If it is in the root of the repo, use "."
+          # If your index.html is inside the docs/ folder:
           path: "docs"
 
       - name: deploy_to_pages
+        id: deployment
         uses: actions/deploy-pages@v4
