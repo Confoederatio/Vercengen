@@ -2,7 +2,7 @@ name: deploy_github_pages
 
 on:
   push:
-    branches: ["docs"] # Change to your branch name
+    branches: ["docs"] # Ensure this matches your docs branch
 
 permissions:
   contents: read
@@ -23,14 +23,10 @@ jobs:
       - name: checkout_code
         uses: actions/checkout@v4
 
-      # DEBUG STEP: This will show in your logs what files are actually found
-      - name: list_files_to_verify
-        run: ls -R docs
-
       - name: upload_pages_artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # If your index.html is inside the docs/ folder:
+          # This should point to the folder containing your index.html
           path: "docs"
 
       - name: deploy_to_pages
