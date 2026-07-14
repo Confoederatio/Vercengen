@@ -5,7 +5,7 @@ let { performance } = require("perf_hooks");
 
 //Metadata - Title
 let latest_fps = 0;
-let vercengen_version = "1.0.6";
+let vercengen_version = "1.0.7";
 let title_update_interval;
 let win;
 
