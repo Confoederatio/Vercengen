@@ -14,6 +14,19 @@ All interfaces are split into <b><a href = "ve.Component.html">Components</a></b
 
 **Batteries Included:** Unlike other frameworks, a default features and components library is included out-of-the-box, and can be modified as needed.
 
+## Components:
+
+Currently supported locales: DE, EN-GB (Default), FR.
+
+Default **Features** (9):
+- Confirm, ContextMenu, Modal, Navbar, PageMenuWindow, Scene, Toast, Tooltip, Window
+
+Default **Components** (50):
+- Button, Checkbox, Colour, CRUD, Datalist, DatavisSuite, Date, DateLength, File, FileExplorer, FlexInterface, Graph, GraphLegend, GraphText, HTML, Hierarchy, HierarchyDatatype, Interface, List, Log, Map, MultiTag, NodeEditor, NodeEditorDatatype, Number, ObjectEditor, ObjectInspector, PageMenu, Password, Radio, Range, RawInterface, RichText, ScriptManager, ScriptManagerBlockly, ScriptManagerMonaco, SearchSelect, Select, Spreadsheet, Table, Telephone, Text, Time, Timeline, TimelineChronology, Toggle, URL, UndoRedo, Wiki, WordProcessor
+
+> [!NOTE]
+> A corresponding 4D GIS for ve.Map is available at [Naissance HGIS](https://github.com/Confoederatio/Naissance).
+
 ## Dataflow:
 
 Vercengen provides directional bindings for your data, without the risk of race conditions, as the program and user agent can never be the same.
