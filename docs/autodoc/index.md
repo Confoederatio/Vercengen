@@ -24,7 +24,7 @@ Default **Features** (9):
 Default **Components** (50):
 - Button, Checkbox, Colour, CRUD, Datalist, DatavisSuite, Date, DateLength, File, FileExplorer, FlexInterface, Graph, GraphLegend, GraphText, HTML, Hierarchy, HierarchyDatatype, Interface, List, Log, Map, MultiTag, NodeEditor, NodeEditorDatatype, Number, ObjectEditor, ObjectInspector, PageMenu, Password, Radio, Range, RawInterface, RichText, ScriptManager, ScriptManagerBlockly, ScriptManagerMonaco, SearchSelect, Select, Spreadsheet, Table, Telephone, Text, Time, Timeline, TimelineChronology, Toggle, URL, UndoRedo, Wiki, WordProcessor
 
-> [!NOTE]
+> **Note.**
 > A corresponding 4D GIS for ve.Map is available at [Naissance HGIS](https://github.com/Confoederatio/Naissance).
 
 ## Dataflow:
