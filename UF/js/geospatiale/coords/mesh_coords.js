@@ -32,7 +32,7 @@
 				let dy = mesh_points[i].src_y - mesh_points[j].src_y;
 				
 				let r2 = dx*dx + dy*dy;
-				matrix[i][j] = (r2 === 0) ? 0 : r2 * Math.log(Math.sqrt(r2));
+				matrix[i][j] = (r2 === 0) ? 0 : r2*Math.log(Math.sqrt(r2));
 			}
 			
 			//Adjust cell values
@@ -108,8 +108,11 @@
 			
 			triangles = triangles.filter((tri) => {
 				let circum = Geospatiale.getCircumcircle(tri.p1, tri.p2, tri.p3);
+				
 				if (Math.hypot(p.x - circum.x, p.y - circum.y) < circum.r) {
 					edges.push([tri.i1, tri.i2], [tri.i2, tri.i3], [tri.i3, tri.i1]);
+					
+					//Return statement
 					return false;
 				}
 				return true;
@@ -149,6 +152,7 @@
 			});
 		});
 		
+		//Iterate over all triangles
 		triangles.forEach((tri) => {
 			if (tri.i1 >= 0 && tri.i2 >= 0 && tri.i3 >= 0) 
 				indices.push(tri.i1, tri.i2, tri.i3);
@@ -201,7 +205,7 @@
 			ctx.fillStyle = (selected_point_index === i) ? 
 				"#00ff00" : "rgba(255, 200, 100, 0.9)";
 			ctx.beginPath();
-			ctx.arc(p.x, p.y, visual_radius, 0, Math.PI * 2);
+			ctx.arc(p.x, p.y, visual_radius, 0, Math.PI*2);
 			ctx.fill();
 			ctx.strokeStyle = "white";
 			ctx.stroke();
@@ -271,8 +275,8 @@
 		
 		//Declare local instance variables
 		let det = (p2.y - p3.y)*(p1.x - p3.x) + (p3.x - p2.x)*(p1.y - p3.y);
-		let u = ((p2.y - p3.y)*(p.x - p3.x) + (p3.x - p2.x)*(p.y - p3.y)) / det;
-		let v = ((p3.y - p1.y)*(p.x - p3.x) + (p1.x - p3.x)*(p.y - p3.y)) / det;
+		let u = ((p2.y - p3.y)*(p.x - p3.x) + (p3.x - p2.x)*(p.y - p3.y))/det;
+		let v = ((p3.y - p1.y)*(p.x - p3.x) + (p1.x - p3.x)*(p.y - p3.y))/det;
 		let w = 1 - u - v;
 		
 		//Return statement
@@ -341,7 +345,7 @@
 		let hitbox_radius = arg4_hitbox_radius;
 		
 		//Declare local instance variables
-		let threshold = hitbox_radius / factor;
+		let threshold = hitbox_radius/factor;
 		
 		//Iterate over all mesh_points
 		for (let i = 0; i < mesh_points.length; i++) {
@@ -387,8 +391,8 @@
 			let kernel = (r2 === 0) ? 0 : r2*Math.log(Math.sqrt(r2));
 			
 			//Adjust res_x, res_y
-			res_x += coeffs_x[i] * kernel;
-			res_y += coeffs_y[i] * kernel;
+			res_x += coeffs_x[i]*kernel;
+			res_y += coeffs_y[i]*kernel;
 		}
 		
 		//Return statement
@@ -436,9 +440,9 @@
 		
 		let du1 = u2 - u1, dv1 = v2 - v1, 
 			du2 = u3 - u1, dv2 = v3 - v1;
-		let ma = (du1*dy2 - du2*dy1) * inv_det, 
+		let ma = (du1*dy2 - du2*dy1)*inv_det, 
 			mb = (dx1*du2 - dx2*du1)*inv_det;
-		let mc = (dv1*dy2 - dv2*dy1) * inv_det, 
+		let mc = (dv1*dy2 - dv2*dy1)*inv_det, 
 			md = (dx1*dv2 - dx2*dv1)*inv_det;
 		let me = u1 - ma*x1 - mb*y1, 
 			mf = v1 - mc*x1 - md*y1;
@@ -525,7 +529,7 @@
 			//Iterate over all cells in the row
 			for (let j = i + 1; j < n; j++) {
 				let factor = matrix[j][i]/matrix[i][i];
-				target[j] -= factor * target[i];
+				target[j] -= factor*target[i];
 				
 				//Adjust factor
 				for (let k = i; k < n; k++) 
@@ -541,8 +545,8 @@
 			
 			//Iterate over all cells in the row
 			for (let j = i + 1; j < n; j++) 
-				sum += matrix[i][j] * x[j];
-			x[i] = (target[i] - sum) / matrix[i][i];
+				sum += matrix[i][j]*x[j];
+			x[i] = (target[i] - sum)/matrix[i][i];
 		}
 		
 		//Return statement
