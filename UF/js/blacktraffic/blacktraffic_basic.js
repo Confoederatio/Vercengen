@@ -195,4 +195,14 @@
 			}
 		}
 	};
+	
+	/**
+	 * Yields to the event loop inside of a synchronous processing sequence.
+	 * 
+	 * @returns {Promise<unknown>}
+	 */
+	Blacktraffic.uield = function () {
+		//Return statement
+		return new Promise((resolve) => setImmediate(resolve));
+	};
 }

@@ -15,11 +15,11 @@
 	 * @param {string} arg0_input_file_path
 	 * @param {string} arg1_output_file_path
 	 * @param {Object} [arg2_options]
-	 *  @param {string} [arg2_options.mode="number"] - Either 'number'/'percentage'.
-	 *  @param {boolean} [arg2_options.ceil=true] - Whether to ceiling ASC integers.
+	 *  @param {string} [arg2_options.format="int32"] - Either 'int32'/'float32'/'percentage'.
+	 *  @param {boolean} [arg2_options.ceil=true] - Whether to ceiling ASC integers when format is 'int32'.
 	 *  @param {function(local_index, local_value)} [arg2_options.special_function] - Any function to pass to the iterative loop when processing. Must return a {@link number}.
 	 *  
-	 * @returns {{dataframe: Object, max_value: number}}
+	 * @returns {Promise<{dataframe: Object, max_value: number}>}
 	 */
 	GeoASC.convertToPNG = async function (arg0_input_file_path, arg1_output_file_path, arg2_options) {
 		//Convert from parameters
@@ -28,7 +28,7 @@
 		let options = (arg2_options) ? arg2_options : {};
 		
 		//Initialise options
-		if (!options.mode) options.mode = "number";
+		if (!options.format) options.format = "int32";
 		if (options.ceil === undefined) options.ceil = true;
 		
 		//Declare local instance variables
@@ -57,12 +57,15 @@
 					local_value = options.special_function(local_index, local_value);
 				
 				if (local_value !== undefined && local_value !== -9999) {
-					if (options.mode === "number") {
+					if (options.format === "int32") {
 						//Encode full 32-bit integer value into RGBA
 						if (options.ceil)
 							local_value = Math.ceil(local_value);
-						rgba = Colour.encodeNumberAsRGBA(local_value);
-					} else if (options.mode === "percentage") {
+						rgba = Colour.encodeNumberAsRGBA(local_value, options);
+					} else if (options.format === "float32") {
+						//Encode 32-bit float value into RGBA
+						rgba = Colour.encodeNumberAsRGBA(local_value, options);
+					} else if (options.format === "percentage") {
 						//Scale using percentage mode (0-100 mapped to G channel)
 						let local_g = Math.min(Math.round((local_value/max_value)*255), 255);
 						rgba = [0, local_g, 0, 255];
@@ -79,9 +82,16 @@
 				png.data[local_index + 3] = rgba[3];
 			}
 		
-		//Write PNG file
-		png.pack().pipe(fs.createWriteStream(output_file_path))
-			.on("finish", () => console.log(`.PNG output file written to ${output_file_path}`));
+		//Await PNG write completion to prevent race conditions
+		await new Promise((resolve, reject) => {
+			png.pack()
+				.pipe(fs.createWriteStream(output_file_path))
+				.on("finish", () => {
+					console.log(`.PNG output file written to ${output_file_path}`);
+					resolve();
+				})
+				.on("error", (err) => reject(err));
+		});
 		
 		//Return statement
 		return {

@@ -12,9 +12,9 @@ if (!global.Geospatiale)
  *  @param {maptalks.Map} [arg1_options.map]
  *  @param {Object} [arg1_options.style]
  * 
- * @type {Geospatiale.maptalks_CurvedText}
+ * @type {Geospatiale.maptalks_CurvedLabel}
  */
-Geospatiale.maptalks_CurvedText = class {
+Geospatiale.maptalks_CurvedLabel = class {
 	constructor (arg0_coords, arg1_options) {
 		//Convert from parameters
 		let coords = arg0_coords;
@@ -30,10 +30,10 @@ Geospatiale.maptalks_CurvedText = class {
 		this.glyph_markers = [];
 		this.style = {
 			fontFamily: "sans-serif",
-			fontSize: this.base_font_size,
 			opacity: 0.85,
 			pointerEvents: "none",
-			...this.options.style
+			...this.options.style,
+			fontSize: this.base_font_size
 		};
 		this.text_string = this.options.text_string;
 		
@@ -46,9 +46,18 @@ Geospatiale.maptalks_CurvedText = class {
 		this.render();
 	}
 	
+	addTo (arg0_map) {
+		//Convert from parameters
+		let map = (arg0_map) ? arg0_map : this.map;
+		
+		//Iterate over all this.glyph_markers and add it to the map
+		for (let i = 0; i < this.glyph_markers.length; i++)
+			this.glyph_markers[i].addTo(map);
+	}
+	
 	/**
 	 * Returns smoothed points between coords for arc curves.
-	 * - Method of: {@link Geospatiale.maptalks_CurvedText}
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
 	 * 
 	 * @param {Array.<number[]>} arg0_coords
 	 * @param [arg1_samples_per_segment=25]
@@ -98,7 +107,7 @@ Geospatiale.maptalks_CurvedText = class {
 	
 	/**
 	 * Measures actual text width using a `<canvas>` to assess kerning.
-	 * - Method of: {@link Geospatiale.maptalks_CurvedText}
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
 	 * 
 	 * @param {string} arg0_text
 	 * @param {number} arg1_font_size
@@ -120,8 +129,8 @@ Geospatiale.maptalks_CurvedText = class {
 	}
 	
 	/**
-	 * Removes the maptalks_CurvedText geometry from the map.
-	 * - Method of: {@link Geospatiale.maptalks_CurvedText}
+	 * Removes the maptalks_CurvedLabel geometry from the map.
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
 	 */
 	remove () {
 		//Remove map view event handlers
@@ -129,14 +138,15 @@ Geospatiale.maptalks_CurvedText = class {
 			this.map.off("zoomend zooming moving moveend rotate pitch", this.onviewchange_handler);
 		
 		//Iterate over all this.glyph_markers and remove them
-		for (let i = 0; i < this.glyph_markers.length; i++)
+		for (let i = 0; i < this.glyph_markers.length; i++) try {
 			this.glyph_markers[i].remove();
+		} catch (e) {}
 		this.glyph_markers = [];
 	}
 	
 	/**
-	 * Renders the maptalks_CurvedText geometry to the map.
-	 * - Method of: {@link Geospatiale.maptalks_CurvedText}
+	 * Renders the maptalks_CurvedLabel geometry to the map.
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
 	 */
 	render () {
 		if (!this.map || !this.text_string) return; //Internal guard clause
@@ -254,9 +264,11 @@ Geospatiale.maptalks_CurvedText = class {
 			if (this.options.class) {
 				dom_el.setAttribute("class", this.options.class);
 			} else {
+				let span_el = dom_el.querySelector("span");
+				
 				Object.iterate(this.style, (local_key, local_value) =>
-					dom_el.style[local_key] = String(local_value));
-				dom_el.style.fontSize = `${current_font_size}px`;
+					span_el.style[local_key] = String(local_value));
+				span_el.style.fontSize = `${current_font_size}px`;
 			}
 			
 			if (marker_index < this.glyph_markers.length) {
@@ -266,15 +278,14 @@ Geospatiale.maptalks_CurvedText = class {
 				if (!existing_marker.isVisible()) existing_marker.show();
 			} else {
 				let new_marker = new maptalks.ui.UIMarker(target_coord, {
+					animation: false,
 					draggable: false,
 					single: false,
-					eventsPropagation: false,
 					pitchWithMap: true,
 					rotateWithMap: true,
 					
 					content: dom_el
 				});
-				new_marker.addTo(this.map);
 				this.glyph_markers.push(new_marker);
 			}
 			
@@ -297,8 +308,8 @@ Geospatiale.maptalks_CurvedText = class {
 	}
 	
 	/**
-	 * Sets coordinates for the maptalks_CurvedText geometry.
-	 * - Method of: {@link Geospatiale.maptalks_CurvedText}
+	 * Sets coordinates for the maptalks_CurvedLabel geometry.
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
 	 * 
 	 * @param {Array.<number[]>} arg0_coords
 	 */
@@ -312,8 +323,8 @@ Geospatiale.maptalks_CurvedText = class {
 	}
 	
 	/**
-	 * Sets the font size for the maptalks_CurvedText geometry.
-	 * - Method of: {@link Geospatiale.maptalks_CurvedText}
+	 * Sets the font size for the maptalks_CurvedLabel geometry.
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
 	 * 
 	 * @param {number} arg0_size
 	 */
@@ -323,13 +334,13 @@ Geospatiale.maptalks_CurvedText = class {
 		
 		//Refresh font_size relative to screenspace
 		this.base_font_size = font_size;
-		this.base_zoom = this.map.getZoom();
+		this.style.fontSize = font_size;
 		this.render();
 	}
 	
 	/**
-	 * Sets the new text for the maptalks_CurvedText geometry.
-	 * - Method of: {@link Geospatiale.maptalks_CurvedText}
+	 * Sets the new text for the maptalks_CurvedLabel geometry.
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
 	 * 
 	 * @param {string} arg0_text
 	 */
@@ -343,8 +354,60 @@ Geospatiale.maptalks_CurvedText = class {
 	}
 	
 	/**
+	 * Exports class to JSON.
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
+	 * 
+	 * @returns {Object} 
+	 */
+	toJSON () {
+		//Declare local instance variables
+		let new_options_obj = {};
+		
+		//Iterate over all this.options and move serialisable JSON into new_options_obj
+		Object.iterate(this.options, (local_key, local_value) => {
+			if (local_key !== "map")
+				new_options_obj[local_key] = local_value;
+		});
+		
+		new_options_obj.base_font_size = this.base_font_size;
+		new_options_obj.base_zoom = this.base_zoom;
+		new_options_obj.style = { ...this.style, fontSize: this.base_font_size };
+		new_options_obj.text_string = this.text_string;
+		new_options_obj.type = "curved";
+		
+		//Return statement
+		return {
+			coords: this.coords,
+			options: new_options_obj
+		};
+	}
+	
+	/**
 	 * Internal helper function to refresh zoom.
-	 * - Method of: {@link Geospatiale.maptalks_CurvedText}
+	 * - Method of: {@link Geospatiale.maptalks_CurvedLabel}
 	 */
 	updateZoom () { this.render(); }
+	
+	/**
+	 * Creates a new maptalks_CurvedLabel geometry from JSON.
+	 * - Static method of: {@link Geospatiale.maptalks_CurvedLabel}
+	 * 
+	 * @param {maptalks.Map} arg0_map
+	 * @param {Object|string} arg1_json
+	 * 
+	 * @returns {Geospatiale.maptalks_CurvedLabel}
+	 */
+	static fromJSON (arg0_map, arg1_json) {
+		//Convert from parameters
+		let map = arg0_map;
+		let json = (typeof arg1_json === "string") ? JSON.parse(arg1_json) : arg1_json;
+		
+		let options_obj = {
+			...(json.options || {}),
+			map: map
+		};
+		
+		//Return statement
+		return new Geospatiale.maptalks_CurvedLabel(json.coords, options_obj);
+	}
 };
