@@ -201,7 +201,7 @@
 	 * 
 	 * @returns {Promise<unknown>}
 	 */
-	Blacktraffic.uield = function () {
+	Blacktraffic.yield = function () {
 		//Return statement
 		return new Promise((resolve) => setImmediate(resolve));
 	};
